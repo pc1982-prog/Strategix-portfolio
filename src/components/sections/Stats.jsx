@@ -1,17 +1,11 @@
-// src/components/CoreValues.jsx
+
 import React, { useEffect, useRef, useState } from "react";
-import { STRATEGIX_DATA } from "../../data/siteContent"; // make sure path is correct
+import { STRATEGIX_DATA } from "../../data/siteContent"; 
 import { X } from "lucide-react";
 
-/**
- * CoreValues (updated)
- * - Professional circular badges
- * - Modal shows clicked item + full "OBSTACLES WE TACKLE" content from STRATEGIX_DATA.obstacles
- * - Better spacing, subtle glow, keyboard accessible
- */
 
 const values = [
-  // (kept your original small set — you can replace / merge with data from STRATEGIX_DATA if needed)
+ 
   {
     key: "integrity",
     title: "INTEGRITY",

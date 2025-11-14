@@ -123,7 +123,7 @@ useEffect(() => {
               ref={titleRef}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-50 leading-tight"
             >
-              What <ShinyText>Drives Us</ShinyText>
+              What Drives Us
             </h2>
 
             <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light">
