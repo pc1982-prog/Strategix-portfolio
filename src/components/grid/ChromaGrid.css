@@ -1,0 +1,33 @@
+.chroma-grid {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 0.75rem;
+  padding: 1rem;
+  box-sizing: border-box;
+  --x: 50%;
+  --y: 50%;
+  --r: 220px;
+}
+
+.chroma-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #222;
+  transition: transform .28s ease, border-color .28s ease;
+  background: linear-gradient(180deg,#0b1220,#04050a);
+  padding: 12px;
+}
+
+.chroma-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; }
+
+.chroma-card:hover { transform: translateY(-6px); border-color: #06b6d4; }
+
+.chroma-info { padding-top: .6rem; color: #dbeafe; }
+
+.chroma-overlay { position:absolute;inset:0;pointer-events:none;z-index:3; }
