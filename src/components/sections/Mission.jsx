@@ -7,7 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Mission() {
+export const Mission=() => {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const cardsRef = useRef([]);
@@ -96,7 +96,7 @@ useEffect(() => {
 
   return (
     <>
-      {/* Google Fonts */}
+     
       <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet"
@@ -105,31 +105,24 @@ useEffect(() => {
       <section
         ref={sectionRef}
         id="mission"
-        className="relative py-16 sm:py-20 lg:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
+       className="relative py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
         style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}
       >
-        {/* Radial glow */}
-        <div className="absolute inset-0 opacity-60">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl max-h-4xl bg-gradient-radial from-purple-600/20 via-transparent to-transparent blur-3xl animate-pulse"></div>
-        </div>
+         <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 right-1/3 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl" />
+      </div>
 
         <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="text-center mb-16 sm:mb-20 lg:mb-24">
-            <p className="text-xs sm:text-sm font-semibold text-indigo-400 uppercase tracking-widest mb-3">
-              Our Mission
-            </p>
-
-            <h2
-              ref={titleRef}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-50 leading-tight"
-            >
-              What Drives Us
-            </h2>
-
-            <p className="mt-4 sm:mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-light">
-              Transforming bold ideas into measurable digital success.
-            </p>
-          </div>
+         <div className="text-center mb-16">
+          <p className="text-sm font-semibold text-emerald-400 uppercase tracking-widest mb-3">Our Mission</p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+            What <span className="bg-gradient-to-br from-emerald-400 to-teal-400 bg-clip-text text-transparent">Drives Us</span>
+          </h2>
+          <p className="mt-4 text-lg text-slate-300 max-w-2xl mx-auto">
+            Transforming bold ideas into measurable digital success
+          </p>
+        </div>
 
           <div className="space-y-16 sm:space-y-20 lg:space-y-28">
             {missions.map((m, index) => (
@@ -148,25 +141,25 @@ useEffect(() => {
                   border border-slate-700/50
                   shadow-2xl shadow-purple-900/10
                   transition-all duration-500 ease-out
-                  hover:shadow-purple-700/25 hover:scale-[1.02] hover:border-purple-500/30
+                  hover:shadow-emerald-700/25 hover:scale-[1.02] hover:border-emerald-500/80
                 `}
               >
-                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-purple-600/10 to-pink-600/10 opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 -z-10" />
+                <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-600/10 to-emerald-300/10 opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 -z-10" />
 
                 <div className="flex-shrink-0">
                   <div
-                    className={`
-                      w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28
-                      rounded-full flex items-center justify-center
-                      bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500
-                      shadow-2xl shadow-purple-600/40
-                      border border-white/20
-                      transition-transform duration-300 group-hover:scale-110
-                    `}
+                    // className={`
+                    //   w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28
+                    //   rounded-full flex items-center justify-center
+                    //   bg-gradient-to-br from-emerald-500 via-green-500 to-emer-500
+                    //   shadow-2xl shadow-purple-600/40
+                    //   border border-white/20
+                    //   transition-transform duration-300 group-hover:scale-110
+                    // `}
                   >
-                    <span className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white drop-shadow-lg">
-                      {m.number}
-                    </span>
+                     <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600 shadow-xl">
+                  <span className="text-4xl font-bold text-white">{m.number}</span>
+                </div>
                   </div>
                 </div>
 

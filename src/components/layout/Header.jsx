@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { STRATEGIX_DATA } from '../../data/siteContent';
+// import logo from '../../assets/images/logo.png';
 
- export const Header = () => {
+export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -12,49 +12,100 @@ import { STRATEGIX_DATA } from '../../data/siteContent';
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = ['Home', 'About', 'Services', 'Work', 'Clients', 'Contact'];
+  const handleNavClick = (id) => {
+    setIsMenuOpen(false);
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) {
+        const offset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const navItems = [
+    { name: 'Home', id: 'home' },
+    { name: 'About', id: 'about' },
+    { name: 'Services', id: 'services' },
+    { name: 'Mission', id: 'mission' },
+    { name: 'Work', id: 'work' },
+    { name: 'Clients', id: 'clients' },
+    { name: 'Contact', id: 'contact' }
+  ];
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-slate-950/95 backdrop-blur-lg border-b border-purple-500/20' : 'bg-transparent'}`}>
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrolled
+          ? 'bg-slate-900/95 backdrop-blur-xl shadow-lg border-b border-emerald-500/20'
+          : 'bg-transparent'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <a href="#home" className="flex items-center space-x-3 group">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-pink-600 rounded-xl flex items-center justify-center transform group-hover:scale-110 transition-transform">
-              <span className="text-2xl font-bold">S</span>
+          <button
+            onClick={() => handleNavClick('home')}
+            className="flex items-center group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
+                <span className="text-xl font-bold text-white">S</span>
+              </div>
+              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                Strategix
+              </span>
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-              {STRATEGIX_DATA.brand.name}
-            </span>
-          </a>
+          </button>
 
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} className="text-gray-300 hover:text-white transition-colors font-medium relative group">
-                {item}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
-              </a>
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`relative font-medium text-base transition-all duration-300 ${
+                  scrolled ? 'text-slate-200 hover:text-emerald-400' : 'text-white hover:text-emerald-300'
+                }`}
+              >
+                {item.name}
+                <span className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out w-0 hover:w-full" />
+              </button>
             ))}
-            <a href="#contact" className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold hover:scale-105 transition-transform">
+            <button
+              onClick={() => handleNavClick('contact')}
+              className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
+            >
               Get Started
-            </a>
+            </button>
           </div>
 
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <button
+            className={`lg:hidden p-2 rounded-lg transition-all ${scrolled ? 'text-slate-200' : 'text-white'}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden bg-slate-900/95 backdrop-blur-lg border-t border-purple-500/20 animate-fadeIn">
-            <div className="px-4 py-6 space-y-4">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-slate-900/98 backdrop-blur-xl border-t border-emerald-500/20 shadow-2xl">
+            <div className="px-6 py-6 space-y-4">
               {navItems.map((item) => (
-                <a key={item} href={`#${item.toLowerCase()}`} className="block text-gray-300 hover:text-white transition-colors py-2" onClick={() => setIsMenuOpen(false)}>
-                  {item}
-                </a>
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className="block w-full text-left text-lg font-semibold text-white hover:text-emerald-400 transition-colors py-2"
+                >
+                  {item.name}
+                </button>
               ))}
-              <a href="#contact" className="block w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full font-semibold text-center" onClick={() => setIsMenuOpen(false)}>
+              <button
+                onClick={() => handleNavClick('contact')}
+                className="block w-full text-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-full shadow-xl transform hover:scale-105 transition-all"
+              >
                 Get Started
-              </a>
+              </button>
             </div>
           </div>
         )}

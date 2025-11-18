@@ -1,165 +1,191 @@
+// src/components/sections/Work.jsx
+import React, { useRef, useEffect } from "react";
+import { ArrowUpRight, TrendingUp, Users, MessageSquare, ShoppingBag } from "lucide-react";
 
-import React, { useRef, useEffect, useState } from 'react';
-import { Search, Settings, Users, Headphones, Award } from 'lucide-react';
-import ShinyText from '../ui/ShinyText';
-import { STRATEGIX_DATA } from '../../data/siteContent';
+// Placeholder images (ye bilkul safe hain, kabhi nahi tootenge)
+const placeholderImg = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"; // analytics
+const linkedinImg = "https://images.unsplash.com/photo-1611944212129-4d44d65ce3d7?w=800&q=80"; // linkedin post
+const shopifyImg = "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80"; // ecommerce
 
- const Work = () => {
-
+const Work = () => {
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.2 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    const cards = sectionRef.current?.querySelectorAll(".work-card");
+    if (!cards) return;
+
+    cards.forEach((card, i) => {
+      card.style.opacity = "0";
+      card.style.transform = "translateY(50px)";
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            card.style.transition = "all 0.8s ease-out";
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+            observer.unobserve(card);
+          }
+        },
+        { threshold: 0.1 }
+      );
+      observer.observe(card);
+    });
   }, []);
 
-  const steps = [
+  const performanceCards = [
     {
-      title: 'DISCOVER',
-      desc: 'People with ideas and experience to develop a vision for the future',
-      icon: <Search className="w-8 h-8" />,
-      color: 'from-purple-600 to-purple-500',
+      title: "Advantage of Engaging Storytelling",
+      reach: "546,800 People reached",
+      engagement: "943,908 Engagements",
+      badge: "₹400 Video → Viral Reach",
+      icon: MessageSquare,
+      img: linkedinImg,
     },
     {
-      title: 'BUILD',
-      desc: 'The right tools at the right time enhances the shared economy',
-      icon: <Settings className="w-8 h-8" />,
-      color: 'from-cyan-600 to-cyan-500',
+      title: "The Potential of Creative Images & Videos",
+      reach: "84,431+ Reach",
+      engagement: "Highly Shareable Carousels",
+      badge: "Organic Virality",
+      icon: TrendingUp,
+      img: linkedinImg,
     },
     {
-      title: 'CONNECT',
-      desc: 'Integrating clients with partners is the focus of everyday business',
-      icon: <Users className="w-8 h-8" />,
-      color: 'from-green-600 to-green-500',
-    },
-    {
-      title: 'LAUNCH',
-      desc: 'Bringing highly-anticipated programs to the marketplace',
-      icon: <Headphones className="w-8 h-8" />,
-      color: 'from-yellow-600 to-yellow-500',
+      title: "Power of Good Content on LinkedIn",
+      reach: "Inbox Qualified Leads",
+      engagement: "Direct Project Enquiries",
+      badge: "Revenue from Conversations",
+      icon: Users,
+      img: linkedinImg,
     },
   ];
 
   return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet"
-      />
+    <section
+      id="work"
+      ref={sectionRef}
+      className="relative py-20 lg:py-32 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
+    >
+      {/* Background Glows */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-emerald-500/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-teal-500/40 rounded-full blur-3xl" />
+      </div>
 
-      <section
-        ref={sectionRef}
-        id="work"
-        className="relative py-20 sm:py-24 lg:py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
-        style={{ fontFamily: "'Inter', ui-sans-serif, system-ui, sans-serif" }}
-      >
-        <div className="absolute inset-0 opacity-50">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-5xl max-h-5xl bg-gradient-radial from-purple-600/10 via-transparent to-transparent blur-3xl"></div>
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+        {/* Title */}
+        <div className="text-center mb-20">
+          <h2 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight">
+            Real Results.
+            <span className="block bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              Real Growth.
+            </span>
+          </h2>
+          <p className="mt-6 text-lg text-emerald-200 max-w-3xl mx-auto font-light">
+            We don’t just create content — we engineer performance that converts.
+          </p>
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="text-center mb-16 sm:mb-20 lg:mb-24">
-            <p className="text-xs sm:text-sm font-semibold text-indigo-400 uppercase tracking-widest mb-3">
-              Our Work Process
-            </p>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-50 leading-tight">
-              Work <ShinyText>Process</ShinyText>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            {steps.map((step, index) => (
-              <div
-                key={index}
-                className={`flex flex-col items-center text-center space-y-4 transition-all duration-1000 ${
-                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                }`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className="relative w-32 h-32 sm:w-36 sm:h-36 lg:w-40 lg:h-40">
-                  <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 100 100">
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="currentColor"
-                      strokeWidth="8"
-                      fill="none"
-                      className="text-slate-800"
-                    />
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      stroke="url(#grad)"
-                      strokeWidth="8"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeDasharray="283"
-                      strokeDashoffset={isVisible ? 0 : 283}
-                      className="transition-all duration-1500 ease-out"
-                    />
-                    <defs>
-                      <linearGradient id={`grad-${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#9333ea" />
-                        <stop offset="100%" stopColor="#ec4899" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
-
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="p-4 rounded-full bg-slate-900/80 backdrop-blur-sm text-white">
-                      {step.icon}
-                    </div>
+        {/* 3 Performance Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+          {performanceCards.map((item, index) => (
+            <div
+              key={index}
+              className="work-card group relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-3xl overflow-hidden hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500"
+            >
+              <div className="p-8">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-4 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl">
+                    <item.icon size={28} className="text-white" />
                   </div>
+                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-widJEST">
+                    {item.badge}
+                  </span>
                 </div>
+                <h3 className="text-xl font-bold text-white mb-4">{item.title}</h3>
+                <p className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                  {item.reach}
+                </p>
+                <p className="text-emerald-200 mt-2">{item.engagement}</p>
+              </div>
 
-                <div className="space-y-2 max-w-xs">
-                  <h3 className="text-lg sm:text-xl font-bold text-slate-50">{step.title}</h3>
-                  <p className="text-sm sm:text-base text-slate-400 leading-relaxed">{step.desc}</p>
-                </div>
+              {/* Image */}
+              <div className="h-64 bg-slate-800">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Stats Section */}
+        <div className="bg-gradient-to-br from-emerald-900/20 to-teal-900/10 backdrop-blur-2xl rounded-3xl border border-emerald-500/30 p-10 lg:p-16 mb-20">
+          <h3 className="text-4xl lg:text-5xl font-black text-center text-white mb-12">
+            With us, your graph will always be <span className="text-emerald-400">UPSTREAM!</span>
+          </h3>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center mb-12">
+            {[
+              { label: "Impressions", value: "132,430", delta: "+155,700%" },
+              { label: "Profile Activity", value: "1,431", delta: "+11,750%" },
+              { label: "Followers Gained", value: "3,378", delta: "+343.2%" },
+              { label: "Accounts Engaged", value: "2,237", delta: "+17,750%" },
+            ].map((stat, i) => (
+              <div key={i}>
+                <p className="text-emerald-300 text-sm uppercase tracking-wider">{stat.label}</p>
+                <p className="text-4xl font-black text-white mt-2">{stat.value}</p>
+                <p className="text-emerald-400 font-bold text-sm mt-1 flex items-center justify-center gap-1">
+                  <TrendingUp size={16} /> {stat.delta}
+                </p>
               </div>
             ))}
           </div>
 
-          {STRATEGIX_DATA.work.caseStudy && (
-            <div className="mt-20 p-8 sm:p-10 lg:p-12 rounded-3xl bg-gradient-to-br from-purple-900/20 to-transparent border border-purple-500/20 backdrop-blur-sm">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <Award size={24} className="text-purple-300" />
-                </div>
-                <div>
-                  <span className="inline-block px-3 py-1 bg-purple-500/20 rounded-full text-sm font-semibold text-purple-300 mb-3">
-                    {STRATEGIX_DATA.work.caseStudy.label}
-                  </span>
-                  <p className="text-slate-200 text-base sm:text-lg leading-relaxed">
-                    {STRATEGIX_DATA.work.caseStudy.description}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
+          <img src={placeholderImg} alt="Analytics" className="w-full rounded-2xl shadow-2xl" />
         </div>
 
-        <style jsx>{`
-          .bg-gradient-radial {
-            background: radial-gradient(circle at center, rgba(139,92,246,0.1), transparent 70%);
-          }
-        `}</style>
-      </section>
-    </>
+        {/* Traction */}
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="text-5xl lg:text-6xl font-black text-white mb-4">
+              Traction <span className="block text-6xl bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">₹23K Order</span>
+            </h3>
+            <p className="text-xl text-emerald-100 leading-relaxed">
+              Incorporated a bespoke <strong>₹23K chandelier</strong> into a luxurious living room design — turning a single product into a conversation-starting centerpiece.
+            </p>
+            <div className="flex flex-wrap gap-6 mt-10">
+              <div className="bg-emerald-900/40 backdrop-blur border border-emerald-500/40 rounded-2xl p-6 text-center min-w-40">
+                <p className="text-emerald-300 text-sm">Investment</p>
+                <p className="text-4xl font-black text-white">₹23K</p>
+              </div>
+              <div className="bg-emerald-900/40 backdrop-blur border border-emerald-500/40 rounded-2xl p-6 text-center min-w-40">
+                <p className="text-emerald-300 text-sm">Client Delight</p>
+                <p className="text-4xl font-black text-white">100%</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <img src={shopifyImg} alt="Shopify Order" className="w-full rounded-3xl shadow-2xl" />
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div className="text-center mt-24">
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-4 px-10 py-6 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xl font-bold rounded-full hover:scale-105 shadow-2xl shadow-emerald-500/40 transition-all duration-300"
+          >
+            Let’s Build Your Success Story
+            <ArrowUpRight size={28} />
+          </a>
+        </div>
+      </div>
+    </section>
   );
 };
-
 
 export default Work;

@@ -113,7 +113,7 @@ export default function CoreValues() {
   return (
     <section
       ref={sectionRef}
-      className="min-h-screen py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden"
+      className="min-h-screen py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden"
       aria-label="Core values"
     >
       {/* subtle background pattern */}
@@ -131,8 +131,8 @@ export default function CoreValues() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white tracking-wide">
-            OBSTACLES WE TACKLE
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+           OBSTACLES WE <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">TACKLE!</span>
           </h2>
           <p className="mt-3 text-slate-300 max-w-2xl mx-auto">
             Click any badge to read more. Below you'll also find a consolidated list of obstacles we address (from your PDF).
@@ -264,7 +264,7 @@ export default function CoreValues() {
                   onClick={() => openModal(v)}
                   className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/40 rounded-xl p-3 sm:p-4 h-full hover:border-slate-600 hover:shadow-2xl transition-all duration-300 cursor-pointer"
                 >
-                  <h3 className="text-white font-semibold text-xs sm:text-sm md:text-base mb-2 text-center">{v.title}</h3>
+                  <h3 className="text-emerald-400 font-semibold text-xs sm:text-sm md:text-base mb-2 text-center">{v.title}</h3>
                   <p className="text-slate-400 text-[11px] sm:text-xs leading-relaxed text-center">{v.description}</p>
                 </div>
               </div>
@@ -286,7 +286,7 @@ export default function CoreValues() {
                     <img src={active.img} alt={active.title} className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-white">{active.title}</h3>
+                    <h3 className="text-2xl font-bold text-emerald-400">{active.title}</h3>
                     <p className="text-sm text-slate-300 mt-1">{active.value}</p>
                   </div>
                 </div>
@@ -294,7 +294,7 @@ export default function CoreValues() {
                 <div className="flex items-start gap-2">
                   <button
                     onClick={closeModal}
-                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-700 hover:bg-slate-600 text-white transition"
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-slate-700 hover:bg-slate-600 text-emerald-400 transition"
                     aria-label="Close"
                   >
                     <X size={16} />
@@ -312,7 +312,7 @@ export default function CoreValues() {
 
               {/* Obstacles list (from PDF data) */}
               <div>
-                <h4 className="text-lg font-semibold text-white mb-3">OBSTACLES WE TACKLE</h4>
+                <h4 className="text-lg font-semibold text-emerald-400 mb-3">OBSTACLES WE TACKLE</h4>
                 <div className="space-y-4">
                   {obstacles.length ? (
                     obstacles.map((ob, idx) => (
@@ -336,15 +336,19 @@ export default function CoreValues() {
               </div>
 
               {/* CTA */}
-              <div className="mt-6 flex gap-3">
-                <a
-                  href="#contact"
-                  onClick={closeModal}
-                  className="inline-flex items-center px-5 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow"
+              <div className="mt-6 flex gap-3 ">
+                <button
+                  onClick={() => {
+                    closeModal();
+                    setTimeout(() => {
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }}
+                  className="px-6 py-3 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-lg cursor-pointer "
                 >
                   Talk to us
-                </a>
-                <button onClick={closeModal} className="px-4 py-3 rounded-lg border border-slate-700 text-slate-200 hover:bg-white/3">
+                </button>
+                <button onClick={closeModal} className="px-6 py-3 rounded-lg border border-slate-700 text-slate-200 hover:bg-white/5 transition cursor-pointer ">
                   Close
                 </button>
               </div>

@@ -134,7 +134,33 @@ const STRATEGIX_DATA = {
     { value: 250, suffix: '+', label: 'Happy Clients' },
     { value: 98, suffix: '%', label: 'Client Satisfaction' },
     { value: 50, suffix: '+', label: 'Team Members' }
-  ]
+  ],
+  clientsList: [
+    { id: 1, name: "A", logo: "/images/1.svg", alt: "A" },
+    { id: 2, name: "b", logo: "/images/2.svg", alt: "B" },
+    { id: 3, name: "B", logo: "/images/3.svg", alt: "B" },
+    { id: 4, name: "E", logo: "/images/4.svg", alt: "A" },
+    { id: 5, name: "D", logo: "/images/5.svg", alt: "A" },
+    { id: 6, name: "F", logo: "/images/6.svg", alt: "A" },
+    { id: 7, name: "G", logo: "/images/7.svg", alt: "A" },
+    { id: 8, name: "H", logo: "/images/8.svg", alt: "A" },
+    { id: 9, name: "I", logo: "/images/9.svg", alt: "A" },
+    { id: 10, name: "J", logo: "/images/10.svg", alt: "A" },
+    { id: 11, name: "K", logo: "/images/11.svg", alt: "A" },
+    { id: 12, name: "L", logo: "/images/12.svg", alt: "A" },
+    { id: 13, name: "M", logo: "/images/13.svg", alt: "A" },
+    { id: 14, name: "N", logo: "/images/14.svg", alt: "A" },
+    { id: 15, name: "O", logo: "/images/15.svg", alt: "A" },
+    { id: 16, name: "P", logo: "/images/16.svg", alt: "A" },
+    { id: 17, name: "Q", logo: "/images/17.svg", alt: "A" },
+    { id: 18, name: "R", logo: "/images/18.svg", alt: "A" },
+    { id: 19, name: "S", logo: "/images/19.svg", alt: "A" },
+    { id: 20, name: "T", logo: "/images/20.svg", alt: "A" },
+
+
+
+  ],
+
 };
 
 export { STRATEGIX_DATA };

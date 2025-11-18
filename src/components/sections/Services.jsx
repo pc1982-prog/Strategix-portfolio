@@ -1,4 +1,3 @@
-// src/components/services/ServicesWheel.jsx
 import React, { useEffect, useRef, useState } from "react";
 import {
   TrendingUp,
@@ -10,16 +9,8 @@ import {
   X,
 } from "lucide-react";
 
-/**
- * Polished Services Wheel
- * - Professional iconography (lucide-react)
- * - Glassy circles, soft halo, subtle rings
- * - Smooth rotation via requestAnimationFrame (keeps your original pattern)
- * - Responsive (wheel on md+, grid on mobile)
- * - Keeps color palette from your `services` definitions (gradient names preserved)
- *
- * Paste this file to replace your existing ServicesWheel.jsx
- */
+
+
 
 const services = [
   {
@@ -99,8 +90,8 @@ const ICON_MAP = {
   rocket: Rocket,
 };
 
-export default function ServicesWheel() {
-  // rotation state (degrees)
+export const Services=() => {
+ 
   const [rotation, setRotation] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
@@ -109,7 +100,7 @@ export default function ServicesWheel() {
   const rafRef = useRef(null);
   const lastRef = useRef(performance.now());
 
-  // responsive radius based on wheel box
+ 
   const [radius, setRadius] = useState(160);
   useEffect(() => {
     const compute = () => {
@@ -129,7 +120,6 @@ export default function ServicesWheel() {
     };
   }, []);
 
-  // smooth continuous rotation; pauses on hover (isPaused)
   useEffect(() => {
     lastRef.current = performance.now();
     const loop = (time) => {
@@ -145,7 +135,7 @@ export default function ServicesWheel() {
     return () => cancelAnimationFrame(rafRef.current);
   }, [isPaused]);
 
-  // keyboard escape closes modal
+ 
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
@@ -178,30 +168,25 @@ export default function ServicesWheel() {
 
   return (
     <section className="relative min-h-[75vh] py-16 overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* faint patterned BG image (blurred) */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-30 pointer-events-none"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80')",
-          filter: "blur(3px) saturate(.9)",
-        }}
-      />
+        <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-500/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-teal-500/30 rounded-full blur-3xl" />
+      </div>
+        
+     
+      
 
-      {/* overlay to keep contrast (slate/indigo toned) */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/40 to-slate-900/70 pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        {/* header */}
+      
+       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <p className="text-sm font-semibold text-indigo-300 uppercase tracking-widest mb-2">
-            WHAT WE OFFER
-          </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight">
-            OUR SERVICES
+          <p className="text-sm font-semibold text-emerald-400 uppercase tracking-widest mb-2">What We Offer</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Our <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Services</span>
           </h2>
-          <p className="mt-3 text-slate-300 max-w-2xl mx-auto">
-            Hover to pause, tap to open details. We keep the wheel subtle and professional.
+          <p className="text-slate-300 max-w-2xl mx-auto">
+            Comprehensive digital solutions tailored to your business needs
           </p>
         </div>
 
@@ -227,8 +212,8 @@ export default function ServicesWheel() {
 
             {/* center glossy disk */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-28 h-28 lg:w-36 lg:h-36 rounded-full bg-gradient-to-br from-slate-800/60 to-slate-900/60 border border-white/6 flex flex-col items-center justify-center shadow-2xl z-10">
-              <div className="text-2xl lg:text-3xl text-indigo-200 mb-1">⚡</div>
-              <div className="text-xs text-slate-300 font-semibold">SERVICES</div>
+              <div className="text-2xl lg:text-3xl text-emerald-400 mb-1">⚡</div>
+              <div className="text-xs text-emerald-400 font-semibold">SERVICES</div>
             </div>
 
             {/* rotating group (we rotate the container; icons counter-rotate visually by inverse transform) */}
@@ -243,16 +228,16 @@ export default function ServicesWheel() {
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-white/6"
                 style={{
-                  width: "72%",
-                  height: "72%",
+                  width: "90%",
+                  height: "90%",
                   opacity: 0.06,
                 }}
               />
               <div
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dotted border-white/10"
                 style={{
-                  width: "62%",
-                  height: "62%",
+                  width: "90%",
+                  height: "90%",
                   opacity: 0.04,
                 }}
               />
@@ -305,7 +290,7 @@ export default function ServicesWheel() {
                     </div>
 
                     {/* label (tiny, neat) */}
-                    <div className="mt-2 text-xs text-slate-300 text-center w-20">
+                    <div className="mt-2 text-xs text-emerald-400 text-center w-20">
                       {s.title.split(" ")[0]}
                     </div>
                   </button>
@@ -316,49 +301,35 @@ export default function ServicesWheel() {
         </div>
 
         {/* Mobile grid (keeps professional styling) */}
-        <div className="md:hidden grid grid-cols-2 gap-4 max-w-md mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((s) => {
             const Icon = ICON_MAP[s.iconKey] || TrendingUp;
             return (
               <button
                 key={s.key}
                 onClick={() => openModal(s)}
-                className={`relative overflow-hidden rounded-xl p-[2px] group`}
-                style={{
-                  background: `linear-gradient(135deg, ${s.colorHex}22, transparent 40%)`,
-                  border: "1px solid rgba(255,255,255,0.03)",
-                }}
+                className="group relative bg-slate-800/50 border border-slate-700/40 rounded-2xl p-6 hover:border-emerald-500/40 transition-all hover:shadow-lg hover:shadow-emerald-500/10"
               >
-                <div className="bg-slate-900/95 rounded-xl p-4 h-full flex flex-col items-center justify-center shadow-md">
-                  <div
-                    className="rounded-full mb-3 flex items-center justify-center"
-                    style={{
-                      width: 56,
-                      height: 56,
-                      background: "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))",
-                      border: "1px solid rgba(255,255,255,0.04)",
-                    }}
-                  >
-                    <Icon size={26} className="text-white" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <Icon size={28} className="text-emerald-400" />
                   </div>
-                  <div className="text-sm font-semibold text-white text-center">{s.title}</div>
-                  <div className="text-xs text-slate-400 mt-1 text-center">{s.shortDesc}</div>
+                  <div className="text-left">
+                    <h3 className="text-white font-semibold text-lg">{s.title}</h3>
+                    <p className="text-emerald-400 text-sm">{s.shortDesc}</p>
+                  </div>
                 </div>
+                <p className="text-slate-400 text-sm text-left">{s.fullDesc}</p>
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Modal */}
       {selectedService && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
-          role="dialog"
-          aria-modal="true"
-        >
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={closeModal} />
-          <div className="relative z-10 max-w-3xl w-full bg-slate-900 rounded-2xl border border-white/6 shadow-2xl overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={closeModal} />
+          <div className="relative z-10 max-w-3xl w-full bg-slate-900 rounded-2xl border border-emerald-500/20 shadow-2xl overflow-hidden">
             <div className="grid grid-cols-1 md:grid-cols-3">
               <div className="md:col-span-1">
                 <img src={selectedService.img} alt={selectedService.title} className="w-full h-48 md:h-full object-cover" />
@@ -366,33 +337,30 @@ export default function ServicesWheel() {
               <div className="p-6 md:col-span-2">
                 <div className="flex items-start justify-between mb-4">
                   <div>
-                    <div className="text-lg font-semibold text-slate-300 mb-1">{selectedService.shortDesc}</div>
                     <h3 className="text-2xl font-bold text-white mb-2">{selectedService.title}</h3>
-                    <p className="text-sm text-slate-400">{selectedService.shortDesc}</p>
+                    <p className="text-sm text-emerald-400">{selectedService.shortDesc}</p>
                   </div>
                   <button
                     onClick={closeModal}
-                    className="w-9 h-9 rounded-full bg-white/5 hover:bg-white/8 flex items-center justify-center transition"
-                    aria-label="Close"
+                    className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 flex items-center justify-center transition"
                   >
                     <X size={16} className="text-white" />
                   </button>
                 </div>
-
                 <p className="text-slate-300 leading-relaxed mb-6">{selectedService.fullDesc}</p>
-
                 <div className="flex gap-3">
-                  <a
-                    href="#contact"
-                    onClick={closeModal}
-                    className="inline-flex items-center px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-semibold shadow"
+                  <button
+                    onClick={() => {
+                      closeModal();
+                      setTimeout(() => {
+                        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }}
+                    className="px-6 py-3 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-lg"
                   >
                     Get Started
-                  </a>
-                  <button
-                    onClick={closeModal}
-                    className="px-4 py-2 rounded-lg border border-white/6 text-slate-200 hover:bg-white/3"
-                  >
+                  </button>
+                  <button onClick={closeModal} className="px-6 py-3 rounded-lg border border-slate-700 text-slate-200 hover:bg-white/5 transition">
                     Close
                   </button>
                 </div>
@@ -401,7 +369,7 @@ export default function ServicesWheel() {
           </div>
         </div>
       )}
-      {/* keyboard focus ring small style */}
+   
       <style>{`
         section [role="button"]:focus-visible, section button:focus-visible {
           outline: none;

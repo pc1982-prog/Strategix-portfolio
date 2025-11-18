@@ -9,7 +9,7 @@ export const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-b from-[#081026] to-[#071221]"
+      className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
     >
       {/* Subtle light rays (soft, low opacity) */}
       <LightRays
@@ -49,20 +49,26 @@ export const Hero = () => {
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#1f6be1] bg-opacity-90 text-white font-medium text-base hover:brightness-105 transition"
+         <button
+            onClick={() => {
+              const el = document.getElementById('contact');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold hover:shadow-lg hover:shadow-emerald-500/50 transition-all"
           >
             Start a Project
-            <ArrowRight size={18} />
-          </a>
+            <ArrowRight size={20} />
+          </button>
 
-          <a
-            href="#work"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#2b5f9e]/40 text-[#cfe3ff] font-medium text-base hover:bg-[#173657]/40 transition"
+          <button
+            onClick={() => {
+              const el = document.getElementById('work');
+              el?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-emerald-500/40 text-emerald-300 font-semibold hover:bg-emerald-950/40 transition-all"
           >
             View Our Work
-          </a>
+          </button>
         </div>
 
      
