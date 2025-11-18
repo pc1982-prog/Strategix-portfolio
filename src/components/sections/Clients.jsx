@@ -143,7 +143,7 @@ export default function ClientsMarquee() {
         .no-scrollbar::-webkit-scrollbar{ display:none; }
       `}</style>
 
-      <section className="w-full bg-gradient-to-b from-slate-950 to-slate-900 py-8">
+      <section id="clients" className="w-full bg-gradient-to-b from-slate-950 to-slate-900 py-8">
         <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: 1400 }}>
           <div className="text-center mb-6">
             <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">OUR CLIENTS</p>

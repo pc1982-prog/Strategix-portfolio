@@ -59,22 +59,22 @@ export const Header = () => {
             </div>
           </button>
 
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8 ">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`relative font-medium text-base transition-all duration-300 ${
+                className={`cursor-pointer relative font-medium text-base transition-all duration-300 ${
                   scrolled ? 'text-slate-200 hover:text-emerald-400' : 'text-white hover:text-emerald-300'
                 }`}
               >
                 {item.name}
-                <span className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out w-0 hover:w-full" />
+                <span className=" cursor-pointer absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out w-0 hover:w-full" />
               </button>
             ))}
             <button
               onClick={() => handleNavClick('contact')}
-              className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
+              className=" cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
             >
               Get Started
             </button>
