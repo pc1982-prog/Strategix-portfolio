@@ -39,8 +39,8 @@ export const Header = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-slate-900/95 backdrop-blur-xl shadow-lg border-b border-emerald-500/20"
-          : "bg-transparent"
+          ? "bg-white/95 backdrop-blur-xl shadow-lg border-b border-slate-200"
+          : "bg-white/90 backdrop-blur-sm"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,29 +53,29 @@ export const Header = () => {
               <img
                 src={logo}
                 alt="Strategix Logo"
-                className="w-28 h-16 object-cover"
+                className="w-28 h-28 object-contain"
               />
             </div>
           </button>
 
-          <div className="hidden lg:flex items-center space-x-8 ">
+          <div className="hidden lg:flex items-center space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 className={`cursor-pointer relative font-medium text-base transition-all duration-300 ${
                   scrolled
-                    ? "text-slate-200 hover:text-emerald-400"
-                    : "text-white hover:text-emerald-300"
+                    ? "text-slate-700 hover:text-emerald-600"
+                    : "text-slate-800 hover:text-emerald-600"
                 }`}
               >
                 {item.name}
-                <span className=" cursor-pointer absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out w-0 hover:w-full" />
+                <span className="cursor-pointer absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transition-all duration-500 ease-out w-0 hover:w-full" />
               </button>
             ))}
             <button
               onClick={() => handleNavClick("contact")}
-              className=" cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
+              className="cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
             >
               Get Started
             </button>
@@ -83,7 +83,7 @@ export const Header = () => {
 
           <button
             className={`lg:hidden p-2 rounded-lg transition-all ${
-              scrolled ? "text-slate-200" : "text-white"
+              scrolled ? "text-slate-700" : "text-slate-800"
             }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
@@ -92,13 +92,13 @@ export const Header = () => {
         </div>
 
         {isMenuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-slate-900/98 backdrop-blur-xl border-t border-emerald-500/20 shadow-2xl">
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/98 backdrop-blur-xl border-t border-slate-200 shadow-2xl">
             <div className="px-6 py-6 space-y-4">
               {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className="block w-full text-left text-lg font-semibold text-white hover:text-emerald-400 transition-colors py-2"
+                  className="block w-full text-left text-lg font-semibold text-slate-800 hover:text-emerald-600 transition-colors py-2"
                 >
                   {item.name}
                 </button>

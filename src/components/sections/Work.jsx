@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import traction from "../../assets/images/traction.png"
 import t from "../../assets/images/adds.jpeg"
 import trading1 from "../../assets/images/1.jpeg"
-import trading3 from "../../assets/images/3.jpeg"
+import trading3 from "../../assets/images/99.jpeg"
 import trading4 from "../../assets/images/4.jpeg"
 import caseStudy10 from "../../assets/images/case-study-10.jpeg";
 import caseStudy7 from "../../assets/images/case-study-7.jpeg";
@@ -442,64 +442,56 @@ const Work = () => {
           Driving <strong className="text-emerald-400">measurable growth</strong> through data-driven campaigns that convert.
         </p>
       </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16 lg:mb-24 xl:mb-32">
-        <div className="performance-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 w-full">
+    
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {performanceCards.map((item, i) => (
             <div 
               key={i} 
-              className="performance-card group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border-2 border-slate-700/50 rounded-2xl sm:rounded-3xl overflow-hidden hover:border-emerald-500/60 transition-all duration-500 flex flex-col min-h-[450px]" 
-              style={{ willChange: 'transform' }}
+              className="group relative bg-slate-800/90 backdrop-blur-sm border-2 border-slate-700/50 rounded-2xl overflow-hidden hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:-translate-y-2"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500 rounded-2xl" />
-              
               {/* Image Section - Fixed Height */}
-              <div className="relative h-56 sm:h-64 overflow-hidden bg-slate-900 flex-shrink-0">
+              <div className="relative h-56 sm:h-64 overflow-hidden bg-slate-900">
                 <img 
                   src={item.image} 
                   alt={item.title}
-                  loading="lazy"
-                  onError={(e) => { 
-                    e.target.style.display = 'none'; 
-                    e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-slate-800/50 text-slate-400 text-sm">Image not loaded</div>`; 
-                  }}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
                 
                 {/* Badge on Image */}
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="px-4 py-2 bg-emerald-500/95 backdrop-blur-sm border border-emerald-400/30 rounded-full text-sm font-bold text-white shadow-lg">
+                <div className="absolute top-4 right-4">
+                  <span className="px-4 py-2 bg-emerald-500/95 backdrop-blur-sm rounded-full text-sm font-bold text-white shadow-lg">
                     {item.badge}
                   </span>
                 </div>
               </div>
 
               {/* Content Section */}
-              <div className="relative flex-1 p-5 sm:p-6 lg:p-7 space-y-4 flex flex-col z-10">
+              <div className="relative p-6 space-y-4 bg-gradient-to-b from-slate-800/95 to-slate-900/95">
+                {/* Icon */}
                 <div className="flex items-start justify-between">
-                  <div className={`p-3 bg-gradient-to-br ${item.gradient} rounded-xl shadow-xl group-hover:scale-110 transition-transform duration-500 flex-shrink-0`}>
-                    <item.icon size={22} className="text-white sm:w-6 sm:h-6" />
+                  <div className={`p-3 bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg`}>
+                    <item.icon size={24} className="text-white" />
                   </div>
                 </div>
                 
-                <div className="flex-grow">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-3 min-h-[3.5rem] flex items-center">
-                    {item.title}
-                  </h3>
-                  
-                  {/* Stats with Clear Borders */}
-                  <div className="space-y-3 pt-4 border-t-2 border-slate-700/60">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-slate-400 text-sm font-medium">Sessions</span>
-                      <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                        {item.reach}
-                      </span>
-                    </div>
-                    <div className="flex items-center justify-between px-4 py-2.5 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-lg">
-                      <span className="text-emerald-300 text-sm font-semibold">Growth</span>
-                      <span className="text-emerald-400 font-bold text-base">{item.suffix}</span>
-                    </div>
+                {/* Title */}
+                <h3 className="text-xl font-bold text-white leading-tight min-h-[3.5rem] flex items-center">
+                  {item.title}
+                </h3>
+                
+                {/* Stats with Clear Borders */}
+                <div className="space-y-3 pt-4 border-t-2 border-slate-700/60">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-slate-400 text-sm font-medium">Sessions</span>
+                    <span className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                      {item.reach}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
+                    <span className="text-emerald-300 text-sm font-semibold">Growth</span>
+                    <span className="text-emerald-400 font-bold">{item.suffix}</span>
                   </div>
                 </div>
               </div>
@@ -619,69 +611,69 @@ const Work = () => {
           </div>
         </div>
       </div>
-
-      {/* Case Studies Section */}
-
-      {/* New Case Studies Section - Responsive Grid */}
-      <div ref={caseStudiesRef} className="max-w-7xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10 lg:mb-12">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 leading-tight">
+<div ref={caseStudiesRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
+        <div className="text-center mb-12">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
             Success <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">Stories</span>
           </h3>
-          <p className="text-xl sm:text-2xl text-slate-300 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
             Real results from our performance marketing campaigns across diverse brands.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6 sm:gap-8 lg:gap-10 w-full"> {/* Added w-full */}
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
           {caseStudies.map((study, i) => (
-            <div key={i} className="case-study-card relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border-2 border-slate-700/70 rounded-2xl sm:rounded-3xl overflow-hidden group hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/30 transition-all duration-500 hover:scale-105 min-h-[350px]" // Added min-h
-              style={{ willChange: 'transform' }}
+            <div 
+              key={i} 
+              className="group relative bg-slate-800/90 backdrop-blur-sm border-2 border-slate-700/50 rounded-2xl overflow-hidden hover:border-teal-500/60 hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-500 hover:-translate-y-2"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/15 group-hover:to-teal-500/15 rounded-2xl transition-all duration-500" />
-              <div className="relative p-4 sm:p-6 lg:p-8 h-full flex flex-col">
-                {/* Fixed: Aspect ratio + object-contain, lazy load, error fallback */}
-                <div className="mb-4 sm:mb-6 relative aspect-[4/3] rounded-xl overflow-hidden  transition-all duration-500 flex items-center justify-center">
-                  <img 
-                    src={study.image} 
-                    alt={`Case Study ${study.number} - ${study.brand}`}
-                    loading="lazy"
-                    onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                    className="w-full h-full object-contain" // Changed to object-contain
-                  />
-                  {/* Fallback if no image or load error */}
-                  <div className="absolute inset-0 flex items-center justify-center text-center text-slate-400 text-sm hidden">
-                    Image Placeholder<br />
-                    (Add your image here)
-                  </div>
-                </div>
-                <div className="flex items-center justify-between mb-3 sm:mb-4">
-                  <span className="px-3 py-1 bg-emerald-500/20 border border-emerald-500/40 rounded-full text-xs sm:text-sm font-bold text-emerald-300">
+              {/* Image Section - Fixed Aspect Ratio */}
+              <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
+                <img 
+                  src={study.image} 
+                  alt={`${study.brand} Case Study`}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+                
+                {/* Case Study Badge */}
+                <div className="absolute top-4 left-4">
+                  <span className="px-3 py-1.5 bg-teal-500/95 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
                     Case Study {study.number}
                   </span>
-                  <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-teal-400 group-hover:text-teal-300 transition-colors" />
                 </div>
-                <h4 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3 leading-tight">
-                  {study.brand}
-                </h4>
-                <p className="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6 flex-grow">
+              </div>
+
+              {/* Content Section */}
+              <div className="relative p-5 bg-gradient-to-b from-slate-800/95 to-slate-900/95">
+                <div className="flex items-start justify-between mb-3">
+                  <h4 className="text-lg font-bold text-white leading-tight flex-1">
+                    {study.brand}
+                  </h4>
+                  <TrendingUp className="w-5 h-5 text-teal-400 flex-shrink-0 ml-2" />
+                </div>
+                
+                <p className="text-slate-400 text-xs mb-4 min-h-[2.5rem]">
                   {study.industry}
                 </p>
-                <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-slate-300">
-                  <div className="flex justify-between">
-                    <span>Total Sales</span>
-                    <span className="font-bold text-emerald-400">{study.totalSales}</span>
+
+                {/* Stats Grid with Clear Borders */}
+                <div className="space-y-2 pt-3 border-t-2 border-slate-700/60">
+                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
+                    <span className="text-slate-400 text-xs font-medium">Total Sales</span>
+                    <span className="font-bold text-emerald-400 text-sm">{study.totalSales}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Spent</span>
-                    <span className="font-bold text-teal-400">{study.amountSpent}</span>
+                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
+                    <span className="text-slate-400 text-xs font-medium">Spent</span>
+                    <span className="font-bold text-teal-400 text-sm">{study.amountSpent}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>ROAS</span>
-                    <span className="font-bold text-emerald-400">{study.roas}</span>
+                  <div className="flex justify-between items-center py-2 px-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
+                    <span className="text-emerald-300 text-xs font-bold">ROAS</span>
+                    <span className="font-black text-emerald-400 text-base">{study.roas}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Orders</span>
-                    <span className="font-bold text-teal-400">{study.orders}</span>
+                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
+                    <span className="text-slate-400 text-xs font-medium">Orders</span>
+                    <span className="font-bold text-teal-400 text-sm">{study.orders}</span>
                   </div>
                 </div>
               </div>
@@ -689,7 +681,6 @@ const Work = () => {
           ))}
         </div>
       </div>
-
       {/* CTA - Magnetic Button - Fully Responsive */}
       <div className="text-center mt-12 sm:mt-16 lg:mt-24 xl:mt-32">
         <a
