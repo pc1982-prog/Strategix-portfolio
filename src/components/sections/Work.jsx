@@ -1,7 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { ArrowUpRight, TrendingUp, Users, MessageSquare, Sparkles, Zap, Target } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ArrowUpRight, TrendingUp, MessageSquare, Zap, Target, Sparkles } from "lucide-react";
 import traction from "../../assets/images/traction.png"
 import t from "../../assets/images/adds.jpeg"
 import trading1 from "../../assets/images/1.jpeg"
@@ -12,333 +10,71 @@ import caseStudy7 from "../../assets/images/case-study-7.jpeg";
 import caseStudy3 from "../../assets/images/case-study-3.jpeg";
 import caseStudy9 from "../../assets/images/case-study-9.jpeg";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const Work = () => {
   const sectionRef = useRef(null);
-  const tractionRef = useRef(null);
-  const heroRef = useRef(null);
-  const caseStudiesRef = useRef(null);
+  const statsRef = useRef(null);
+  const counterStarted = useRef(false);
 
   useEffect(() => {
-    const ctx = gsap.context((self) => {
-      const cards = self.selector(".performance-card");
-      const stats = self.selector(".stat-item");
-      const titleLines = self.selector(".title-line");
-      const tractionText = self.selector(".traction-text");
-      const counterBoxes = self.selector(".counter-box");
-      const tractionImage = tractionRef.current?.querySelector("img");
-      const floatingElements = self.selector(".floating-element");
-      const caseStudyCards = self.selector(".case-study-card");
+    const observerOptions = {
+      threshold: 0.2,
+      rootMargin: '0px'
+    };
 
-      floatingElements.forEach((el, i) => {
-        gsap.to(el, {
-          y: "random(-30, 30)",
-          x: "random(-20, 20)",
-          rotation: "random(-15, 15)",
-          duration: "random(3, 5)",
-          repeat: -1,
-          yoyo: true,
-          ease: "sine.inOut",
-          delay: i * 0.2,
-        });
-      });
-
-      const heroTitle = self.selector(".hero-title");
-      gsap.fromTo(
-        heroTitle,
-        { 
-          rotationX: -90, 
-          opacity: 0, 
-          transformOrigin: "50% 100%",
-          z: -500 
-        },
-        {
-          rotationX: 0,
-          opacity: 1,
-          z: 0,
-          duration: 1.5,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-
-      const heroSubtitle = self.selector(".hero-subtitle");
-      gsap.fromTo(
-        heroSubtitle,
-        { 
-          scale: 0.8,
-          opacity: 0,
-          filter: "blur(10px)"
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: 1.2,
-          delay: 0.4,
-          ease: "back.out(2)",
-          scrollTrigger: {
-            trigger: heroRef.current,
-            start: "top 75%",
-          },
-        }
-      );
-
-      cards.forEach((card, i) => {
-        gsap.fromTo(
-          card,
-          { 
-            rotationY: -45,
-            x: -100,
-            opacity: 0,
-            transformOrigin: "left center"
-          },
-          {
-            rotationY: 0,
-            x: 0,
-            opacity: 1,
-            duration: 1.2,
-            delay: i * 0.15,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: ".performance-grid",
-              start: "top 75%",
-            },
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in');
+          
+          if (entry.target === statsRef.current && !counterStarted.current) {
+            counterStarted.current = true;
+            startCounters();
           }
-        );
-
-        const isTouch = 'ontouchstart' in window;
-        if (!isTouch) {
-          card.addEventListener("mouseenter", () => {
-            gsap.to(card, {
-              y: -15,
-              rotationY: 5,
-              scale: 1.02,
-              duration: 0.4,
-              ease: "power2.out"
-            });
-          });
-
-          card.addEventListener("mouseleave", () => {
-            gsap.to(card, {
-              y: 0,
-              rotationY: 0,
-              scale: 1,
-              duration: 0.4,
-              ease: "power2.out"
-            });
-          });
         }
       });
+    }, observerOptions);
 
-      gsap.fromTo(
-        stats,
-        { 
-          y: 100,
-          opacity: 0,
-          scale: 0.5,
-          rotation: -10
-        },
-        {
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          rotation: 0,
-          duration: 1,
-          stagger: {
-            each: 0.1,
-            from: "start",
-            ease: "power2.out"
-          },
-          ease: "back.out(1.5)",
-          scrollTrigger: {
-            trigger: ".stats-section",
-            start: "top 75%",
-          },
-        }
-      );
+    const elements = sectionRef.current?.querySelectorAll('.fade-in-up, .fade-in-left, .fade-in-right, .scale-in');
+    elements?.forEach(el => observer.observe(el));
 
-      gsap.fromTo(
-        titleLines,
-        { 
-          y: 150,
-          opacity: 0,
-          rotationX: -90,
-          transformOrigin: "50% 100%"
-        },
-        {
-          y: 0,
-          opacity: 1,
-          rotationX: 0,
-          duration: 1.5,
-          stagger: 0.15,
-          ease: "power4.out",
-          scrollTrigger: {
-            trigger: tractionRef.current,
-            start: "top 70%",
-          },
-        }
-      );
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
 
-      gsap.fromTo(
-        tractionText,
-        { opacity: 0, x: -50, filter: "blur(5px)" },
-        {
-          opacity: 1,
-          x: 0,
-          filter: "blur(0px)",
-          duration: 1.5,
-          delay: 0.8,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: tractionRef.current,
-            start: "top 70%",
-          },
-        }
-      );
-
-      gsap.fromTo(
-        counterBoxes,
-        { 
-          z: -500,
-          opacity: 0,
-          scale: 0.3,
-          rotationY: 180
-        },
-        {
-          z: 0,
-          opacity: 1,
-          scale: 1,
-          rotationY: 0,
-          duration: 1.5,
-          stagger: 0.2,
-          ease: "back.out(2)",
-          scrollTrigger: {
-            trigger: tractionRef.current,
-            start: "top 70%",
-            onEnter: () => startCounters(),
-          },
-        }
-      );
-
-      if (tractionImage) {
-        gsap.fromTo(
-          tractionImage,
-          { scale: 1.4, opacity: 0, rotation: -5 },
-          {
-            scale: 1,
-            opacity: 1,
-            rotation: 0,
-            duration: 2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: tractionRef.current,
-              start: "top 80%",
-              end: "bottom 20%",
-              scrub: 1.5,
-            },
-          }
-        );
-      }
-
-      cards.forEach((card, i) => {
-        gsap.to(card, {
-          y: i % 2 === 0 ? -30 : 30,
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 2,
-          },
-        });
-      });
-
-      gsap.fromTo(
-        caseStudyCards,
-        { 
-          opacity: 0,
-          y: 50,
-          scale: 0.9,
-          rotationX: -10
-        },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-          duration: 1,
-          stagger: {
-            each: 0.2,
-            from: "start",
-            ease: "power3.out"
-          },
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: caseStudiesRef.current,
-            start: "top 80%",
-          },
-        }
-      );
-
-      caseStudyCards.forEach((card) => {
-        const isTouch = 'ontouchstart' in window;
-        if (!isTouch) {
-          card.addEventListener("mouseenter", () => {
-            gsap.to(card, {
-              y: -10,
-              scale: 1.02,
-              rotationY: 5,
-              duration: 0.4,
-              ease: "power2.out"
-            });
-          });
-
-          card.addEventListener("mouseleave", () => {
-            gsap.to(card, {
-              y: 0,
-              scale: 1,
-              rotationY: 0,
-              duration: 0.4,
-              ease: "power2.out"
-            });
-          });
-        }
-      });
-
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => observer.disconnect();
   }, []);
 
   const startCounters = () => {
-    gsap.to("#investment-main", {
-      innerText: 23000,
-      duration: 2.5,
-      ease: "power2.out",
-      snap: { innerText: 100 },
-      onUpdate: function () {
-        const val = Math.round(this.targets()[0].innerText);
-        document.getElementById("investment-main").textContent = `₹${(val / 1000).toFixed(val < 10000 ? 1 : 0)}K`;
-        document.getElementById("investment-card").textContent = `₹${(val / 1000).toFixed(val < 10000 ? 1 : 0)}K`;
-      },
-    });
+    const animateValue = (id, start, end, duration, prefix = '', suffix = '') => {
+      const element = document.getElementById(id);
+      if (!element) return;
 
-    gsap.to("#delight-card", {
-      innerText: 100,
-      duration: 2.2,
-      ease: "power2.out",
-      snap: { innerText: 1 },
-      onUpdate: function () {
-        document.getElementById("delight-card").textContent = `${Math.round(this.targets()[0].innerText)}%`;
-      },
-    });
+      const startTime = performance.now();
+      const step = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.floor(start + (end - start) * easeOutQuart(progress));
+        
+        if (id.includes('investment')) {
+          element.textContent = `${prefix}${(value / 1000).toFixed(value < 10000 ? 1 : 0)}K${suffix}`;
+        } else {
+          element.textContent = `${value}${suffix}`;
+        }
+        
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+      requestAnimationFrame(step);
+    };
+
+    const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+    animateValue('investment-main', 0, 23000, 2500, '₹');
+    animateValue('investment-card', 0, 23000, 2500, '₹');
+    animateValue('delight-card', 0, 100, 2200, '', '%');
   };
 
- 
   const performanceCards = [
     { 
       title: "Fair Book Deals - Dec 1", 
@@ -378,8 +114,6 @@ const Work = () => {
       amountSpent: "₹107,000",
       roas: "5x+",
       orders: "4,300",
-      aov: "₹2,000",
-      cps: "₹32",
       image: caseStudy7
     },
     { 
@@ -390,8 +124,6 @@ const Work = () => {
       amountSpent: "₹137.43K",
       roas: "7.74x",
       orders: "290",
-      aov: "₹3.67K",
-      cps: "₹473.89",
       image: caseStudy9
     },
     { 
@@ -402,8 +134,6 @@ const Work = () => {
       amountSpent: "₹49.79K",
       roas: "6.37x",
       orders: "54",
-      aov: "₹5.88K",
-      cps: "₹922.06",
       image: caseStudy10
     },
     { 
@@ -414,286 +144,356 @@ const Work = () => {
       amountSpent: "₹25.83K",
       roas: "5.04x",
       orders: "30",
-      aov: "₹4.34K",
-      cps: "₹860.91",
       image: caseStudy3
     },
   ];
 
   return (
-    <section 
-      ref={sectionRef} 
-      id="work" 
-      className="relative py-12 sm:py-20 lg:py-32 xl:py-40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
-      style={{ perspective: "1500px" }}
-    >
-      <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="floating-element absolute top-20 left-10 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-emerald-500 rounded-full blur-3xl" />
-        <div className="floating-element absolute top-40 right-20 w-40 sm:w-60 md:w-80 h-40 sm:h-60 md:h-80 bg-teal-500 rounded-full blur-3xl" />
-        <div className="floating-element absolute bottom-20 left-1/4 w-24 sm:w-36 md:w-48 h-24 sm:h-36 md:h-48 bg-emerald-400 rounded-full blur-2xl" />
-        <div className="floating-element absolute bottom-40 right-1/4 w-28 sm:w-40 md:w-56 h-28 sm:h-40 md:h-56 bg-teal-400 rounded-full blur-2xl" />
-      </div>
+    <>
+      <style>{`
+        .fade-in-up, .fade-in-left, .fade-in-right, .scale-in {
+          opacity: 0;
+          transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .fade-in-up {
+          transform: translateY(30px);
+        }
+        
+        .fade-in-left {
+          transform: translateX(-30px);
+        }
+        
+        .fade-in-right {
+          transform: translateX(30px);
+        }
+        
+        .scale-in {
+          transform: scale(0.95);
+        }
+        
+        .animate-in {
+          opacity: 1 !important;
+          transform: translateY(0) translateX(0) scale(1) !important;
+        }
+        
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-15px) rotate(3deg); }
+        }
+        
+        .floating {
+          animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+          0% { background-position: -1000px 0; }
+          100% { background-position: 1000px 0; }
+        }
+        
+        .shimmer {
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+          background-size: 1000px 100%;
+          animation: shimmer 3s infinite;
+        }
+        
+        .glass {
+          background: rgba(255, 255, 255, 0.03);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glow-emerald {
+          box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+        }
+      `}</style>
 
-      <div ref={heroRef} className="relative z-10 text-center mb-16 sm:mb-20 lg:mb-24 xl:mb-32">
-        <h2 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black text-white mb-4 sm:mb-6 lg:mb-8 leading-tight">
-          Performance <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">Marketing</span>
-        </h2>
-        <p className="hero-subtitle text-xl sm:text-2xl lg:text-3xl xl:text-4xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-          Driving <strong className="text-emerald-400">measurable growth</strong> through data-driven campaigns that convert.
-        </p>
-      </div>
-    
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-          {performanceCards.map((item, i) => (
-            <div 
-              key={i} 
-              className="group relative bg-slate-800/90 backdrop-blur-sm border-2 border-slate-700/50 rounded-2xl overflow-hidden hover:border-emerald-500/60 hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-500 hover:-translate-y-2"
-            >
-              {/* Image Section - Fixed Height */}
-              <div className="relative h-56 sm:h-64 overflow-hidden bg-slate-900">
-                <img 
-                  src={item.image} 
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
-                
-                {/* Badge on Image */}
-                <div className="absolute top-4 right-4">
-                  <span className="px-4 py-2 bg-emerald-500/95 backdrop-blur-sm rounded-full text-sm font-bold text-white shadow-lg">
-                    {item.badge}
-                  </span>
-                </div>
-              </div>
-
-              {/* Content Section */}
-              <div className="relative p-6 space-y-4 bg-gradient-to-b from-slate-800/95 to-slate-900/95">
-                {/* Icon */}
-                <div className="flex items-start justify-between">
-                  <div className={`p-3 bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg`}>
-                    <item.icon size={24} className="text-white" />
-                  </div>
-                </div>
-                
-                {/* Title */}
-                <h3 className="text-xl font-bold text-white leading-tight min-h-[3.5rem] flex items-center">
-                  {item.title}
-                </h3>
-                
-                {/* Stats with Clear Borders */}
-                <div className="space-y-3 pt-4 border-t-2 border-slate-700/60">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-slate-400 text-sm font-medium">Sessions</span>
-                    <span className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                      {item.reach}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between px-3 py-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-                    <span className="text-emerald-300 text-sm font-semibold">Growth</span>
-                    <span className="text-emerald-400 font-bold">{item.suffix}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
+      <section 
+        ref={sectionRef} 
+        id="work" 
+        className="relative py-12 md:py-16 lg:py-20 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
+      >
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 opacity-15 pointer-events-none">
+          <div className="absolute top-20 left-10 w-48 md:w-64 h-48 md:h-64 bg-emerald-500 rounded-full blur-3xl floating" style={{ animationDelay: '0s' }} />
+          <div className="absolute top-40 right-20 w-56 md:w-80 h-56 md:h-80 bg-teal-500 rounded-full blur-3xl floating" style={{ animationDelay: '1s' }} />
+          <div className="absolute bottom-20 left-1/4 w-40 md:w-48 h-40 md:h-48 bg-emerald-400 rounded-full blur-2xl floating" style={{ animationDelay: '2s' }} />
         </div>
-      </div>
 
-      {/* Stats Section */}
-      <div className="stats-section max-w-6xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
+        {/* Grid Pattern Overlay */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 1px)`,
-            backgroundSize: "40px 40px"
+            backgroundImage: `linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
           }} />
         </div>
 
-        <div className="relative">
-          <div className="text-center mb-10 sm:mb-12 lg:mb-16">
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
+        {/* Hero Section - More Compact */}
+        <div className="relative z-10 text-center mb-12 md:mb-16 lg:mb-20 px-4 fade-in-up">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-4">
+            <Sparkles className="w-3 h-3 text-emerald-400" />
+            <span className="text-xs font-semibold text-emerald-400">Performance Marketing Excellence</span>
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white mb-4 leading-tight">
+            Performance{' '}
+            <span className="relative inline-block">
+              <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">
+                Marketing
+              </span>
+              <div className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 rounded-full" />
+            </span>
+          </h2>
+          
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            Driving <strong className="text-emerald-400 font-bold">measurable growth</strong> through data-driven campaigns that convert.
+          </p>
+        </div>
+      
+        {/* Performance Cards - More Compact */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            {performanceCards.map((item, i) => (
+              <div 
+                key={i} 
+                className="group relative glass rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 fade-in-up"
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-teal-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:via-teal-500/5 group-hover:to-emerald-500/5 transition-all duration-500" />
+                
+                {/* Image Section */}
+                <div className="relative h-48 sm:h-56 overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+                  
+                  {/* Badge */}
+                  <div className="absolute top-3 right-3">
+                    <span className="px-3 py-1.5 bg-emerald-500 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
+                      {item.badge}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="relative p-5 space-y-3">
+                  <div className="flex items-start justify-between">
+                    <div className={`p-2.5 bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg`}>
+                      <item.icon size={20} className="text-white" />
+                    </div>
+                  </div>
+                  
+                  <h3 className="text-lg font-bold text-white leading-tight min-h-[3rem] flex items-center">
+                    {item.title}
+                  </h3>
+                  
+                  <div className="space-y-2.5 pt-3 border-t border-slate-700/60">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-slate-400 text-sm font-medium">Sessions</span>
+                      <span className="text-2xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                        {item.reach}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between px-3 py-1.5 glass border border-emerald-500/30 rounded-lg">
+                      <span className="text-emerald-300 text-sm font-semibold">Growth</span>
+                      <span className="text-emerald-400 font-bold text-sm">{item.suffix}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Stats Section - More Compact */}
+        <div ref={statsRef} className="max-w-6xl mx-auto mb-16 px-4 sm:px-6 lg:px-8 fade-in-up">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
               Your Growth Graph Will Always Be
             </h3>
-            <div className="inline-flex items-center gap-3 sm:gap-4 px-6 sm:px-8 lg:px-12 py-4 sm:py-5 lg:py-6 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border-2 border-emerald-500/50 rounded-2xl sm:rounded-3xl backdrop-blur-sm">
-              <p className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+            <div className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 glass border-2 border-emerald-500/50 rounded-2xl glow-emerald">
+              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
                 UPSTREAM
               </p>
-              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl">📈</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl">📈</span>
             </div>
           </div>
           
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-8 sm:mb-10 lg:mb-14">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 mb-10">
             {[
               { label: "Sessions", value: "10,900", prefix: "₹", delta: "+20%", color: "emerald" },
               { label: "Total Sales", value: "34,917", prefix: "$", delta: "+50%", color: "teal" },
               { label: "Orders", value: "322", prefix: "", delta: "+44%", color: "emerald" },
               { label: "Conversion", value: "2.9%", prefix: "", delta: "+19%", color: "teal" },
             ].map((s, i) => (
-              <div key={i} className="stat-item group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border-2 border-slate-700/70 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 xl:p-8 hover:border-emerald-500/70 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 min-h-[120px]">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/15 group-hover:to-teal-500/15 rounded-2xl transition-all duration-500" />
-                <div className="relative text-center h-full flex flex-col justify-center">
-                  <p className={`text-${s.color}-400 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wide mb-2 sm:mb-3`}>
+              <div 
+                key={i} 
+                className="group glass rounded-2xl p-5 hover:scale-[1.02] transition-all duration-500 scale-in"
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br from-${s.color}-500/0 to-${s.color}-500/0 group-hover:from-${s.color}-500/10 group-hover:to-${s.color}-500/10 rounded-2xl transition-all duration-500`} />
+                <div className="relative text-center">
+                  <p className={`text-${s.color}-400 text-xs font-bold uppercase tracking-wide mb-2`}>
                     {s.label}
                   </p>
-                  <p className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-black text-white mb-2 sm:mb-3 leading-none">
+                  <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-2">
                     {s.prefix}{s.value}
                   </p>
-                  <div className={`inline-flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-${s.color}-500/20 border border-${s.color}-500/40 rounded-full`}>
-                    <TrendingUp size={14} className={`text-${s.color}-400 sm:w-4 sm:h-4`} />
-                    <span className={`text-${s.color}-400 font-bold text-xs sm:text-sm lg:text-base`}>{s.delta}</span>
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-${s.color}-500/20 border border-${s.color}-500/40 rounded-full`}>
+                    <TrendingUp size={14} className={`text-${s.color}-400`} />
+                    <span className={`text-${s.color}-400 font-bold text-xs`}>{s.delta}</span>
                   </div>
                 </div>
               </div>
             ))}
           </div>
           
-          <div className="relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-500">
+          <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl glow-emerald">
             <img 
               src={t} 
-              alt="Growth Graph"
-              loading="lazy"
-              className="w-full h-auto object-contain"
+              alt="Growth Analytics Dashboard"
+              className="w-full h-auto"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 shimmer" />
           </div>
         </div>
-      </div>
 
-      {/* TRACTION Section */}
-      <div ref={tractionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-20 items-center max-w-7xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
-        <div className="space-y-4 sm:space-y-6 lg:space-y-10 order-2 lg:order-1">
-          <div className="space-y-2 sm:space-y-3">
-            <div className="overflow-hidden">
-              <h3 className="title-line text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-none">
+        {/* Traction Section - More Compact */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto mb-16 px-4 sm:px-6 lg:px-8">
+          <div className="space-y-6 fade-in-left">
+            <div className="space-y-2">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white">
                 Traction
               </h3>
-            </div>
-            <div className="overflow-hidden">
-              <p className="title-line text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent leading-none">
+              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">
                 <span id="investment-main">₹0K</span> Order
               </p>
             </div>
-          </div>
 
-          <p className="traction-text text-sm sm:text-base lg:text-lg xl:text-xl text-emerald-100/90 leading-relaxed">
-            Incorporated a bespoke <strong className="text-emerald-300 font-black">₹23K chandelier</strong> into a luxurious living room design — turning a single product into a conversation-starting centerpiece.
-          </p>
+            <p className="text-base md:text-lg text-emerald-100/90 leading-relaxed">
+              Incorporated a bespoke <strong className="text-emerald-300 font-black">₹23K chandelier</strong> into a luxurious living room design — turning a single product into a conversation-starting centerpiece.
+            </p>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-            <div className="counter-box relative bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-xl border border-emerald-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500" />
-              <div className="relative h-full flex flex-col justify-center">
-                <p className="text-emerald-400 text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider mb-1 sm:mb-2 lg:mb-3">Investment</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black text-white" id="investment-card">₹0K</p>
-              </div>
-            </div>
-            
-            <div className="counter-box relative bg-gradient-to-br from-teal-900/40 to-emerald-900/40 backdrop-blur-xl border border-teal-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]">
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-emerald-500/0 group-hover:from-teal-500/20 group-hover:to-emerald-500/20 transition-all duration-500" />
-              <div className="relative h-full flex flex-col justify-center">
-                <p className="text-teal-400 text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider mb-1 sm:mb-2 lg:mb-3">Client Delight</p>
-                <p className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-black text-white" id="delight-card">0%</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative group order-1 lg:order-2">
-          <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl sm:rounded-3xl blur-xl sm:blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-          <div className="relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden border-2 border-emerald-500/30 shadow-2xl shadow-emerald-500/20">
-            <img
-              src={traction}
-              alt="₹23K Order"
-              loading="lazy"
-              className="w-full h-auto object-contain"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
-          </div>
-        </div>
-      </div>
-<div ref={caseStudiesRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16 sm:mb-24">
-        <div className="text-center mb-12">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
-            Success <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">Stories</span>
-          </h3>
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-            Real results from our performance marketing campaigns across diverse brands.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {caseStudies.map((study, i) => (
-            <div 
-              key={i} 
-              className="group relative bg-slate-800/90 backdrop-blur-sm border-2 border-slate-700/50 rounded-2xl overflow-hidden hover:border-teal-500/60 hover:shadow-2xl hover:shadow-teal-500/20 transition-all duration-500 hover:-translate-y-2"
-            >
-              {/* Image Section - Fixed Aspect Ratio */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-slate-900">
-                <img 
-                  src={study.image} 
-                  alt={`${study.brand} Case Study`}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-                
-                {/* Case Study Badge */}
-                <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1.5 bg-teal-500/95 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
-                    Case Study {study.number}
-                  </span>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative glass rounded-2xl p-5 text-center overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-500" />
+                <div className="relative">
+                  <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">Investment</p>
+                  <p className="text-3xl md:text-4xl lg:text-5xl font-black text-white" id="investment-card">₹0K</p>
                 </div>
               </div>
-
-              {/* Content Section */}
-              <div className="relative p-5 bg-gradient-to-b from-slate-800/95 to-slate-900/95">
-                <div className="flex items-start justify-between mb-3">
-                  <h4 className="text-lg font-bold text-white leading-tight flex-1">
-                    {study.brand}
-                  </h4>
-                  <TrendingUp className="w-5 h-5 text-teal-400 flex-shrink-0 ml-2" />
-                </div>
-                
-                <p className="text-slate-400 text-xs mb-4 min-h-[2.5rem]">
-                  {study.industry}
-                </p>
-
-                {/* Stats Grid with Clear Borders */}
-                <div className="space-y-2 pt-3 border-t-2 border-slate-700/60">
-                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
-                    <span className="text-slate-400 text-xs font-medium">Total Sales</span>
-                    <span className="font-bold text-emerald-400 text-sm">{study.totalSales}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
-                    <span className="text-slate-400 text-xs font-medium">Spent</span>
-                    <span className="font-bold text-teal-400 text-sm">{study.amountSpent}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 px-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-                    <span className="text-emerald-300 text-xs font-bold">ROAS</span>
-                    <span className="font-black text-emerald-400 text-base">{study.roas}</span>
-                  </div>
-                  <div className="flex justify-between items-center py-2 px-3 bg-slate-700/30 rounded-lg border border-slate-600/40">
-                    <span className="text-slate-400 text-xs font-medium">Orders</span>
-                    <span className="font-bold text-teal-400 text-sm">{study.orders}</span>
-                  </div>
+              
+              <div className="relative glass rounded-2xl p-5 text-center overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-emerald-500/0 group-hover:from-teal-500/10 group-hover:to-emerald-500/10 transition-all duration-500" />
+                <div className="relative">
+                  <p className="text-teal-400 text-xs font-bold uppercase tracking-wider mb-2">Client Delight</p>
+                  <p className="text-3xl md:text-4xl lg:text-5xl font-black text-white" id="delight-card">0%</p>
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="relative group fade-in-right">
+            <div className="absolute -inset-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+            <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/30 shadow-2xl">
+              <img
+                src={traction}
+                alt="₹23K Order Chandelier"
+                className="w-full h-auto"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent" />
+            </div>
+          </div>
         </div>
-      </div>
-      {/* CTA - Magnetic Button - Fully Responsive */}
-      <div className="text-center mt-12 sm:mt-16 lg:mt-24 xl:mt-32">
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 sm:gap-3 lg:gap-4 px-6 sm:px-8 lg:px-12 xl:px-16 py-3 sm:py-4 lg:py-6 xl:py-8 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-white text-sm sm:text-base lg:text-xl xl:text-2xl 2xl:text-3xl font-black rounded-full hover:scale-105 lg:hover:scale-110 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-500 relative overflow-hidden"
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <span className="relative">Let's Build Your Success Story</span>
-          <ArrowUpRight size={20} className="relative group-hover:rotate-45 transition-transform duration-500 sm:w-6 sm:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8" />
-        </a>
-      </div>
-    </section>
+
+        {/* Case Studies - More Compact */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+          <div className="text-center mb-10 fade-in-up">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3">
+              Success <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">Stories</span>
+            </h3>
+            <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto">
+              Real results from our performance marketing campaigns across diverse brands.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+            {caseStudies.map((study, i) => (
+              <div 
+                key={i} 
+                className="group glass rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 fade-in-up"
+                style={{ transitionDelay: `${i * 100}ms` }}
+              >
+                {/* Image */}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={study.image} 
+                    alt={`${study.brand} Case Study`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+                  
+                  <div className="absolute top-3 left-3">
+                    <span className="px-3 py-1.5 bg-teal-500 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
+                      Case Study {study.number}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="relative p-4">
+                  <div className="flex items-start justify-between mb-2">
+                    <h4 className="text-base font-bold text-white leading-tight flex-1">
+                      {study.brand}
+                    </h4>
+                    <TrendingUp className="w-4 h-4 text-teal-400 flex-shrink-0 ml-2" />
+                  </div>
+                  
+                  <p className="text-slate-400 text-xs mb-3 min-h-[2.5rem]">
+                    {study.industry}
+                  </p>
+
+                  <div className="space-y-2 pt-3 border-t border-slate-700/60">
+                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
+                      <span className="text-slate-400 text-xs font-medium">Total Sales</span>
+                      <span className="font-bold text-emerald-400 text-sm">{study.totalSales}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
+                      <span className="text-slate-400 text-xs font-medium">Spent</span>
+                      <span className="font-bold text-teal-400 text-sm">{study.amountSpent}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-1.5 px-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
+                      <span className="text-emerald-300 text-xs font-bold">ROAS</span>
+                      <span className="font-black text-emerald-400 text-base">{study.roas}</span>
+                    </div>
+                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
+                      <span className="text-slate-400 text-xs font-medium">Orders</span>
+                      <span className="font-bold text-teal-400 text-sm">{study.orders}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA - More Compact */}
+        <div className="text-center mt-16 fade-in-up">
+          <a
+            href="#contact"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 text-white text-base md:text-lg font-black rounded-full hover:scale-105 hover:shadow-2xl hover:shadow-emerald-500/50 transition-all duration-500 relative overflow-hidden"
+          >
+            <span className="absolute inset-0 bg-gradient-to-r from-teal-500 via-emerald-500 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <span className="relative">Let's Build Your Success Story</span>
+            <ArrowUpRight size={20} className="relative group-hover:rotate-45 transition-transform duration-500" />
+          </a>
+        </div>
+      </section>
+    </>
   );
 };
 
-export default Work;  
+export default Work;
