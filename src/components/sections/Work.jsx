@@ -29,10 +29,8 @@ const Work = () => {
       const counterBoxes = self.selector(".counter-box");
       const tractionImage = tractionRef.current?.querySelector("img");
       const floatingElements = self.selector(".floating-element");
-      // Selectors for new case studies
       const caseStudyCards = self.selector(".case-study-card");
 
-      // Continuous floating animation for background elements
       floatingElements.forEach((el, i) => {
         gsap.to(el, {
           y: "random(-30, 30)",
@@ -46,7 +44,6 @@ const Work = () => {
         });
       });
 
-      // Hero Title - 3D Perspective Entrance
       const heroTitle = self.selector(".hero-title");
       gsap.fromTo(
         heroTitle,
@@ -69,7 +66,6 @@ const Work = () => {
         }
       );
 
-      // Hero Subtitle - Glitch effect
       const heroSubtitle = self.selector(".hero-subtitle");
       gsap.fromTo(
         heroSubtitle,
@@ -92,13 +88,12 @@ const Work = () => {
         }
       );
 
-      // Performance Cards - 3D Flip + Slide (simplified rotation to avoid clipping)
       cards.forEach((card, i) => {
         gsap.fromTo(
           card,
           { 
-            rotationY: -45, // Reduced from -90 for less clipping
-            x: -100, // Reduced offset
+            rotationY: -45,
+            x: -100,
             opacity: 0,
             transformOrigin: "left center"
           },
@@ -116,7 +111,6 @@ const Work = () => {
           }
         );
 
-        // Hover animation (only on non-touch devices)
         const isTouch = 'ontouchstart' in window;
         if (!isTouch) {
           card.addEventListener("mouseenter", () => {
@@ -141,7 +135,6 @@ const Work = () => {
         }
       });
 
-      // Stats - Wave entrance
       gsap.fromTo(
         stats,
         { 
@@ -169,7 +162,6 @@ const Work = () => {
         }
       );
 
-      // Traction Title - Split text reveal
       gsap.fromTo(
         titleLines,
         { 
@@ -192,7 +184,6 @@ const Work = () => {
         }
       );
 
-      // Traction Paragraph - Typewriter effect
       gsap.fromTo(
         tractionText,
         { opacity: 0, x: -50, filter: "blur(5px)" },
@@ -210,7 +201,6 @@ const Work = () => {
         }
       );
 
-      // Counter Boxes - 3D Pop
       gsap.fromTo(
         counterBoxes,
         { 
@@ -235,7 +225,6 @@ const Work = () => {
         }
       );
 
-      // Traction Image - Parallax + Scale + Rotation
       if (tractionImage) {
         gsap.fromTo(
           tractionImage,
@@ -256,10 +245,9 @@ const Work = () => {
         );
       }
 
-      // Parallax scrolling for cards (reduced for smoothness)
       cards.forEach((card, i) => {
         gsap.to(card, {
-          y: i % 2 === 0 ? -30 : 30, // Reduced from 50
+          y: i % 2 === 0 ? -30 : 30,
           scrollTrigger: {
             trigger: card,
             start: "top bottom",
@@ -269,7 +257,6 @@ const Work = () => {
         });
       });
 
-      // New Case Studies Animation - Staggered Fade + Scale
       gsap.fromTo(
         caseStudyCards,
         { 
@@ -297,7 +284,6 @@ const Work = () => {
         }
       );
 
-      // Hover for case study cards (only on non-touch)
       caseStudyCards.forEach((card) => {
         const isTouch = 'ontouchstart' in window;
         if (!isTouch) {
@@ -383,7 +369,6 @@ const Work = () => {
     },
   ];
 
-
   const caseStudies = [
     { 
       number: "10",
@@ -442,7 +427,6 @@ const Work = () => {
       className="relative py-12 sm:py-20 lg:py-32 xl:py-40 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
       style={{ perspective: "1500px" }}
     >
-      {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="floating-element absolute top-20 left-10 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-emerald-500 rounded-full blur-3xl" />
         <div className="floating-element absolute top-40 right-20 w-40 sm:w-60 md:w-80 h-40 sm:h-60 md:h-80 bg-teal-500 rounded-full blur-3xl" />
@@ -450,7 +434,6 @@ const Work = () => {
         <div className="floating-element absolute bottom-40 right-1/4 w-28 sm:w-40 md:w-56 h-28 sm:h-40 md:h-56 bg-teal-400 rounded-full blur-2xl" />
       </div>
 
-      {/* Hero Section - 3D Animated */}
       <div ref={heroRef} className="relative z-10 text-center mb-16 sm:mb-20 lg:mb-24 xl:mb-32">
         <h2 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black text-white mb-4 sm:mb-6 lg:mb-8 leading-tight">
           Performance <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 bg-clip-text text-transparent">Marketing</span>
@@ -465,60 +448,68 @@ const Work = () => {
           {performanceCards.map((item, i) => (
             <div 
               key={i} 
-              className="performance-card group relative bg-gradient-to-br from-slate-800/70 to-slate-900/70 backdrop-blur-xl border border-slate-700/50 rounded-2xl sm:rounded-3xl overflow-hidden hover:border-emerald-500/50 transition-all duration-500 flex flex-col h-full min-h-[400px]" 
+              className="performance-card group relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl border-2 border-slate-700/50 rounded-2xl sm:rounded-3xl overflow-hidden hover:border-emerald-500/60 transition-all duration-500 flex flex-col min-h-[450px]" 
               style={{ willChange: 'transform' }}
             >
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500" /> {/* Increased hover glow */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500 rounded-2xl" />
               
-              {/* Content Section - Top part with text/info */}
-              <div className="relative flex-1 p-4 sm:p-5 lg:p-6 space-y-3 sm:space-y-4 flex flex-col justify-between z-10"> {/* flex-1 to push image down, z-10 to layer over image if needed */}
-                <div className="flex items-center justify-between flex-wrap gap-2 sm:gap-3">
-                  <div className={`p-2.5 sm:p-3 lg:p-4 bg-gradient-to-br ${item.gradient} rounded-xl sm:rounded-2xl shadow-xl group-hover:scale-110 transition-transform duration-500 flex-shrink-0`}> {/* Larger icon container */}
-                    <item.icon size={20} className="text-white sm:w-6 sm:h-6 lg:w-7 lg:h-7" /> {/* Larger icon */}
-                  </div>
-                  <span className="px-3 sm:px-4 lg:px-5 py-2 sm:py-2.5 bg-emerald-500/30 border border-emerald-500/50 rounded-full text-sm sm:text-base font-bold text-emerald-300 uppercase tracking-wide flex-shrink-0"> {/* Enhanced badge styling */}
-                    {item.badge}
-                  </span>
-                </div>
-                
-                <div className="flex-grow"> {/* flex-grow for spacing */}
-                  <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white leading-tight mb-2"> {/* Slightly larger title */}
-                    {item.title}
-                  </h3>
-                  
-                  <div className="mt-auto"> {/* Push stats to bottom */}
-                    <p className="text-3xl sm:text-4xl lg:text-5xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent mb-1">
-                      {item.reach}
-                    </p>
-                    <p className="text-emerald-200 text-sm sm:text-base lg:text-lg"> {/* Larger suffix */}
-                      {item.suffix}
-                    </p>
-                  </div>
-                </div>
-              </div>
-           
-              <div className="relative flex-shrink-0 overflow-hidden bg-slate-800/50">
+              {/* Image Section - Fixed Height */}
+              <div className="relative h-56 sm:h-64 overflow-hidden bg-slate-900 flex-shrink-0">
                 <img 
                   src={item.image} 
                   alt={item.title}
                   loading="lazy"
                   onError={(e) => { 
                     e.target.style.display = 'none'; 
-                    e.target.parentElement.innerHTML = `<div class="w-full   flex items-center justify-center bg-slate-700/50 text-slate-400 text-sm">Image not loaded</div>`; 
+                    e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-slate-800/50 text-slate-400 text-sm">Image not loaded</div>`; 
                   }}
-                  className="w-full h-48 sm:h-56  object-cover group-hover:scale-105 transition-transform duration-1000" 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-slate-900/20 to-transparent pointer-events-none" /> 
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent pointer-events-none" />
+                
+                {/* Badge on Image */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span className="px-4 py-2 bg-emerald-500/95 backdrop-blur-sm border border-emerald-400/30 rounded-full text-sm font-bold text-white shadow-lg">
+                    {item.badge}
+                  </span>
+                </div>
+              </div>
+
+              {/* Content Section */}
+              <div className="relative flex-1 p-5 sm:p-6 lg:p-7 space-y-4 flex flex-col z-10">
+                <div className="flex items-start justify-between">
+                  <div className={`p-3 bg-gradient-to-br ${item.gradient} rounded-xl shadow-xl group-hover:scale-110 transition-transform duration-500 flex-shrink-0`}>
+                    <item.icon size={22} className="text-white sm:w-6 sm:h-6" />
+                  </div>
+                </div>
+                
+                <div className="flex-grow">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white leading-tight mb-3 min-h-[3.5rem] flex items-center">
+                    {item.title}
+                  </h3>
+                  
+                  {/* Stats with Clear Borders */}
+                  <div className="space-y-3 pt-4 border-t-2 border-slate-700/60">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-slate-400 text-sm font-medium">Sessions</span>
+                      <span className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                        {item.reach}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-emerald-500/10 border-2 border-emerald-500/30 rounded-lg">
+                      <span className="text-emerald-300 text-sm font-semibold">Growth</span>
+                      <span className="text-emerald-400 font-bold text-base">{item.suffix}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Stats Section - Animated Counters */}
+      {/* Stats Section */}
       <div className="stats-section max-w-6xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
-        {/* Dot Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
             backgroundImage: `radial-gradient(circle at 2px 2px, white 1px, transparent 1px)`,
@@ -527,7 +518,6 @@ const Work = () => {
         </div>
 
         <div className="relative">
-          {/* Improved Heading Section */}
           <div className="text-center mb-10 sm:mb-12 lg:mb-16">
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4 leading-tight">
               Your Growth Graph Will Always Be
@@ -540,7 +530,6 @@ const Work = () => {
             </div>
           </div>
           
-          {/* Improved Stats Grid */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-8 sm:mb-10 lg:mb-14">
             {[
               { label: "Sessions", value: "10,900", prefix: "₹", delta: "+20%", color: "emerald" },
@@ -548,7 +537,7 @@ const Work = () => {
               { label: "Orders", value: "322", prefix: "", delta: "+44%", color: "emerald" },
               { label: "Conversion", value: "2.9%", prefix: "", delta: "+19%", color: "teal" },
             ].map((s, i) => (
-              <div key={i} className="stat-item group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border-2 border-slate-700/70 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 xl:p-8 hover:border-emerald-500/70 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 min-h-[120px]"> {/* Added min-h */}
+              <div key={i} className="stat-item group relative bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl border-2 border-slate-700/70 rounded-xl sm:rounded-2xl lg:rounded-3xl p-4 sm:p-5 lg:p-6 xl:p-8 hover:border-emerald-500/70 hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-500 hover:scale-105 min-h-[120px]">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/15 group-hover:to-teal-500/15 rounded-2xl transition-all duration-500" />
                 <div className="relative text-center h-full flex flex-col justify-center">
                   <p className={`text-${s.color}-400 text-xs sm:text-sm lg:text-base font-bold uppercase tracking-wide mb-2 sm:mb-3`}>
@@ -566,20 +555,19 @@ const Work = () => {
             ))}
           </div>
           
-          {/* Graph Image with Better Styling */}
           <div className="relative rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-500">
             <img 
               src={t} 
               alt="Growth Graph"
               loading="lazy"
-              className="w-full h-auto object-contain" // Changed to object-contain
+              className="w-full h-auto object-contain"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
 
-      {/* TRACTION Section - Cinematic - Fully Responsive */}
+      {/* TRACTION Section */}
       <div ref={tractionRef} className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 xl:gap-20 items-center max-w-7xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
         <div className="space-y-4 sm:space-y-6 lg:space-y-10 order-2 lg:order-1">
           <div className="space-y-2 sm:space-y-3">
@@ -600,7 +588,7 @@ const Work = () => {
           </p>
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
-            <div className="counter-box relative bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-xl border border-emerald-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]"> {/* Added min-h */}
+            <div className="counter-box relative bg-gradient-to-br from-emerald-900/40 to-teal-900/40 backdrop-blur-xl border border-emerald-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]">
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/20 group-hover:to-teal-500/20 transition-all duration-500" />
               <div className="relative h-full flex flex-col justify-center">
                 <p className="text-emerald-400 text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider mb-1 sm:mb-2 lg:mb-3">Investment</p>
@@ -608,7 +596,7 @@ const Work = () => {
               </div>
             </div>
             
-            <div className="counter-box relative bg-gradient-to-br from-teal-900/40 to-emerald-900/40 backdrop-blur-xl border border-teal-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]"> {/* Added min-h */}
+            <div className="counter-box relative bg-gradient-to-br from-teal-900/40 to-emerald-900/40 backdrop-blur-xl border border-teal-500/40 rounded-xl sm:rounded-2xl lg:rounded-3xl p-3 sm:p-4 lg:p-6 xl:p-8 text-center overflow-hidden group hover:scale-105 transition-transform duration-500 min-h-[100px]">
               <div className="absolute inset-0 bg-gradient-to-br from-teal-500/0 to-emerald-500/0 group-hover:from-teal-500/20 group-hover:to-emerald-500/20 transition-all duration-500" />
               <div className="relative h-full flex flex-col justify-center">
                 <p className="text-teal-400 text-[10px] sm:text-xs lg:text-sm font-bold uppercase tracking-wider mb-1 sm:mb-2 lg:mb-3">Client Delight</p>
@@ -625,12 +613,14 @@ const Work = () => {
               src={traction}
               alt="₹23K Order"
               loading="lazy"
-              className="w-full h-auto object-contain" // Changed to object-contain
+              className="w-full h-auto object-contain"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
           </div>
         </div>
       </div>
+
+      {/* Case Studies Section */}
 
       {/* New Case Studies Section - Responsive Grid */}
       <div ref={caseStudiesRef} className="max-w-7xl mx-auto mb-16 sm:mb-20 lg:mb-24 px-4 sm:px-6 lg:px-8">
@@ -715,4 +705,4 @@ const Work = () => {
   );
 };
 
-export default Work;
+export default Work;  
