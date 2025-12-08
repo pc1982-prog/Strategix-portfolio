@@ -57,7 +57,19 @@ const STRATEGIX_DATA = {
       fullDesc: "Professional Pine Script development for TradingView. We create custom indicators, strategies, and automated trading tools that empower traders with reliable technical insights and data-driven decision making.",
       icon: "line-chart",
       color: "#06B6D4"
-    }
+    },
+    {
+    key: "ai-agentic",
+    title: "AI Agentic Tools",
+    shortDesc: "Automate Intelligent Workflows",
+    fullDesc:
+      "We develop autonomous AI agents that handle complex tasks, integrate with your systems, and adapt in real-time to optimize operations and decision-making with minimal human intervention.",
+    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+    gradient: "from-cyan-500 to-blue-600",
+    colorHex: "#06B6D4",
+    iconKey: "zap",
+  },
+
   ],
   obstacles: [
     {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
-// import logo from '../../assets/images/logo.png';
+import React, { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
+import logo from "../../assets/images/STRATEGIX LOGO.png";
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -8,8 +8,8 @@ export const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleNavClick = (id) => {
@@ -20,42 +20,41 @@ export const Header = () => {
         const offset = 80;
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
-        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
       }
     }, 100);
   };
 
   const navItems = [
-    { name: 'Home', id: 'home' },
-    { name: 'About', id: 'about' },
-    { name: 'Services', id: 'services' },
-    { name: 'Mission', id: 'mission' },
-    { name: 'Work', id: 'work' },
-    { name: 'Clients', id: 'clients' },
-    { name: 'Contact', id: 'contact' }
+    { name: "Home", id: "home" },
+    { name: "About", id: "about" },
+    { name: "Services", id: "services" },
+    { name: "Mission", id: "mission" },
+    { name: "Work", id: "work" },
+    { name: "Clients", id: "clients" },
+    { name: "Contact", id: "contact" },
   ];
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? 'bg-slate-900/95 backdrop-blur-xl shadow-lg border-b border-emerald-500/20'
-          : 'bg-transparent'
+          ? "bg-slate-900/95 backdrop-blur-xl shadow-lg border-b border-emerald-500/20"
+          : "bg-transparent"
       }`}
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <button
-            onClick={() => handleNavClick('home')}
+            onClick={() => handleNavClick("home")}
             className="flex items-center group"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-white">S</span>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                Strategix
-              </span>
+            <div className="flex items-center">
+              <img
+                src={logo}
+                alt="Strategix Logo"
+                className="w-28 h-16 object-cover"
+              />
             </div>
           </button>
 
@@ -65,7 +64,9 @@ export const Header = () => {
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
                 className={`cursor-pointer relative font-medium text-base transition-all duration-300 ${
-                  scrolled ? 'text-slate-200 hover:text-emerald-400' : 'text-white hover:text-emerald-300'
+                  scrolled
+                    ? "text-slate-200 hover:text-emerald-400"
+                    : "text-white hover:text-emerald-300"
                 }`}
               >
                 {item.name}
@@ -73,7 +74,7 @@ export const Header = () => {
               </button>
             ))}
             <button
-              onClick={() => handleNavClick('contact')}
+              onClick={() => handleNavClick("contact")}
               className=" cursor-pointer px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:shadow-emerald-500/50 transform hover:scale-105 transition-all duration-300"
             >
               Get Started
@@ -81,7 +82,9 @@ export const Header = () => {
           </div>
 
           <button
-            className={`lg:hidden p-2 rounded-lg transition-all ${scrolled ? 'text-slate-200' : 'text-white'}`}
+            className={`lg:hidden p-2 rounded-lg transition-all ${
+              scrolled ? "text-slate-200" : "text-white"
+            }`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
@@ -101,7 +104,7 @@ export const Header = () => {
                 </button>
               ))}
               <button
-                onClick={() => handleNavClick('contact')}
+                onClick={() => handleNavClick("contact")}
                 className="block w-full text-center px-6 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-bold rounded-full shadow-xl transform hover:scale-105 transition-all"
               >
                 Get Started

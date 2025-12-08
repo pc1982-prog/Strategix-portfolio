@@ -6,6 +6,7 @@ import {
   Code,
   BarChart3,
   Rocket,
+  Zap,
   X,
 } from "lucide-react";
 
@@ -79,6 +80,17 @@ const services = [
     colorHex: "#6366F1",
     iconKey: "rocket",
   },
+  {
+    key: "ai-agentic",
+    title: "AI Agentic Tools",
+    shortDesc: "Automate Intelligent Workflows",
+    fullDesc:
+      "We develop autonomous AI agents that handle complex tasks, integrate with your systems, and adapt in real-time to optimize operations and decision-making with minimal human intervention.",
+    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+    gradient: "from-cyan-500 to-blue-600",
+    colorHex: "#06B6D4",
+    iconKey: "zap",
+  },
 ];
 
 const ICON_MAP = {
@@ -88,6 +100,7 @@ const ICON_MAP = {
   code: Code,
   "bar-chart": BarChart3,
   rocket: Rocket,
+  zap: Zap,
 };
 
 export const Services=() => {
