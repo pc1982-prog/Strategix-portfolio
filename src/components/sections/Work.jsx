@@ -407,7 +407,7 @@ const Work = () => {
       orders: "290",
       aov: "₹3.67K",
       cps: "₹473.89",
-      image: caseStudy10
+      image: caseStudy9
     },
     { 
       number: "3",
@@ -419,7 +419,7 @@ const Work = () => {
       orders: "54",
       aov: "₹5.88K",
       cps: "₹922.06",
-      image: caseStudy9
+      image: caseStudy10
     },
     { 
       number: "9",
@@ -497,9 +497,8 @@ const Work = () => {
                   </div>
                 </div>
               </div>
-              
-              {/* Image Section - Bottom, larger, full visibility without cropping */}
-              <div className="relative flex-shrink-0 overflow-hidden bg-slate-800/50"> {/* flex-shrink-0 to prevent squish, background for fallback */}
+           
+              <div className="relative flex-shrink-0 overflow-hidden bg-slate-800/50">
                 <img 
                   src={item.image} 
                   alt={item.title}
@@ -508,9 +507,9 @@ const Work = () => {
                     e.target.style.display = 'none'; 
                     e.target.parentElement.innerHTML = `<div class="w-full   flex items-center justify-center bg-slate-700/50 text-slate-400 text-sm">Image not loaded</div>`; 
                   }}
-                  className="w-full h-48 sm:h-56  object-cover group-hover:scale-105 transition-transform duration-1000" // Increased height for larger images, slower transition for smoothness
+                  className="w-full h-48 sm:h-56  object-cover group-hover:scale-105 transition-transform duration-1000" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-slate-900/20 to-transparent pointer-events-none" /> {/* Lighter overlay for better image visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-slate-900/20 to-transparent pointer-events-none" /> 
               </div>
             </div>
           ))}
@@ -651,7 +650,7 @@ const Work = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/15 group-hover:to-teal-500/15 rounded-2xl transition-all duration-500" />
               <div className="relative p-4 sm:p-6 lg:p-8 h-full flex flex-col">
                 {/* Fixed: Aspect ratio + object-contain, lazy load, error fallback */}
-                <div className="mb-4 sm:mb-6 relative aspect-[4/3] rounded-xl overflow-hidden border border-white/20 group-hover:border-emerald-400/50 transition-all duration-500 flex items-center justify-center bg-slate-700/50">
+                <div className="mb-4 sm:mb-6 relative aspect-[4/3] rounded-xl overflow-hidden  transition-all duration-500 flex items-center justify-center">
                   <img 
                     src={study.image} 
                     alt={`Case Study ${study.number} - ${study.brand}`}
