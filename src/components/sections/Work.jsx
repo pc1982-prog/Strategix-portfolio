@@ -88,8 +88,8 @@ const Work = () => {
   const performanceCards = [
     { 
       title: "Books & Publishing Brand", 
-      reach: "$8,644.87", 
-      suffix: "Sales (+15%)",
+      reach: "$4,864.87", 
+      suffix: "Sales (+86%)",
       badge: "577 Sessions", 
       icon: MessageSquare,
       gradient: "from-emerald-500 to-teal-600",
@@ -98,7 +98,7 @@ const Work = () => {
     { 
       title: "Premium Lifestyle Brand", 
       reach: "₹144,356", 
-      suffix: "Sales (+3%)",
+      suffix: "Sales (+16%)",
       badge: "14.06K Sessions", 
       icon: Zap,
       gradient: "from-teal-500 to-cyan-600",
@@ -107,7 +107,7 @@ const Work = () => {
     { 
       title: "E-commerce Book Store", 
       reach: "$6,941.66", 
-      suffix: "Sales (+36%)",
+      suffix: "Sales (+277%)",
       badge: "646 Sessions", 
       icon: Target,
       gradient: "from-emerald-600 to-teal-500",
@@ -120,11 +120,11 @@ const Work = () => {
       number: "10",
       brand: "",
       industry: "Online Silver Jewellery Brand",
-      totalSales: "₹520,000",
-      amountSpent: "₹107,000",
-      roas: "5x+",
-      orders: "4,300",
-      image: case10
+      totalSales: "₹4,83,343",
+      amountSpent: "₹1,06,189.26",
+      roas: "4.5x+",
+      orders: "394",
+      image: case7
     },
     { 
       number: "7",
@@ -144,7 +144,7 @@ const Work = () => {
       amountSpent: "₹49.79K",
       roas: "6.37x",
       orders: "54",
-      image: case7
+      image: case10
     },
     { 
       number: "9",
