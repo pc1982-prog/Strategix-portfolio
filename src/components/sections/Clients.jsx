@@ -3,11 +3,13 @@ import { STRATEGIX_DATA } from "../../data/siteContent";
 
 export default function ClientsMarquee() {
   const userClients = STRATEGIX_DATA?.clientsList ?? STRATEGIX_DATA?.clients?.list;
+  
+  // Increased to show all 25 clients from your data
   const baseClients = useMemo(() => {
     if (Array.isArray(userClients) && userClients.length > 0) {
-      return userClients.slice(0, 20);
+      return userClients; // Use all available clients instead of slice(0, 30)
     }
-    return Array.from({ length: 20 }, (_, i) => ({
+    return Array.from({ length: 30}, (_, i) => ({
       id: i + 1,
       name: `Client ${i + 1}`,
       logo: "", 
@@ -110,12 +112,12 @@ export default function ClientsMarquee() {
           paddingRight: 12,
         }}
       >
-        <div className="w-full max-w-[160px] flex items-center justify-center bg-white rounded-lg p-2 ">
+        <div className="w-full max-w-[160px] flex items-center justify-center bg-white rounded-lg p-2 shadow-lg hover:scale-105 transition-transform duration-300">
           {hasLogo ? (
             <img
               src={c.logo}
               alt={c.alt ?? c.name}
-              className="max-h-25 md:max-h-28 object-cover block"
+              className="max-h-20 md:max-h-24 w-auto object-contain block"
               loading="lazy"
               draggable={false}
             />
@@ -143,19 +145,23 @@ export default function ClientsMarquee() {
         .no-scrollbar::-webkit-scrollbar{ display:none; }
       `}</style>
 
-      <section id="clients" className="w-full bg-gradient-to-b from-slate-950 to-slate-900 py-8">
+      <section id="clients" className="w-full bg-gradient-to-b from-slate-950 to-slate-900 py-12">
         <div className="mx-auto px-4 sm:px-6 lg:px-8" style={{ maxWidth: 1400 }}>
-          <div className="text-center mb-6">
+          <div className="text-center mb-8">
             <p className="text-xs font-semibold tracking-widest text-emerald-400 uppercase">OUR CLIENTS</p>
             <h3 className="text-2xl sm:text-3xl md:text-5xl font-extrabold text-white mt-2">
-              Trusted by <span className="bg-gradient-to-br from-emerald-400 to-teal-400 bg-clip-text text-transparent">{STRATEGIX_DATA?.brand?.name ?? "Global Brands"}</span>
+              Trusted by <span className="bg-gradient-to-br from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+                {baseClients.length}+ Global Brands
+              </span>
             </h3>
-          
+            <p className="text-slate-400 mt-3 text-sm md:text-base">
+              We cater to a global audience with excellence
+            </p>
           </div>
 
           {/* ROW A */}
           <div
-            className="overflow-hidden rounded-xl   bg-emerald/60 mb-4 no-scrollbar"
+            className="overflow-hidden rounded-xl bg-slate-800/20 backdrop-blur-sm border border-emerald-500/10 mb-4 no-scrollbar"
             onMouseEnter={() => { if (rowARef.current) rowARef.current.style.animationPlayState = "paused"; }}
             onMouseLeave={() => { if (rowARef.current) rowARef.current.style.animationPlayState = "running"; }}
             onTouchStart={() => { if (rowARef.current) rowARef.current.style.animationPlayState = "paused"; }}
@@ -170,7 +176,7 @@ export default function ClientsMarquee() {
                 animationIterationCount: "infinite",
                 animationPlayState: "running",
                 gap: 0,
-                padding: "12px",
+                padding: "16px",
               }}
             >
               {duplicated.map((c, idx) => renderItem(c, idx))}
@@ -179,7 +185,7 @@ export default function ClientsMarquee() {
 
           {/* ROW B (same duplicated content, animation direction reversed) */}
           <div
-            className="overflow-hidden rounded-xl  bg-emerald/60 no-scrollbar"
+            className="overflow-hidden rounded-xl bg-slate-800/20 backdrop-blur-sm border border-emerald-500/10 no-scrollbar"
             onMouseEnter={() => { if (rowBRef.current) rowBRef.current.style.animationPlayState = "paused"; }}
             onMouseLeave={() => { if (rowBRef.current) rowBRef.current.style.animationPlayState = "running"; }}
             onTouchStart={() => { if (rowBRef.current) rowBRef.current.style.animationPlayState = "paused"; }}
@@ -194,7 +200,7 @@ export default function ClientsMarquee() {
                 animationIterationCount: "infinite",
                 animationPlayState: "running",
                 gap: 0,
-                padding: "12px",
+                padding: "16px",
               }}
             >
               {duplicated.map((c, idx) => renderItem(c, idx))}

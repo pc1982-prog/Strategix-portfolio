@@ -167,11 +167,13 @@ const STRATEGIX_DATA = {
     { id: 17, name: "Q", logo: "/images/Strategix- Portfolio (12).png", alt: "A" },
     { id: 18, name: "R", logo: "/images/Strategix- Portfolio (9).png", alt: "A" },
     { id: 19, name: "S", logo: "/images/Strategix- Portfolio (25).png", alt: "A" },
-    { id: 20, name: "T", logo: "/images/Strategix- Portfolio (11).png", alt: "A" },
-    { id: 20, name: "T", logo: "/images/Strategix- Portfolio (21).png", alt: "A" },
-    { id: 20, name: "T", logo: "/images/Strategix- Portfolio (22).png", alt: "A" },
-    { id: 20, name: "T", logo: "/images/Strategix- Portfolio (23).png", alt: "A" },
-    { id: 20, name: "T", logo: "/images/Strategix- Portfolio (24).png", alt: "A" },
+    { id: 20, name: "U", logo: "/images/Strategix- Portfolio (11).png", alt: "A" },
+    { id: 21, name: "V", logo: "/images/Strategix- Portfolio (21).png", alt: "A" },
+    { id: 22, name: "W", logo: "/images/Strategix- Portfolio (22).png", alt: "A" },
+    { id: 23, name: "X", logo: "/images/Strategix- Portfolio (23).png", alt: "A" },
+    { id: 24, name: "Y", logo: "/images/Strategix- Portfolio (24).png", alt: "A" },
+    { id: 25, name: "Y", logo: "/images/Strategix- Portfolio (28).png", alt: "A" },
+
 
 
 
