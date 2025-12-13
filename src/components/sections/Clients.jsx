@@ -115,7 +115,7 @@ export default function ClientsMarquee() {
             <img
               src={c.logo}
               alt={c.alt ?? c.name}
-              className="max-h-12 md:max-h-14 object-contain block"
+              className="max-h-25 md:max-h-28 object-cover block"
               loading="lazy"
               draggable={false}
             />

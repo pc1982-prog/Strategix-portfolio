@@ -1,19 +1,21 @@
-import React, { useEffect, useRef } from "react";
-import { ArrowUpRight, TrendingUp, MessageSquare, Zap, Target, Sparkles } from "lucide-react";
-import traction from "../../assets/images/traction.png"
-import t from "../../assets/images/adds.jpeg"
-import trading1 from "../../assets/images/1.jpeg"
-import trading3 from "../../assets/images/99.jpeg"
-import trading4 from "../../assets/images/4.jpeg"
-import caseStudy10 from "../../assets/images/case-study-10.jpeg";
-import caseStudy7 from "../../assets/images/case-study-7.jpeg";
-import caseStudy3 from "../../assets/images/case-study-3.jpeg";
-import caseStudy9 from "../../assets/images/case-study-9.jpeg";
+import React, { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, TrendingUp, MessageSquare, Zap, Target, Sparkles, X } from "lucide-react";
+import Trading1 from "../../assets/images/Trading1.jpeg"
+import Trading2 from "../../assets/images/Trading2.jpeg"
+import Trading3 from "../../assets/images/Trading3.jpeg"
+import SaleGraph from "../../assets/images/SaleGraph.jpeg"
+import Traction from "../../assets/images/Strategix- Portfolio (27).png"
+import case3 from "../../assets/images/CaseStudy3.jpeg"
+import case7 from "../../assets/images/CaseStudy7.jpeg"
+import case9 from "../../assets/images/CaseStudy9.jpeg"
+import case10 from "../../assets/images/CaseStudy10.jpeg"
 
 const Work = () => {
   const sectionRef = useRef(null);
   const statsRef = useRef(null);
   const counterStarted = useRef(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     const observerOptions = {
@@ -83,7 +85,7 @@ const Work = () => {
       badge: "Sales $8,644.87", 
       icon: MessageSquare,
       gradient: "from-emerald-500 to-teal-600",
-      image: trading1
+      image: Trading3
     },
     { 
       title: "Sterling International", 
@@ -92,7 +94,7 @@ const Work = () => {
       badge: "Sales ₹144,356", 
       icon: Zap,
       gradient: "from-teal-500 to-cyan-600",
-      image: trading3
+      image: Trading1
     },
     { 
       title: "Fair Book Deals - Nov 28", 
@@ -101,7 +103,7 @@ const Work = () => {
       badge: "Sales $6,941.66", 
       icon: Target,
       gradient: "from-emerald-600 to-teal-500",
-      image: trading4
+      image: Trading2
     },
   ];
 
@@ -114,7 +116,7 @@ const Work = () => {
       amountSpent: "₹107,000",
       roas: "5x+",
       orders: "4,300",
-      image: caseStudy7
+      image: case10
     },
     { 
       number: "7",
@@ -124,7 +126,7 @@ const Work = () => {
       amountSpent: "₹137.43K",
       roas: "7.74x",
       orders: "290",
-      image: caseStudy9
+      image: case9
     },
     { 
       number: "3",
@@ -134,7 +136,7 @@ const Work = () => {
       amountSpent: "₹49.79K",
       roas: "6.37x",
       orders: "54",
-      image: caseStudy10
+      image: case7
     },
     { 
       number: "9",
@@ -144,7 +146,7 @@ const Work = () => {
       amountSpent: "₹25.83K",
       roas: "5.04x",
       orders: "30",
-      image: caseStudy3
+      image: case3
     },
   ];
 
@@ -206,7 +208,99 @@ const Work = () => {
         .glow-emerald {
           box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
         }
+
+        .card-hover-effect {
+          position: relative;
+          overflow: hidden;
+        }
+
+        .card-hover-effect::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+          transition: left 0.5s;
+        }
+
+        .card-hover-effect:hover::before {
+          left: 100%;
+        }
+
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.92);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 9999;
+          padding: 2rem;
+          animation: fadeIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .modal-content {
+          background: transparent;
+          border-radius: 1rem;
+          max-width: 900px;
+          width: auto;
+          max-height: 85vh;
+          overflow: hidden;
+          position: relative;
+          animation: slideUp 0.4s ease-out;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .modal-content img {
+          max-width: 100%;
+          max-height: 85vh;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+        }
+
+        @keyframes slideUp {
+          from { 
+            opacity: 0;
+            transform: translateY(20px) scale(0.97);
+          }
+          to { 
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
       `}</style>
+
+      {/* Image Popup Modal */}
+      {(selectedImage || selectedCard) && (
+        <div className="modal-overlay" onClick={() => { setSelectedImage(null); setSelectedCard(null); }}>
+          <button 
+            onClick={() => { setSelectedImage(null); setSelectedCard(null); }}
+            className="absolute top-6 right-6 z-50 p-3 bg-slate-900/90 hover:bg-emerald-500 rounded-full transition-all duration-300 backdrop-blur-sm shadow-2xl border border-white/10"
+          >
+            <X className="w-6 h-6 text-white" />
+          </button>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <img 
+              src={selectedImage || selectedCard} 
+              alt="Full view"
+              className="rounded-xl shadow-2xl border border-emerald-500/20"
+            />
+          </div>
+        </div>
+      )}
 
       <section 
         ref={sectionRef} 
@@ -228,7 +322,7 @@ const Work = () => {
           }} />
         </div>
 
-        {/* Hero Section - More Compact */}
+        {/* Hero Section */}
         <div className="relative z-10 text-center mb-12 md:mb-16 lg:mb-20 px-4 fade-in-up">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full mb-4">
             <Sparkles className="w-3 h-3 text-emerald-400" />
@@ -250,56 +344,67 @@ const Work = () => {
           </p>
         </div>
       
-        {/* Performance Cards - More Compact */}
+        {/* Performance Cards - REDESIGNED */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {performanceCards.map((item, i) => (
               <div 
                 key={i} 
-                className="group relative glass rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 fade-in-up"
+                className="group relative rounded-3xl overflow-hidden hover:scale-[1.03] transition-all duration-500 fade-in-up card-hover-effect shadow-2xl"
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 via-teal-500/0 to-emerald-500/0 group-hover:from-emerald-500/5 group-hover:via-teal-500/5 group-hover:to-emerald-500/5 transition-all duration-500" />
+                {/* Card Border Glow */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-500 rounded-3xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
                 
-                {/* Image Section */}
-                <div className="relative h-48 sm:h-56 overflow-hidden">
-                  <img 
-                    src={item.image} 
-                    alt={item.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
-                  
-                  {/* Badge */}
-                  <div className="absolute top-3 right-3">
-                    <span className="px-3 py-1.5 bg-emerald-500 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
-                      {item.badge}
-                    </span>
-                  </div>
-                </div>
+                {/* Card Content */}
+                <div className="relative bg-slate-900/95 rounded-3xl overflow-hidden border border-slate-800/50">
+                  {/* Image Section - Full Bleed */}
+                  <div 
+                    className="relative aspect-[16/10] overflow-hidden cursor-pointer"
+                    onClick={() => setSelectedImage(item.image)}
+                  >
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent opacity-80" />
+                    
+                    {/* Icon Badge - Top Left */}
+                    <div className="absolute top-4 left-4">
+                      <div className={`p-3 bg-gradient-to-br ${item.gradient} rounded-xl shadow-2xl backdrop-blur-sm`}>
+                        <item.icon size={20} className="text-white" />
+                      </div>
+                    </div>
 
-                {/* Content */}
-                <div className="relative p-5 space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div className={`p-2.5 bg-gradient-to-br ${item.gradient} rounded-xl shadow-lg`}>
-                      <item.icon size={20} className="text-white" />
+                    {/* Sales Badge - Top Right */}
+                    <div className="absolute top-4 right-4">
+                      <span className="px-4 py-2 bg-emerald-500 backdrop-blur-md rounded-full text-xs font-bold text-white shadow-2xl border border-white/20">
+                        {item.badge}
+                      </span>
+                    </div>
+
+                    {/* Bottom Stats Overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-5">
+                      <h3 className="text-xl font-bold text-white mb-3 leading-tight drop-shadow-lg">
+                        {item.title}
+                      </h3>
                     </div>
                   </div>
-                  
-                  <h3 className="text-lg font-bold text-white leading-tight min-h-[3rem] flex items-center">
-                    {item.title}
-                  </h3>
-                  
-                  <div className="space-y-2.5 pt-3 border-t border-slate-700/60">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-slate-400 text-sm font-medium">Sessions</span>
-                      <span className="text-2xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+
+                  {/* Stats Section */}
+                  <div className="p-6 space-y-3">
+                    <div className="flex items-baseline justify-between mb-2">
+                      <span className="text-slate-400 text-sm font-semibold">Sessions</span>
+                      <span className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
                         {item.reach}
                       </span>
                     </div>
-                    <div className="flex items-center justify-between px-3 py-1.5 glass border border-emerald-500/30 rounded-lg">
-                      <span className="text-emerald-300 text-sm font-semibold">Growth</span>
-                      <span className="text-emerald-400 font-bold text-sm">{item.suffix}</span>
+                    
+                    <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-emerald-500/30 rounded-xl">
+                      <span className="text-emerald-300 text-sm font-bold">Growth</span>
+                      <span className="text-emerald-400 font-black text-base">{item.suffix}</span>
                     </div>
                   </div>
                 </div>
@@ -308,7 +413,7 @@ const Work = () => {
           </div>
         </div>
 
-        {/* Stats Section - More Compact */}
+        {/* Stats Section */}
         <div ref={statsRef} className="max-w-6xl mx-auto mb-16 px-4 sm:px-6 lg:px-8 fade-in-up">
           <div className="text-center mb-10">
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
@@ -353,7 +458,7 @@ const Work = () => {
           
           <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/40 shadow-2xl glow-emerald">
             <img 
-              src={t} 
+              src={SaleGraph} 
               alt="Growth Analytics Dashboard"
               className="w-full h-auto"
             />
@@ -361,7 +466,7 @@ const Work = () => {
           </div>
         </div>
 
-        {/* Traction Section - More Compact */}
+        {/* Traction Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center max-w-7xl mx-auto mb-16 px-4 sm:px-6 lg:px-8">
           <div className="space-y-6 fade-in-left">
             <div className="space-y-2">
@@ -400,7 +505,7 @@ const Work = () => {
             <div className="absolute -inset-3 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
             <div className="relative rounded-2xl overflow-hidden border-2 border-emerald-500/30 shadow-2xl">
               <img
-                src={traction}
+                src={Traction}
                 alt="₹23K Order Chandelier"
                 className="w-full h-auto"
               />
@@ -409,7 +514,7 @@ const Work = () => {
           </div>
         </div>
 
-        {/* Case Studies - More Compact */}
+        {/* Case Studies - REDESIGNED */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
           <div className="text-center mb-10 fade-in-up">
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-3">
@@ -424,54 +529,56 @@ const Work = () => {
             {caseStudies.map((study, i) => (
               <div 
                 key={i} 
-                className="group glass rounded-2xl overflow-hidden hover:scale-[1.02] transition-all duration-500 fade-in-up"
+                className="group relative rounded-2xl overflow-hidden hover:scale-[1.03] transition-all duration-500 fade-in-up shadow-xl cursor-pointer"
                 style={{ transitionDelay: `${i * 100}ms` }}
+                onClick={() => setSelectedCard(study.image)}
               >
-                {/* Image */}
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img 
-                    src={study.image} 
-                    alt={`${study.brand} Case Study`}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
-                  
-                  <div className="absolute top-3 left-3">
-                    <span className="px-3 py-1.5 bg-teal-500 backdrop-blur-sm rounded-full text-xs font-bold text-white shadow-lg">
-                      Case Study {study.number}
-                    </span>
+                {/* Border Glow */}
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-2xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
+                
+                {/* Card Content */}
+                <div className="relative bg-slate-900/95 rounded-2xl overflow-hidden border border-slate-800/50">
+                  {/* Image */}
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img 
+                      src={study.image} 
+                      alt={`${study.brand} Case Study`}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
+                    
+                    <div className="absolute top-3 right-3">
+                      <TrendingUp className="w-5 h-5 text-teal-400 drop-shadow-lg" />
+                    </div>
                   </div>
-                </div>
 
-                {/* Content */}
-                <div className="relative p-4">
-                  <div className="flex items-start justify-between mb-2">
-                    <h4 className="text-base font-bold text-white leading-tight flex-1">
+                  {/* Content */}
+                  <div className="relative p-4">
+                    <h4 className="text-base font-bold text-white leading-tight mb-1">
                       {study.brand}
                     </h4>
-                    <TrendingUp className="w-4 h-4 text-teal-400 flex-shrink-0 ml-2" />
-                  </div>
-                  
-                  <p className="text-slate-400 text-xs mb-3 min-h-[2.5rem]">
-                    {study.industry}
-                  </p>
+                    
+                    <p className="text-slate-400 text-xs mb-4">
+                      {study.industry}
+                    </p>
 
-                  <div className="space-y-2 pt-3 border-t border-slate-700/60">
-                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
-                      <span className="text-slate-400 text-xs font-medium">Total Sales</span>
-                      <span className="font-bold text-emerald-400 text-sm">{study.totalSales}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
-                      <span className="text-slate-400 text-xs font-medium">Spent</span>
-                      <span className="font-bold text-teal-400 text-sm">{study.amountSpent}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-1.5 px-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
-                      <span className="text-emerald-300 text-xs font-bold">ROAS</span>
-                      <span className="font-black text-emerald-400 text-base">{study.roas}</span>
-                    </div>
-                    <div className="flex justify-between items-center py-1.5 px-3 glass rounded-lg">
-                      <span className="text-slate-400 text-xs font-medium">Orders</span>
-                      <span className="font-bold text-teal-400 text-sm">{study.orders}</span>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center py-2 px-3 glass rounded-lg">
+                        <span className="text-slate-400 text-xs font-medium">Total Sales</span>
+                        <span className="font-bold text-emerald-400 text-sm">{study.totalSales}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 px-3 glass rounded-lg">
+                        <span className="text-slate-400 text-xs font-medium">Spent</span>
+                        <span className="font-bold text-teal-400 text-sm">{study.amountSpent}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 px-3 bg-emerald-500/10 rounded-lg border border-emerald-500/30">
+                        <span className="text-emerald-300 text-xs font-bold">ROAS</span>
+                        <span className="font-black text-emerald-400 text-base">{study.roas}</span>
+                      </div>
+                      <div className="flex justify-between items-center py-2 px-3 glass rounded-lg">
+                        <span className="text-slate-400 text-xs font-medium">Orders</span>
+                        <span className="font-bold text-teal-400 text-sm">{study.orders}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -480,7 +587,7 @@ const Work = () => {
           </div>
         </div>
 
-        {/* CTA - More Compact */}
+        {/* CTA */}
         <div className="text-center mt-16 fade-in-up">
           <a
             href="#contact"
