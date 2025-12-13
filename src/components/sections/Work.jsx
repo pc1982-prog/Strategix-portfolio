@@ -4,10 +4,10 @@ import Trading1 from "../../assets/images/Trading1.jpeg"
 import Trading2 from "../../assets/images/Trading2.jpeg"
 import Trading3 from "../../assets/images/Trading3.jpeg"
 import SaleGraph from "../../assets/images/SaleGraph.jpeg"
-import Traction from "../../assets/images/Strategix- Portfolio (27).png"
-import case3 from "../../assets/images/CaseStudy3.jpeg"
+import Traction from "../../assets/images/Strategix- Portfolio (29).png"
+import case3 from "../../assets/images/WhatsApp Image 2025-12-08 at 1.53.53 PM.jpeg"
 import case7 from "../../assets/images/CaseStudy7.jpeg"
-import case9 from "../../assets/images/CaseStudy9.jpeg"
+import case9 from "../../assets/images/WhatsApp Image 2025-12-08 at 1.53.53 PM (1).jpeg"
 import case10 from "../../assets/images/CaseStudy10.jpeg"
 
 const Work = () => {
@@ -59,8 +59,12 @@ const Work = () => {
         
         if (id.includes('investment')) {
           element.textContent = `${prefix}${(value / 1000).toFixed(value < 10000 ? 1 : 0)}K${suffix}`;
+        } else if (id === 'stat-conversion') {
+          element.textContent = `${prefix}${(value / 10).toFixed(1)}${suffix}`;
+        } else if (id === 'stat-sales') {
+          element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
         } else {
-          element.textContent = `${value}${suffix}`;
+          element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
         }
         
         if (progress < 1) {
@@ -75,32 +79,36 @@ const Work = () => {
     animateValue('investment-main', 0, 23000, 2500, '₹');
     animateValue('investment-card', 0, 23000, 2500, '₹');
     animateValue('delight-card', 0, 100, 2200, '', '%');
+    animateValue('stat-sessions', 0, 10900, 2500, '');
+    animateValue('stat-sales', 0, 34917, 2500, '$');
+    animateValue('stat-orders', 0, 322, 2200, '');
+    animateValue('stat-conversion', 0, 29, 2300, '', '%');
   };
 
   const performanceCards = [
     { 
-      title: "Fair Book Deals - Dec 1", 
-      reach: "577", 
-      suffix: "Sessions (+15%)",
-      badge: "Sales $8,644.87", 
+      title: "Books & Publishing Brand", 
+      reach: "$8,644.87", 
+      suffix: "Sales (+15%)",
+      badge: "577 Sessions", 
       icon: MessageSquare,
       gradient: "from-emerald-500 to-teal-600",
       image: Trading3
     },
     { 
-      title: "Sterling International", 
-      reach: "14.06K", 
-      suffix: "Sessions (+3%)",
-      badge: "Sales ₹144,356", 
+      title: "Premium Lifestyle Brand", 
+      reach: "₹144,356", 
+      suffix: "Sales (+3%)",
+      badge: "14.06K Sessions", 
       icon: Zap,
       gradient: "from-teal-500 to-cyan-600",
       image: Trading1
     },
     { 
-      title: "Fair Book Deals - Nov 28", 
-      reach: "646", 
-      suffix: "Sessions (+36%)",
-      badge: "Sales $6,941.66", 
+      title: "E-commerce Book Store", 
+      reach: "$6,941.66", 
+      suffix: "Sales (+36%)",
+      badge: "646 Sessions", 
       icon: Target,
       gradient: "from-emerald-600 to-teal-500",
       image: Trading2
@@ -110,7 +118,7 @@ const Work = () => {
   const caseStudies = [
     { 
       number: "10",
-      brand: "Rishbhirich India",
+      brand: "",
       industry: "Online Silver Jewellery Brand",
       totalSales: "₹520,000",
       amountSpent: "₹107,000",
@@ -120,7 +128,7 @@ const Work = () => {
     },
     { 
       number: "7",
-      brand: "Muvazoz",
+      brand: "",
       industry: "Premium Athleisure Brand",
       totalSales: "₹1.06M",
       amountSpent: "₹137.43K",
@@ -130,7 +138,7 @@ const Work = () => {
     },
     { 
       number: "3",
-      brand: "Ogio",
+      brand: "",
       industry: "Fashion & Apparel Industry",
       totalSales: "₹317.31K",
       amountSpent: "₹49.79K",
@@ -140,7 +148,7 @@ const Work = () => {
     },
     { 
       number: "9",
-      brand: "Pazzion India",
+      brand: "",
       industry: "Online Luxury Brand",
       totalSales: "₹130.29K",
       amountSpent: "₹25.83K",
@@ -396,7 +404,7 @@ const Work = () => {
                   {/* Stats Section */}
                   <div className="p-6 space-y-3">
                     <div className="flex items-baseline justify-between mb-2">
-                      <span className="text-slate-400 text-sm font-semibold">Sessions</span>
+                      <span className="text-slate-400 text-sm font-semibold">Total Sales</span>
                       <span className="text-3xl font-black bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
                         {item.reach}
                       </span>
@@ -417,22 +425,25 @@ const Work = () => {
         <div ref={statsRef} className="max-w-6xl mx-auto mb-16 px-4 sm:px-6 lg:px-8 fade-in-up">
           <div className="text-center mb-10">
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Your Growth Graph Will Always Be
+              Real Impact, Real Numbers
             </h3>
+            <p className="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-6">
+              Data-driven performance marketing that delivers measurable growth across all key metrics
+            </p>
             <div className="inline-flex items-center gap-3 px-6 sm:px-8 py-3 sm:py-4 glass border-2 border-emerald-500/50 rounded-2xl glow-emerald">
-              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
-                UPSTREAM
+              <p className="text-2xl sm:text-3xl md:text-4xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 bg-clip-text text-transparent">
+                Performance That Moves Upstream
               </p>
-              <span className="text-3xl sm:text-4xl md:text-5xl">📈</span>
+              <span className="text-2xl sm:text-3xl md:text-4xl">📈</span>
             </div>
           </div>
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 mb-10">
             {[
-              { label: "Sessions", value: "10,900", prefix: "₹", delta: "+20%", color: "emerald" },
-              { label: "Total Sales", value: "34,917", prefix: "$", delta: "+50%", color: "teal" },
-              { label: "Orders", value: "322", prefix: "", delta: "+44%", color: "emerald" },
-              { label: "Conversion", value: "2.9%", prefix: "", delta: "+19%", color: "teal" },
+              { label: "Sessions", value: "10,900", prefix: "", delta: "+20%", color: "emerald", id: "stat-sessions" },
+              { label: "Total Sales", value: "34,917", prefix: "$", delta: "+50%", color: "teal", id: "stat-sales" },
+              { label: "Orders", value: "322", prefix: "", delta: "+44%", color: "emerald", id: "stat-orders" },
+              { label: "Conversion", value: "2.9", prefix: "", suffix: "%", delta: "+19%", color: "teal", id: "stat-conversion" },
             ].map((s, i) => (
               <div 
                 key={i} 
@@ -445,7 +456,7 @@ const Work = () => {
                     {s.label}
                   </p>
                   <p className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-2">
-                    {s.prefix}{s.value}
+                    <span id={s.id}>{s.prefix}0{s.suffix || ''}</span>
                   </p>
                   <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-${s.color}-500/20 border border-${s.color}-500/40 rounded-full`}>
                     <TrendingUp size={14} className={`text-${s.color}-400`} />
@@ -479,14 +490,14 @@ const Work = () => {
             </div>
 
             <p className="text-base md:text-lg text-emerald-100/90 leading-relaxed">
-              Incorporated a bespoke <strong className="text-emerald-300 font-black">₹23K chandelier</strong> into a luxurious living room design — turning a single product into a conversation-starting centerpiece.
+              Incorporated a bespoke <strong className="text-emerald-300 font-black">₹23K chandelier</strong> into a luxurious living room design – turning a single product into a conversation-starting centerpiece.
             </p>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="relative glass rounded-2xl p-5 text-center overflow-hidden group hover:scale-[1.02] transition-transform duration-500">
                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-all duration-500" />
                 <div className="relative">
-                  <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">Investment</p>
+                  <p className="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">Chandelier Cost</p>
                   <p className="text-3xl md:text-4xl lg:text-5xl font-black text-white" id="investment-card">₹0K</p>
                 </div>
               </div>
@@ -542,7 +553,7 @@ const Work = () => {
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img 
                       src={study.image} 
-                      alt={`${study.brand} Case Study`}
+                      alt={`${study.industry} Case Study`}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent" />
@@ -554,9 +565,11 @@ const Work = () => {
 
                   {/* Content */}
                   <div className="relative p-4">
-                    <h4 className="text-base font-bold text-white leading-tight mb-1">
-                      {study.brand}
-                    </h4>
+                    {study.brand && (
+                      <h4 className="text-base font-bold text-white leading-tight mb-1">
+                        {study.brand}
+                      </h4>
+                    )}
                     
                     <p className="text-slate-400 text-xs mb-4">
                       {study.industry}
