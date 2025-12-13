@@ -121,7 +121,7 @@ const Work = () => {
       brand: "",
       industry: "Online Silver Jewellery Brand",
       totalSales: "₹4,83,343",
-      amountSpent: "₹1,06,189.26",
+      amountSpent: "₹106189",
       roas: "4.5x+",
       orders: "394",
       image: case7
