@@ -10,6 +10,7 @@ import Clients from "./components/sections/Clients.jsx";
 import Contact from "./components/sections/Contact.jsx";
 import { Header } from "./components/layout/Header.jsx";
 import Footer from "./components/layout/Footer.jsx";
+import AIStudio from "./components/sections/AiStudio";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Services />
         <Mission />
         <Work />
+        <AIStudio/>
         <Clients />
         <Contact />
       </main>

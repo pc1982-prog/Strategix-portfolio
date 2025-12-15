@@ -134,8 +134,8 @@ const STRATEGIX_DATA = {
   contact: {
     heading: "GET IN TOUCH WITH US:",
     team: [
-      { name: "ABHISHEK GANDHI", phone: "8595519533", email: "mail.marketingrules@gmail.com" },
-      { name: "SUYASH TYAGI", phone: "9999241625", email: "mail.strategix@gmail.com" }
+      { name: "ABHISHEK GANDHI", phone: "8595519533", email: "abhishek@strategixworks.com" },
+      { name: "SUYASH TYAGI", phone: "9999241625", email: "suyash@strategixworks.com" }
     ]
   },
   cta: {
