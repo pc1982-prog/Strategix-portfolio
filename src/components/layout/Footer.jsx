@@ -39,6 +39,12 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-bold mb-4 text-white">Get In Touch</h4>
             <div className="space-y-3">
+            <div className="text-slate-400 text-sm">
+                <div className="font-semibold text-white mb-1">General Inquiries</div>
+                <a href="mailto:marketing@strategixworks.com" className="hover:text-emerald-400 transition-colors block text-xs">
+                  marketing@strategixworks.com
+                </a>
+              </div>
               {STRATEGIX_DATA.contact.team.map((member, index) => (
                 <div key={index} className="text-slate-400 text-sm">
                   <div className="font-semibold text-white mb-1">{member.name}</div>

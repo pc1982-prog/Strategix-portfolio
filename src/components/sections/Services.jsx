@@ -7,6 +7,7 @@ import {
   BarChart3,
   Rocket,
   Zap,
+  Sparkles,
   X,
 } from "lucide-react";
 
@@ -52,7 +53,7 @@ const services = [
     title: "Web Development",
     shortDesc: "Build Digital Products",
     fullDesc:
-      "We build fast, accessible websites and apps optimized for conversion and retention — fast loading pages, clear CTAs and experiment hooks to continuously improve outcomes.",
+      "We build fast, accessible websites and apps optimized for conversion and retention – fast loading pages, clear CTAs and experiment hooks to continuously improve outcomes.",
     img: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
     gradient: "from-blue-500 to-purple-600",
     colorHex: "#3B82F6",
@@ -63,7 +64,7 @@ const services = [
     title: "Data Analytics",
     shortDesc: "Make Data-Driven Decisions",
     fullDesc:
-      "Custom indicators and dashboards — combine historical data, signals and monitoring to help users make better data-driven decisions and optimize performance.",
+      "Custom indicators and dashboards – combine historical data, signals and monitoring to help users make better data-driven decisions and optimize performance.",
     img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
     gradient: "from-pink-500 to-rose-600",
     colorHex: "#EC4899",
@@ -74,11 +75,22 @@ const services = [
     title: "Growth Strategy",
     shortDesc: "Scale Your Business",
     fullDesc:
-      "We design processes, automation and channel mixes that are repeatable and scalable — so growth isn't one-off but sustainable across months and years.",
+      "We design processes, automation and channel mixes that are repeatable and scalable – so growth isn't one-off but sustainable across months and years.",
     img: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80",
     gradient: "from-indigo-500 to-blue-600",
     colorHex: "#6366F1",
     iconKey: "rocket",
+  },
+  {
+    key: "ai-studio",
+    title: "Studio AI",
+    shortDesc: "Create with AI",
+    fullDesc:
+      "Our AI Studio creates stunning videos, original music, and unique visuals using cutting-edge AI technology. From YouTube content to marketing materials, we bring your creative vision to life.",
+    img: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
+    gradient: "from-violet-500 to-purple-600",
+    colorHex: "#8B5CF6",
+    iconKey: "sparkles",
   },
   {
     key: "ai-agentic",
@@ -101,6 +113,7 @@ const ICON_MAP = {
   "bar-chart": BarChart3,
   rocket: Rocket,
   zap: Zap,
+  sparkles: Sparkles,
 };
 
 export const Services=() => {
@@ -260,7 +273,7 @@ export const Services=() => {
                 const Icon = ICON_MAP[s.iconKey] || TrendingUp;
                 return (
                   <button
-                    key={s.key}
+                    key={s.key + '-' + i}
                     onClick={() => openModal(s)}
                     className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 focus:outline-none"
                     aria-label={s.title}
@@ -314,12 +327,12 @@ export const Services=() => {
         </div>
 
         {/* Mobile grid (keeps professional styling) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:hidden">
+          {services.map((s, idx) => {
             const Icon = ICON_MAP[s.iconKey] || TrendingUp;
             return (
               <button
-                key={s.key}
+                key={s.key + '-mobile-' + idx}
                 onClick={() => openModal(s)}
                 className="group relative bg-slate-800/50 border border-slate-700/40 rounded-2xl p-6 hover:border-emerald-500/40 transition-all hover:shadow-lg hover:shadow-emerald-500/10"
               >
@@ -360,7 +373,21 @@ export const Services=() => {
                     <X size={16} className="text-white" />
                   </button>
                 </div>
-                <p className="text-slate-300 leading-relaxed mb-6">{selectedService.fullDesc}</p>
+                <p className="text-slate-300 leading-relaxed mb-6">
+                  {selectedService.fullDesc}
+                  {selectedService.key === 'ai-studio' && (
+                    <span className="block mt-4">
+                      <a 
+                        href="https://youtube.com/@strategix-yt?si=9G8bX6r6o8DtJnkv" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-emerald-400 hover:text-emerald-300 underline font-semibold"
+                      >
+                        Visit our YouTube Channel →
+                      </a>
+                    </span>
+                  )}
+                </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => {
