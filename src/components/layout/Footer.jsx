@@ -1,20 +1,24 @@
 import React from 'react';
 import { STRATEGIX_DATA } from '../../data/siteContent';
-
+import logo from "../../assets/images/STRATEGIX LOGO.png";
 const Footer = () => {
   return (
     <footer className="relative border-t border-emerald-500/20 py-12 bg-slate-950/95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-emerald-600 to-teal-600 rounded-lg flex items-center justify-center">
-                <span className="text-xl font-bold text-white">S</span>
-              </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-                {STRATEGIX_DATA.brand.name}
-              </span>
+          <button
+            onClick={() => handleNavClick("home")}
+            className="flex items-center group"
+          >
+            <div className="flex items-center">
+              <img
+                src={logo}
+                alt="Strategix Logo"
+                className="w-28 h-28 object-contain"
+              />
             </div>
+          </button>
             <p className="text-slate-400 leading-relaxed">{STRATEGIX_DATA.brand.tagline}</p>
           </div>
 
