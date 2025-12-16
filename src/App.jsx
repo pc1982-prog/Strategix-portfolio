@@ -8,7 +8,7 @@ import {Mission} from "./components/sections/Mission.jsx";
 import Work from "./components/sections/Work.jsx";
 import Clients from "./components/sections/Clients.jsx";
 import Contact from "./components/sections/Contact.jsx";
-import { Header } from "./components/layout/Header.jsx";
+import  Header  from "./components/layout/Header.jsx";
 import Footer from "./components/layout/Footer.jsx";
 import AIStudio from "./components/sections/AiStudio";
 

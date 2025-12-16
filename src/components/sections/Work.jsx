@@ -3,7 +3,7 @@ import { ArrowUpRight, TrendingUp, MessageSquare, Zap, Target, Sparkles, X } fro
 import Trading1 from "../../assets/images/Trading1.jpeg"
 import Trading2 from "../../assets/images/Trading2.jpeg"
 import Trading3 from "../../assets/images/Trading3.jpeg"
-import SaleGraph from "../../assets/images/SaleGraph.jpeg"
+import SaleGraph from "../../assets/images/WhatsApp Image 2025-12-16 at 2.17.33 AM.jpeg"
 import Traction from "../../assets/images/Strategix- Portfolio (29).png"
 import case3 from "../../assets/images/WhatsApp Image 2025-12-08 at 1.53.53 PM.jpeg"
 import case7 from "../../assets/images/CaseStudy7.jpeg"
@@ -46,6 +46,44 @@ const Work = () => {
     return () => observer.disconnect();
   }, []);
 
+  // const startCounters = () => {
+  //   const animateValue = (id, start, end, duration, prefix = '', suffix = '') => {
+  //     const element = document.getElementById(id);
+  //     if (!element) return;
+
+  //     const startTime = performance.now();
+  //     const step = (currentTime) => {
+  //       const elapsed = currentTime - startTime;
+  //       const progress = Math.min(elapsed / duration, 1);
+  //       const value = Math.floor(start + (end - start) * easeOutQuart(progress));
+        
+  //       if (id.includes('investment')) {
+  //         element.textContent = `${prefix}${(value / 1000).toFixed(value < 10000 ? 1 : 0)}K${suffix}`;
+  //       } else if (id === 'stat-conversion') {
+  //         element.textContent = `${prefix}${(value / 10).toFixed(1)}${suffix}`;
+  //       } else if (id === 'stat-sales') {
+  //         element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
+  //       } else {
+  //         element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
+  //       }
+        
+  //       if (progress < 1) {
+  //         requestAnimationFrame(step);
+  //       }
+  //     };
+  //     requestAnimationFrame(step);
+  //   };
+
+  //   const easeOutQuart = (t) => 1 - Math.pow(1 - t, 4);
+
+  //   animateValue('investment-main', 0, 23000, 2500, '₹');
+  //   animateValue('investment-card', 0, 23000, 2500, '₹');
+  //   animateValue('delight-card', 0, 100, 2200, '', '%');
+  //   animateValue('stat-sessions', 0, 14.54, 2500, '');
+  //   animateValue('stat-sales', 0, 40267, 2500, '$');
+  //   animateValue('stat-orders', 0, 361, 2200, '');
+  //   animateValue('stat-conversion', 0, 6.23, 2300, '', '%');
+  // };
   const startCounters = () => {
     const animateValue = (id, start, end, duration, prefix = '', suffix = '') => {
       const element = document.getElementById(id);
@@ -55,16 +93,16 @@ const Work = () => {
       const step = (currentTime) => {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
-        const value = Math.floor(start + (end - start) * easeOutQuart(progress));
+        const value = start + (end - start) * easeOutQuart(progress);
         
         if (id.includes('investment')) {
-          element.textContent = `${prefix}${(value / 1000).toFixed(value < 10000 ? 1 : 0)}K${suffix}`;
-        } else if (id === 'stat-conversion') {
-          element.textContent = `${prefix}${(value / 10).toFixed(1)}${suffix}`;
+          element.textContent = `${prefix}${(Math.floor(value) / 1000).toFixed(value < 10000 ? 1 : 0)}K${suffix}`;
+        } else if (id === 'stat-conversion' || id === 'stat-sessions') {
+          element.textContent = `${prefix}${value.toFixed(2)}${suffix}`;
         } else if (id === 'stat-sales') {
-          element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
+          element.textContent = `${prefix}${Math.floor(value).toLocaleString()}${suffix}`;
         } else {
-          element.textContent = `${prefix}${value.toLocaleString()}${suffix}`;
+          element.textContent = `${prefix}${Math.floor(value).toLocaleString()}${suffix}`;
         }
         
         if (progress < 1) {
@@ -79,18 +117,19 @@ const Work = () => {
     animateValue('investment-main', 0, 23000, 2500, '₹');
     animateValue('investment-card', 0, 23000, 2500, '₹');
     animateValue('delight-card', 0, 100, 2200, '', '%');
-    animateValue('stat-sessions', 0, 10900, 2500, '');
-    animateValue('stat-sales', 0, 34917, 2500, '$');
-    animateValue('stat-orders', 0, 322, 2200, '');
-    animateValue('stat-conversion', 0, 29, 2300, '', '%');
+    animateValue('stat-sessions', 0, 14.54, 2500, '', 'x');
+    animateValue('stat-sales', 0, 40267, 2500, '$');
+    animateValue('stat-orders', 0, 361, 2200, '');
+    animateValue('stat-conversion', 0, 6.23, 2300, '', '%');
   };
+
 
   const performanceCards = [
     { 
       title: "Books & Publishing Brand", 
       reach: "$4,864.87", 
       suffix: "Sales (+86%)",
-      badge: "577 Sessions", 
+      badge: "41 Orders", 
       icon: MessageSquare,
       gradient: "from-emerald-500 to-teal-600",
       image: Trading3
@@ -99,7 +138,7 @@ const Work = () => {
       title: "Premium Lifestyle Brand", 
       reach: "₹144,356", 
       suffix: "Sales (+16%)",
-      badge: "14.06K Sessions", 
+      badge: "924 Orders", 
       icon: Zap,
       gradient: "from-teal-500 to-cyan-600",
       image: Trading1
@@ -108,7 +147,7 @@ const Work = () => {
       title: "E-commerce Book Store", 
       reach: "$6,941.66", 
       suffix: "Sales (+277%)",
-      badge: "646 Sessions", 
+      badge: "54 Orders", 
       icon: Target,
       gradient: "from-emerald-600 to-teal-500",
       image: Trading2
@@ -440,10 +479,10 @@ const Work = () => {
           
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 mb-10">
             {[
-              { label: "Sessions", value: "10,900", prefix: "", delta: "+20%", color: "emerald", id: "stat-sessions" },
-              { label: "Total Sales", value: "34,917", prefix: "$", delta: "+50%", color: "teal", id: "stat-sales" },
-              { label: "Orders", value: "322", prefix: "", delta: "+44%", color: "emerald", id: "stat-orders" },
-              { label: "Conversion", value: "2.9", prefix: "", suffix: "%", delta: "+19%", color: "teal", id: "stat-conversion" },
+              { label: "ROAS", value: "14.54x", prefix: "", delta: "+20%", color: "emerald", id: "stat-sessions" },
+              { label: "Total Sales", value: "40,267", prefix: "$", delta: "+42%", color: "teal", id: "stat-sales" },
+              { label: "Orders", value: "361", prefix: "", delta: "+52%", color: "emerald", id: "stat-orders" },
+              { label: "Conversion", value: "6.23", prefix: "", suffix: "%", delta: "+72%", color: "teal", id: "stat-conversion" },
             ].map((s, i) => (
               <div 
                 key={i} 

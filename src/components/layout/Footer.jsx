@@ -1,6 +1,6 @@
 import React from 'react';
 import { STRATEGIX_DATA } from '../../data/siteContent';
-import logo from "../../assets/images/STRATEGIX LOGO.png";
+import logo from "../../assets/images/logoStrategix.png";
 const Footer = () => {
   return (
     <footer className="relative border-t border-emerald-500/20 py-12 bg-slate-950/95">
@@ -15,7 +15,7 @@ const Footer = () => {
               <img
                 src={logo}
                 alt="Strategix Logo"
-                className="w-28 h-28 object-contain"
+                className="w-30 h-30 object-contain"
               />
             </div>
           </button>
