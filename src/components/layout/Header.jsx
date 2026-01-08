@@ -43,7 +43,7 @@ const Header = () => {
       <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex  items-center space-x-3 text-slate-300">
+            <div className="flex items-center space-x-3 text-slate-300">
               <HiTrendingUp className="text-emerald-400" size={24} />
               <span className="font-medium text-base">Total sales</span>
               <span className="text-emerald-400 font-bold text-xl">$40,267</span>
@@ -51,17 +51,7 @@ const Header = () => {
             
             <div className="flex items-center space-x-4">
               <a
-                href="https://wa.me/8595519533"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/30"
-              >
-                <FaWhatsapp size={20} />
-                <span className="font-medium">WhatsApp</span>
-              </a>
-              
-              <a
-                href="tel:+919821781788"
+                href="tel:+918595519533"
                 className="flex items-center space-x-2 text-slate-300 hover:text-emerald-400 transition-colors"
               >
                 <Phone size={18} />
@@ -72,24 +62,24 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Top Bar - Only WhatsApp Button Centered */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
-        <div className="flex justify-center items-center h-14 px-4">
-          <a
-            href="https://wa.me/919821781788"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full transition-all duration-300 shadow-lg shadow-emerald-500/30"
-          >
-            <FaWhatsapp size={20} />
-            <span className="font-semibold">WhatsApp</span>
-          </a>
-        </div>
-      </div>
+
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href="https://wa.me/918595519533"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-110 animate-bounce-slow"
+        style={{
+          animation: 'bounce-slow 2s infinite'
+        }}
+      >
+        <FaWhatsapp size={32} />
+      </a>
 
       {/* Main Header */}
       <header
-        className={`fixed left-0 right-0 z-40 transition-all duration-500 lg:top-16 top-14 ${
+        className={`fixed left-0 right-0 z-40 transition-all duration-500 lg:top-16 top-0 ${
           scrolled
             ? "bg-slate-950/98 backdrop-blur-xl shadow-lg shadow-emerald-500/10 border-b border-emerald-500/20"
             : "bg-slate-950/90 backdrop-blur-sm"
@@ -101,15 +91,13 @@ const Header = () => {
               onClick={() => handleNavClick("home")}
               className="flex items-center group"
             >
-        
               <div className="flex items-center">
-              <img
-                src={logo}
-                alt="Strategix Logo"
-                className="w-28 h-28 object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
-              />
-            </div>
-             
+                <img
+                  src={logo}
+                  alt="Strategix Logo"
+                  className="w-28 h-28 object-contain brightness-0 invert opacity-90 group-hover:opacity-100 transition-opacity"
+                />
+              </div>
             </button>
 
             {/* Desktop Navigation */}
@@ -165,6 +153,17 @@ const Header = () => {
           )}
         </nav>
       </header>
+
+      <style jsx>{`
+        @keyframes bounce-slow {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-10px);
+          }
+        }
+      `}</style>
     </>
   );
 };
