@@ -45,15 +45,39 @@ export const About = () => {
           </div>
 
           <div className="order-1 lg:order-2">
-            <div className="relative rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
+      <div className="relative h-[450px] sm:h-[500px] lg:h-[550px]">
+        
+        {/* Main Image - Left & Top (Larger) */}
+        <div className="absolute top-0 left-0 w-[75%] sm:w-[72%] z-10">
+          <div className="relative rounded-2xl overflow-hidden border border-emerald-500/20 shadow-2xl">
+            <img
+              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=800&fit=crop"
+              alt="Team collaboration"
+              className="w-full h-80 sm:h-96 lg:h-[450px] object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+          </div>
+        </div>
+
+        {/* Second Image - Right & Bottom (Smaller with Gradient Border) */}
+        <div className="absolute bottom-0 right-0 w-[50%] sm:w-[48%] z-20">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl" style={{
+            background: 'linear-gradient(to bottom,  #0f172a)',
+            padding: '4px'
+          }}>
+            <div className="relative rounded-xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&h=800&fit=crop"
-                alt="Team collaboration"
-                className="w-full h-96 object-cover"
+                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&h=800&fit=crop"
+                alt="Team meeting"
+                className="w-full h-56 sm:h-64 lg:h-72 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+              <div className="absolute inset-0 from-slate-950 " />
             </div>
           </div>
+        </div>
+
+      </div>
+    </div>
         </div>
       </div>
     </section>
