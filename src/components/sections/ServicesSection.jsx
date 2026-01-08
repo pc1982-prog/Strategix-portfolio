@@ -15,7 +15,7 @@ export default function BrandingDesignPage() {
         'Brand Experience',
         'Brand Refresh or Rebranding'
       ],
-      image: 'https://images.unsplash.com/photo-1634942537034-2531766767d1?w=600&h=600&fit=crop'
+      image: 'https://media.istockphoto.com/id/2222068029/photo/brand-marketing-strategy-analysis.webp?a=1&b=1&s=612x612&w=0&k=20&c=SaYdTvJf5ym_-KaID9tmFfpNsifDg-ZcN35JGB7BqvQ='
     },
     'UI/UX Design': {
       description: 'We create intuitive and engaging user experiences that delight your customers. Our UI/UX design process focuses on user research, wireframing, prototyping, and testing to ensure your digital products are both beautiful and functional.',
@@ -51,7 +51,7 @@ export default function BrandingDesignPage() {
         'Social Media Advertising',
         'Analytics & Reporting'
       ],
-      image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=600&fit=crop'
+      image: 'https://images.unsplash.com/photo-1683721003111-070bcc053d8b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c29jaWFsJTIwbWVkaWElMjBtYXJrZXRpbmd8ZW58MHx8MHx8fDA%3D'
     },
     'Performance Marketing': {
       description: 'Drive measurable growth with data-driven performance marketing campaigns. We optimize every channel and touchpoint to maximize your ROI, from paid search to programmatic advertising and beyond.',
@@ -75,7 +75,7 @@ export default function BrandingDesignPage() {
         'Local SEO',
         'SEO Analytics & Reporting'
       ],
-      image: 'https://images.unsplash.com/photo-1571721795195-a2ca2d3370a9?w=600&h=600&fit=crop'
+      image: 'https://images.unsplash.com/photo-1686061594225-3e92c0cd51b0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHNlb3xlbnwwfHwwfHx8MA%3D%3D'
     }
   };
 
