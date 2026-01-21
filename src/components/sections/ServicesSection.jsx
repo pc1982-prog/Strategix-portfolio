@@ -83,7 +83,7 @@ export default function BrandingDesignPage() {
   const currentContent = contentData[activeItem];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 flex items-center py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8">
+    <div id='ServicesSection' className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 flex items-center py-8 sm:py-12 md:py-16 px-4 sm:px-6 md:px-8">
       <div className="w-full max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="mb-8 sm:mb-12 md:mb-16 text-center px-4">

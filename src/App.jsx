@@ -15,6 +15,8 @@ import AIStudio from "./components/sections/AiStudio";
 import ServicesSection from "./components/sections/ServicesSection";
 import Card from "./components/sections/Card";
 import ClientFeedbacks from "./components/sections/Feedback";
+import CTABanner from "./components/sections/CtaBanner";
+
 
 const App = () => {
   return (
@@ -24,6 +26,7 @@ const App = () => {
         <Hero />
         <Stats />
         <About />
+      <CTABanner/>
         <Services />
         <Mission />
         <Card />

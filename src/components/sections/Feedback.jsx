@@ -1,8 +1,49 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function ClientFeedbacks() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Touch handling for mobile swipe
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      handleNext();
+    }
+    if (isRightSwipe) {
+      handlePrev();
+    }
+  };
 
   const feedbacks = [
     {
@@ -64,7 +105,7 @@ export default function ClientFeedbacks() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 to-slate-900 flex items-center justify-center px-4 py-12 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto">
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-8 lg:gap-12">
           {/* Left Side - Heading */}
@@ -78,31 +119,18 @@ export default function ClientFeedbacks() {
           {/* Right Side - Cards Container with Fixed Width */}
           <div className="flex-1 w-full lg:max-w-3xl">
             {/* Cards Background Container */}
-            <div className="bg-gradient-to-b from-slate-800/40 to-slate-900/40 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm relative">
+            <div className="bg-gradient-to-b from-slate-800/40 to-slate-900/40 rounded-3xl p-4 sm:p-6 lg:p-8 backdrop-blur-sm relative"
+                 onTouchStart={isMobile ? onTouchStart : undefined}
+                 onTouchMove={isMobile ? onTouchMove : undefined}
+                 onTouchEnd={isMobile ? onTouchEnd : undefined}
+            >
               
-              {/* Left Arrow - Only on Small Devices */}
-              <button
-                onClick={handlePrev}
-                className="lg:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-2 shadow-lg transition-all"
-                aria-label="Previous feedback"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              {/* Right Arrow - Only on Small Devices */}
-              <button
-                onClick={handleNext}
-                className="lg:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-2 shadow-lg transition-all"
-                aria-label="Next feedback"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
               {/* Cards Viewport - Infinite Loop */}
               <div className="relative overflow-hidden mb-4 sm:mb-6">
                 <div 
                   className="flex transition-transform duration-700 ease-in-out"
                   style={{
-                    transform: `translateX(-${activeIndex * (window.innerWidth < 640 ? 100 : 50)}%)`
+                    transform: `translateX(-${activeIndex * (isMobile ? 100 : 50)}%)`
                   }}
                 >
                   {/* Render cards in a loop - show original array + first card again for seamless loop */}
@@ -115,12 +143,12 @@ export default function ClientFeedbacks() {
                       }}
                       className="w-full sm:w-1/2 flex-shrink-0 px-2 sm:px-3 cursor-pointer"
                     >
-                      <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl min-h-[260px] sm:min-h-[280px] flex flex-col justify-between hover:shadow-emerald-500/20 transition-all">
-                        <p className="text-slate-700 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
+                      <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl min-h-[280px] sm:min-h-[280px] flex flex-col justify-between hover:shadow-emerald-500/20 transition-all">
+                        <p className="text-slate-700 text-[15px] sm:text-base leading-relaxed mb-4 sm:mb-6">
                           {feedback.text}
                         </p>
-                        <div className="flex items-center gap-2 sm:gap-3">
-                          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-3 sm:border-4 border-emerald-500 flex-shrink-0">
+                        <div className="flex items-center gap-3 sm:gap-3">
+                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-3 sm:border-4 border-emerald-500 flex-shrink-0">
                             <img 
                               src={feedback.avatar} 
                               alt={feedback.name}

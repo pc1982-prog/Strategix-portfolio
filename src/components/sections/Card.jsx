@@ -1,6 +1,15 @@
 import React from 'react';
 
 export default function LegitGlobal() {
+    const handleScroll = () => {
+    const el = document.getElementById('contact');
+    if (el) {
+      const offset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
+  };
   const cards = [
     {
         title: "Modern Digital Services",
@@ -37,7 +46,7 @@ export default function LegitGlobal() {
           <p className="text-xl text-slate-400 max-w-4xl mx-auto mb-10">
             What Sets Us Apart Is Our Passion For Digital Marketing And Our Commitment To Delivering Exceptional Results.
           </p>
-          <button className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-10 py-4 rounded-full text-lg font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl">
+          <button onClick={handleScroll}  className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-10 py-4 rounded-full text-lg font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl cursor-pointer">
             GET A FREE CONSULTATION →
           </button>
         </div>

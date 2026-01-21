@@ -2,8 +2,8 @@
 import React from "react";
 import { ChevronDown, ArrowRight } from "lucide-react";
 import { STRATEGIX_DATA } from "../../data/siteContent";
-import LightRays from "../hero/LightRays";
 import { TypeWriter } from "../ui/TypeWriter";
+import video from "../../assets/images/videos.mp4"
 
 export const Hero = () => {
   return (
@@ -11,20 +11,21 @@ export const Hero = () => {
       id="home"
       className=" relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"
     >
-      {/* Subtle light rays (soft, low opacity) */}
-      <LightRays
-        raysOrigin="top-center"
-        raysColor="#4F8FFD"
-        raysSpeed={0.9}
-        lightSpread={0.45}
-        rayLength={60}
-        pulsating={true}
-        followMouse={true}
-        mouseInfluence={0.06}
-        noiseAmount={0.02}
-        distortion={0.01}
-        className="opacity-80"
-      />
+      {/* Full Screen Video Background */}
+      <div className="absolute inset-0 w-full h-full flex items-center justify-center overflow-hidden">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="min-w-full min-h-full w-auto h-auto object-cover"
+          src={video}
+        >
+        </video>
+       
+        {/* Subtle dark overlay for text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-950/60" />
+      </div>
 
       {/* soft behind-glow */}
       <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-[420px] h-[420px] rounded-full blur-[120px] bg-[#16355b]/20 pointer-events-none" />

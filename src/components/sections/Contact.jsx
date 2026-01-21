@@ -1,30 +1,93 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Phone, Mail } from 'lucide-react';
-import ShinyText from '../ui/ShinyText';
 import { STRATEGIX_DATA } from '../../data/siteContent';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+// Register GSAP plugin
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
   const sectionRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const headingRef = useRef(null);
+  const cardsRef = useRef([]);
 
   useEffect(() => {
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.2 }
-    );
-    if (sectionRef.current) obs.observe(sectionRef.current);
-    return () => obs.disconnect();
+    const ctx = gsap.context(() => {
+      // Heading animation - fade in from top
+      gsap.from(headingRef.current, {
+        y: -60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          toggleActions: "play none none reverse",
+        }
+      });
+
+      // Cards animation - slide from left and right alternately
+      cardsRef.current.forEach((card, index) => {
+        if (card) {
+          gsap.from(card, {
+            x: index % 2 === 0 ? -100 : 100, // Left se pehla, right se doosra
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none reverse",
+            }
+          });
+
+          // Card ke andar ke elements ko animate karo
+          const phoneLink = card.querySelector('.phone-link');
+          const emailLink = card.querySelector('.email-link');
+          
+          if (phoneLink) {
+            gsap.from(phoneLink, {
+              x: 30,
+              opacity: 0,
+              duration: 0.6,
+              delay: 0.3,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              }
+            });
+          }
+
+          if (emailLink) {
+            gsap.from(emailLink, {
+              x: 30,
+              opacity: 0,
+              duration: 0.6,
+              delay: 0.5,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none reverse",
+              }
+            });
+          }
+        }
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
     <section
       id="contact"
       ref={sectionRef}
-      className={`py-16 sm:py-20 lg:py-24 relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden transition-all duration-1000 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-      }`}
+      className="py-16 sm:py-20 lg:py-24 relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden"
     >
       {/* Background glows – responsive blur */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
@@ -34,7 +97,7 @@ const Contact = () => {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading */}
-        <div className="text-center mb-12 sm:mb-16">
+        <div ref={headingRef} className="text-center mb-12 sm:mb-16">
           <h2 className="text-xs sm:text-sm font-bold text-emerald-400 mb-4 tracking-widest uppercase">
             {STRATEGIX_DATA.contact.heading}
           </h2>
@@ -48,6 +111,7 @@ const Contact = () => {
           {STRATEGIX_DATA.contact.team.map((member, index) => (
             <div
               key={index}
+              ref={(el) => (cardsRef.current[index] = el)}
               className="group relative bg-slate-800/50 backdrop-blur-sm border border-slate-700/40 rounded-2xl p-6 sm:p-8 lg:p-10 
                          hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10 
                          transition-all duration-500 transform hover:-translate-y-2"
@@ -66,7 +130,7 @@ const Contact = () => {
                 {/* Phone */}
                 <a
                   href={`tel:${member.phone}`}
-                  className="flex items-center gap-4 text-slate-300 hover:text-white transition-all duration-300 group/link"
+                  className="phone-link flex items-center gap-4 text-slate-300 hover:text-white transition-all duration-300 group/link"
                 >
                   <div className="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center 
                                    group-hover/link:bg-emerald-500/30 group-hover/link:scale-110 
@@ -79,7 +143,7 @@ const Contact = () => {
                 {/* Email */}
                 <a
                   href={`mailto:${member.email}`}
-                  className="flex items-center gap-4 text-slate-300 hover:text-white transition-all duration-300 group/link"
+                  className="email-link flex items-center gap-4 text-slate-300 hover:text-white transition-all duration-300 group/link"
                 >
                   <div className="w-11 h-11 sm:w-12 sm:h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center 
                                    group-hover/link:bg-emerald-500/30 group-hover/link:scale-110 

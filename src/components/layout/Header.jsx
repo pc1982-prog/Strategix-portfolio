@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
-import { HiTrendingUp } from "react-icons/hi";
+import { RiMenu3Fill } from "react-icons/ri";
 import logo from "../../assets/images/logoStrategix.png";
 
 const Header = () => {
@@ -39,37 +39,12 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Bar - Hidden on Mobile */}
-      <div className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-sm border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3 text-slate-300">
-              <HiTrendingUp className="text-emerald-400" size={24} />
-              <span className="font-medium text-base">Total sales</span>
-              <span className="text-emerald-400 font-bold text-xl">$40,267</span>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <a
-                href="tel:+918595519533"
-                className="flex items-center space-x-2 text-slate-300 hover:text-emerald-400 transition-colors"
-              >
-                <Phone size={18} />
-                <span className="font-medium">+91 8595519533</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
       {/* Floating WhatsApp Button */}
       <a
         href="https://wa.me/918595519533"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-110 animate-bounce-slow"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-12 h-12 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full shadow-2xl hover:shadow-emerald-500/50 transition-all duration-300 hover:scale-110"
         style={{
           animation: 'bounce-slow 2s infinite'
         }}
@@ -79,7 +54,7 @@ const Header = () => {
 
       {/* Main Header */}
       <header
-        className={`fixed left-0 right-0 z-40 transition-all duration-500 lg:top-16 top-0 ${
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${
           scrolled
             ? "bg-slate-950/98 backdrop-blur-xl shadow-lg shadow-emerald-500/10 border-b border-emerald-500/20"
             : "bg-slate-950/90 backdrop-blur-sm"
@@ -125,32 +100,50 @@ const Header = () => {
               className="lg:hidden p-2 rounded-lg transition-all text-slate-300 hover:text-emerald-400 hover:bg-slate-800/50"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-              {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              <div className={`transition-all duration-300 ${isMenuOpen ? 'rotate-90 scale-110' : 'rotate-0 scale-100'}`}>
+                {isMenuOpen ? <X size={28} /> : <RiMenu3Fill size={28} />}
+              </div>
             </button>
           </div>
 
-          {/* Mobile Menu */}
-          {isMenuOpen && (
-            <div className="lg:hidden absolute top-full left-0 right-0 bg-slate-950/98 backdrop-blur-xl border-t border-emerald-500/20 shadow-2xl shadow-emerald-500/10">
-              <div className="px-6 py-6 space-y-4">
-                {navItems.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => handleNavClick(item.id)}
-                    className="block w-full text-left text-lg font-semibold text-slate-300 hover:text-emerald-400 transition-colors py-2 hover:pl-2"
-                  >
-                    {item.name}
-                  </button>
-                ))}
+          {/* Mobile Menu with Smooth Slide Animation */}
+          <div
+            className={`lg:hidden overflow-hidden transition-all duration-500 ease-in-out ${
+              isMenuOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="px-6 py-6 space-y-4 bg-slate-950/98 backdrop-blur-xl border-t border-emerald-500/20 shadow-2xl shadow-emerald-500/10">
+              {navItems.map((item, index) => (
                 <button
-                  onClick={() => handleNavClick("contact")}
-                  className="block w-full text-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-full shadow-xl shadow-emerald-500/30 transform hover:scale-105 transition-all"
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`block w-full text-left text-lg font-semibold text-slate-300 hover:text-emerald-400 transition-all duration-300 py-2 hover:pl-2 transform ${
+                    isMenuOpen
+                      ? "translate-x-0 opacity-100"
+                      : "-translate-x-4 opacity-0"
+                  }`}
+                  style={{
+                    transitionDelay: isMenuOpen ? `${index * 50}ms` : "0ms",
+                  }}
                 >
-                  Get Started
+                  {item.name}
                 </button>
-              </div>
+              ))}
+              <button
+                onClick={() => handleNavClick("contact")}
+                className={`block w-full text-center px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-full shadow-xl shadow-emerald-500/30 transform hover:scale-105 transition-all duration-300 ${
+                  isMenuOpen
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-4 opacity-0"
+                }`}
+                style={{
+                  transitionDelay: isMenuOpen ? `${navItems.length * 50}ms` : "0ms",
+                }}
+              >
+                Get Started
+              </button>
             </div>
-          )}
+          </div>
         </nav>
       </header>
 
