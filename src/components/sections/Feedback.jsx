@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import image from '../../../public/images/Strategix- Portfolio (39).png'
+import image1 from '../../../public/images/Strategix- Portfolio (31).png'
+import image2 from '../../../public/images/Strategix- Portfolio (33).png'
+import image3 from '../../../public/images/Strategix- Portfolio (5).png'
+import image4 from '../../../public/images/Strategix- Portfolio (38).png'
+import image5 from '../../../public/images/Strategix- Portfolio (35).png'
+import image6 from '../../../public/images/Strategix- Portfolio (34).png'
+import image7 from '../../../public/images/Strategix- Portfolio (32).png'
 
 export default function ClientFeedbacks() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -48,43 +55,43 @@ export default function ClientFeedbacks() {
   const feedbacks = [
     {
       text: "Strategix helped us build a strong digital presence with a well-designed website and effective marketing strategies. Their team understood our goals and delivered exactly what we needed.",
-      name: "Expertrons",
-      avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=100&h=100&fit=crop&crop=face"
+      name: "Genwin",
+      avatar: image
     },
     {
       text: "From website development to digital marketing execution, Strategix provided consistent support and clear strategy. The results were visible within a short time.",
       name: "Edoofa",
-      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face"
+      avatar: image1
     },
     {
       text: "Strategix delivered a clean, professional website along with marketing solutions that aligned perfectly with our brand vision. Smooth communication and timely delivery.",
       name: "OGIO",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
+      avatar: image2
     },
     {
       text: "Their creative and technical expertise helped us improve our online visibility. Strategix brought structure and clarity to our digital efforts.",
-      name: "Studio We Do Effects",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face"
+      name: "Nandi IVF",
+      avatar: image6
     },
     {
       text: "Strategix supported us with reliable web development and digital strategy. Their approach was practical, transparent, and result-oriented.",
-      name: "WishNew Wellness",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face"
+      name: "One Show",
+      avatar: image4
     },
     {
       text: "We appreciated Strategix structured approach to website design and digital marketing. Their solutions helped strengthen our brand presence online.",
       name: "The Class of One",
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face"
+      avatar: image5
     },
     {
       text: "Strategix played a key role in enhancing our digital platform with modern design and performance-focused solutions. A dependable digital partner.",
       name: "Ramada Lucknow",
-      avatar: "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&fit=crop&crop=face"
+      avatar: image3
     },
     {
       text: "Strategix helped us streamline our digital presence with a professional website and smart marketing support. Their understanding of our industry was impressive.",
-      name: "Nandi IVF",
-      avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&h=100&fit=crop&crop=face"
+      name: "Prozone",
+      avatar: image7
     }
   ];
   
@@ -143,19 +150,19 @@ export default function ClientFeedbacks() {
                       }}
                       className="w-full sm:w-1/2 flex-shrink-0 px-2 sm:px-3 cursor-pointer"
                     >
-                      <div className="bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl min-h-[280px] sm:min-h-[280px] flex flex-col justify-between hover:shadow-emerald-500/20 transition-all">
-                        <p className="text-slate-700 text-[15px] sm:text-base leading-relaxed mb-4 sm:mb-6">
+                      <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl h-[280px] sm:h-[280px] flex flex-col justify-between hover:shadow-emerald-500/20 transition-all">
+                        <p className="text-slate-200 text-[15px] sm:text-base leading-relaxed mb-4 sm:mb-6 flex-1 overflow-hidden">
                           {feedback.text}
                         </p>
                         <div className="flex items-center gap-3 sm:gap-3">
-                          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-3 sm:border-4 border-emerald-500 flex-shrink-0">
+                          <div className="w-16 h-16 sm:w-14 sm:h-14 rounded-full overflow-hidden border-3 sm:border-4 border-emerald-500 flex-shrink-0">
                             <img 
                               src={feedback.avatar} 
                               alt={feedback.name}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover "
                             />
                           </div>
-                          <span className="text-slate-900 font-semibold text-sm sm:text-base">
+                          <span className="text-white font-semibold text-xl sm:text-xl">
                             {feedback.name}
                           </span>
                         </div>
