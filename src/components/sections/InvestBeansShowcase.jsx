@@ -4,20 +4,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─────────────────────────────────────────────────────────────────────────────
-// IMAGES KO "public/investbeans/" FOLDER MEIN RAKH DO (project root ke andar)
-// Example structure:
-//   your-project/
-//     public/
-//       investbeans/
-//         img1.png
-//         img2.png
-//         img3.png
-//         img4.png
-//         img5.png
-//     src/
-//       ...
-// ─────────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────
+// Put images in:  public/investbeans/img1.png ... img5.png
+// ─────────────────────────────────────────────────────────────────────
 const IMAGES = [
   { src: '/investbeans/img1.png', label: 'Hero — BeansIndex' },
   { src: '/investbeans/img2.png', label: 'Market Dashboard' },
@@ -35,15 +24,15 @@ const STATS = [
   { numeric: 2,   suffix: '',  label: 'Market Modes' },
 ];
 
-// ── Animated Counter Hook ─────────────────────────────────────────────────────
+// ── Counter Hook ──────────────────────────────────────────────────────
 const useCounter = (target, duration = 1.8, shouldStart = false) => {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!shouldStart) { setCount(0); return; }
     let startTime = null;
-    const step = (timestamp) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / (duration * 1000), 1);
       const eased = 1 - Math.pow(1 - progress, 4);
       setCount(Math.floor(eased * target));
       if (progress < 1) requestAnimationFrame(step);
@@ -54,31 +43,19 @@ const useCounter = (target, duration = 1.8, shouldStart = false) => {
   return count;
 };
 
-// ── Stat Card ─────────────────────────────────────────────────────────────────
+// ── Stat Card ─────────────────────────────────────────────────────────
 const StatCard = ({ numeric, suffix, label, shouldStart }) => {
   const count = useCounter(numeric, 1.8, shouldStart);
   return (
-    <div className="ib-stat group relative bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6 text-center hover:border-emerald-500/40 hover:bg-slate-800/70 transition-all duration-500 overflow-hidden">
+    <div className="group relative bg-slate-800/40 border border-slate-700/40 rounded-2xl p-6 text-center hover:border-emerald-500/40 hover:bg-slate-800/70 transition-all duration-500 overflow-hidden">
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-      <p className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums relative z-10">
-        {count}{suffix}
-      </p>
+      <p className="text-3xl sm:text-4xl font-black text-white mb-1 tabular-nums relative z-10">{count}{suffix}</p>
       <p className="text-xs text-slate-500 font-bold tracking-widest uppercase relative z-10">{label}</p>
     </div>
   );
 };
 
-// ── Spinner ───────────────────────────────────────────────────────────────────
-const Spinner = () => (
-  <div className="absolute inset-0 bg-slate-900 flex items-center justify-center z-10">
-    <div className="relative w-8 h-8">
-      <div className="absolute inset-0 border-2 border-slate-700 rounded-full" />
-      <div className="absolute inset-0 border-2 border-t-emerald-400 border-r-transparent border-b-transparent border-l-transparent rounded-full animate-spin" />
-    </div>
-  </div>
-);
-
-// ── Browser Bar ───────────────────────────────────────────────────────────────
+// ── Browser Bar ───────────────────────────────────────────────────────
 const BrowserBar = ({ label }) => (
   <div className="flex-shrink-0 bg-slate-800/90 px-3 py-2 flex items-center gap-1.5 border-b border-slate-700/50">
     <span className="w-2.5 h-2.5 rounded-full bg-red-500/70 flex-shrink-0" />
@@ -88,95 +65,119 @@ const BrowserBar = ({ label }) => (
   </div>
 );
 
-// ── Gallery Card ──────────────────────────────────────────────────────────────
-const GalleryCard = ({ img, loaded, onLoad, accentColor, imgHeight, className }) => (
-  <div
-    className={
-      'ib-gallery-card group relative rounded-2xl overflow-hidden border border-slate-700/40 ' +
-      'hover:border-' + accentColor + '-500/40 ' +
-      'transition-all duration-500 cursor-pointer shadow-xl shadow-black/40 flex flex-col ' +
-      (className || '')
-    }
-  >
-    <BrowserBar label={img.label} />
-    <div className="relative overflow-hidden bg-slate-900 flex-1" style={{ minHeight: imgHeight }}>
-      {!loaded && <Spinner />}
-      <img
-        src={img.src}
-        alt={img.label}
-        onLoad={onLoad}
-        className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
-        style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.5s ease' }}
-      />
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-900/90 to-transparent pointer-events-none" />
-      <div className="absolute bottom-3 left-3 z-10">
-        <span
-          className={
-            'text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full ' +
-            'text-' + accentColor + '-400 bg-' + accentColor + '-500/20 border border-' + accentColor + '-500/30'
-          }
-        >
-          {img.label}
-        </span>
+// ── Gallery Card ──────────────────────────────────────────────────────
+const GalleryCard = ({ img, accentColor = 'emerald', style = {}, className = '' }) => {
+  const [loaded, setLoaded] = useState(false);
+  const [error,  setError]  = useState(false);
+
+  return (
+    <div
+      style={style}
+      className={
+        'group relative rounded-2xl overflow-hidden border border-slate-700/40 ' +
+        'transition-all duration-500 cursor-pointer shadow-xl shadow-black/40 flex flex-col ' +
+        className
+      }
+    >
+      <BrowserBar label={img.label} />
+      <div className="relative flex-1 bg-slate-900 overflow-hidden" style={{ minHeight: '200px' }}>
+        {/* Spinner while loading */}
+        {!loaded && !error && (
+          <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
+            <div className="relative w-8 h-8">
+              <div className="absolute inset-0 border-2 border-slate-700 rounded-full" />
+              <div className="absolute inset-0 border-2 border-t-emerald-400 border-transparent rounded-full animate-spin" />
+            </div>
+          </div>
+        )}
+        {/* Error fallback */}
+        {error && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10 gap-2">
+            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
+              <span className="text-slate-600 text-lg">?</span>
+            </div>
+            <span className="text-xs text-slate-600">{img.label}</span>
+          </div>
+        )}
+        <img
+          src={img.src}
+          alt={img.label}
+          onLoad={() => setLoaded(true)}
+          onError={() => { setLoaded(true); setError(true); }}
+          className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+          style={{ opacity: loaded && !error ? 1 : 0, transition: 'opacity 0.5s ease' }}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-900/90 to-transparent pointer-events-none" />
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className={'text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full text-' + accentColor + '-400 bg-' + accentColor + '-500/20 border border-' + accentColor + '-500/30'}>
+            {img.label}
+          </span>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// ── MAIN COMPONENT ────────────────────────────────────────────────────────────
+// ── MAIN ─────────────────────────────────────────────────────────────
 const InvestBeansShowcase = () => {
   const sectionRef = useRef(null);
-  const heroRef    = useRef(null);
-  const galleryRef = useRef(null);
   const statsRef   = useRef(null);
 
   const [activeImg,    setActiveImg]    = useState(0);
-  const [loadedImages, setLoadedImages] = useState({});
   const [statsVisible, setStatsVisible] = useState(false);
+  const [sliderLoaded, setSliderLoaded] = useState({});
 
-  const markLoaded = (i) => setLoadedImages((prev) => ({ ...prev, [i]: true }));
+  const markSlider = (i) => setSliderLoaded((p) => ({ ...p, [i]: true }));
 
-  // Pre-load all images
+  // ── GSAP: use fromTo + once:true + clearProps so elements are never stuck invisible
   useEffect(() => {
-    IMAGES.forEach((imgObj, i) => {
-      const image = new window.Image();
-      image.src = imgObj.src;
-      image.onload  = () => markLoaded(i);
-      image.onerror = () => markLoaded(i);
-      if (image.complete) markLoaded(i);
-    });
-  }, []);
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 0px)', () => {
 
-  // GSAP
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.ib-hero-line', {
-        y: 80, opacity: 0, stagger: 0.15, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: heroRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
-      });
-      gsap.from('.ib-tag', {
-        scale: 0.6, opacity: 0, stagger: 0.07, duration: 0.5, ease: 'back.out(1.7)',
-        scrollTrigger: { trigger: '.ib-tags-row', start: 'top 88%', toggleActions: 'play none none reverse' },
-      });
-      gsap.from('.ib-gallery-card', {
-        y: 60, opacity: 0, stagger: 0.1, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: galleryRef.current, start: 'top 82%', toggleActions: 'play none none reverse' },
-      });
-      gsap.from('.ib-stat', {
-        y: 40, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power2.out',
-        scrollTrigger: { trigger: statsRef.current, start: 'top 85%', toggleActions: 'play none none reverse' },
-      });
+      // Helper — safe animate that always ends visible
+      const animate = (selector, vars, triggerEl) => {
+        const els = sectionRef.current ? sectionRef.current.querySelectorAll(selector) : [];
+        if (!els.length) return;
+        gsap.set(els, { opacity: 0, y: vars.y || 0 });
+        gsap.to(els, {
+          opacity: 1,
+          y: 0,
+          duration: vars.duration || 0.9,
+          stagger: vars.stagger || 0,
+          ease: vars.ease || 'power3.out',
+          delay: vars.delay || 0,
+          clearProps: 'all', // remove inline styles after animation — prevents stuck states
+          scrollTrigger: {
+            trigger: triggerEl,
+            start: 'top 88%',
+            once: true, // fire once, never reverse — content stays visible
+          },
+        });
+      };
+
+      const sec = sectionRef.current;
+      animate('.ib-eyebrow',     { duration: 0.8 }, sec);
+      animate('.ib-title',       { y: 60, duration: 1, stagger: 0.1 }, sec);
+      animate('.ib-desc',        { y: 40, duration: 0.8, delay: 0.2 }, sec);
+      animate('.ib-tag',         { y: 20, duration: 0.5, stagger: 0.06, delay: 0.3 }, sec);
+      animate('.ib-slider-wrap', { y: 50, duration: 1, delay: 0.1 }, sec);
+      animate('.ib-stat-card',   { y: 40, duration: 0.8, stagger: 0.1 }, statsRef.current);
+      animate('.ib-gallery-row', { y: 60, duration: 0.9, stagger: 0.15 }, sec);
+      animate('.ib-cta',         { y: 40, duration: 0.8 }, sec);
+
+      // Counter trigger
       ScrollTrigger.create({
         trigger: statsRef.current,
-        start: 'top 85%',
-        onEnter:     () => setStatsVisible(true),
-        onLeaveBack: () => setStatsVisible(false),
+        start: 'top 88%',
+        once: true,
+        onEnter: () => setStatsVisible(true),
       });
-    }, sectionRef);
-    return () => ctx.revert();
+    });
+
+    return () => mm.revert();
   }, []);
 
-  // Auto-rotate
+  // Auto-rotate slider
   useEffect(() => {
     const t = setInterval(() => setActiveImg((p) => (p + 1) % IMAGES.length), 3000);
     return () => clearInterval(t);
@@ -192,8 +193,7 @@ const InvestBeansShowcase = () => {
         <div
           className="absolute inset-0 opacity-[0.04]"
           style={{
-            backgroundImage:
-              'linear-gradient(rgba(52,211,153,1) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,1) 1px, transparent 1px)',
+            backgroundImage: 'linear-gradient(rgba(52,211,153,1) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,1) 1px, transparent 1px)',
             backgroundSize: '64px 64px',
           }}
         />
@@ -208,30 +208,32 @@ const InvestBeansShowcase = () => {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* ── HERO ── */}
-        <div ref={heroRef} className="mb-16 sm:mb-24">
-          <div className="ib-hero-line flex items-center gap-4 mb-6">
+        <div className="mb-16 sm:mb-24">
+          {/* Eyebrow */}
+          <div className="ib-eyebrow flex items-center gap-4 mb-6">
             <div className="h-px flex-1 max-w-16 bg-gradient-to-r from-transparent to-emerald-500/60" />
             <span className="text-xs font-bold text-emerald-400 tracking-widest uppercase">Case Study</span>
             <div className="h-px flex-1 max-w-16 bg-gradient-to-l from-transparent to-emerald-500/60" />
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left */}
             <div>
-              <h2 className="ib-hero-line text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-6">
+              <h2 className="ib-title text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[0.95] tracking-tight mb-2">
                 Invest
-                <span
-                  className="block"
-                  style={{ WebkitTextStroke: '2px', WebkitTextStrokeColor: 'rgb(52 211 153)', color: 'transparent' }}
-                >
-                  Beans
-                </span>
               </h2>
-              <p className="ib-hero-line text-slate-400 text-base sm:text-lg leading-relaxed max-w-md mb-8">
+              <h2
+                className="ib-title text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight mb-6"
+                style={{ WebkitTextStroke: '2px', WebkitTextStrokeColor: 'rgb(52 211 153)', color: 'transparent' }}
+              >
+                Beans
+              </h2>
+              <p className="ib-desc text-slate-400 text-base sm:text-lg leading-relaxed max-w-md mb-8">
                 A full-stack stock intelligence platform featuring live market data,
                 TradingView-powered charts, heatmaps, and India + US market dashboards —
                 all in a sleek dark UI.
               </p>
-              <div className="ib-tags-row flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2">
                 {TAGS.map((tag, i) => (
                   <span key={i} className="ib-tag px-3 py-1.5 text-xs font-bold tracking-wider text-emerald-400 border border-emerald-500/30 rounded-full bg-emerald-500/10 uppercase">
                     {tag}
@@ -240,10 +242,11 @@ const InvestBeansShowcase = () => {
               </div>
             </div>
 
-            {/* Auto-slider */}
-            <div className="relative">
+            {/* Right — slider */}
+            <div className="ib-slider-wrap relative">
               <div className="absolute inset-0 bg-emerald-500/10 rounded-2xl blur-2xl scale-110" />
-              <div className="ib-hero-line relative rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/50">
+              <div className="relative rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/50">
+                {/* Browser top bar */}
                 <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2 border-b border-slate-700/60">
                   <span className="w-3 h-3 rounded-full bg-red-500/70" />
                   <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
@@ -254,7 +257,9 @@ const InvestBeansShowcase = () => {
                   </div>
                   <span className="text-xs text-emerald-400 font-bold">LIVE</span>
                 </div>
-                <div className="relative overflow-hidden bg-slate-900" style={{ height: '280px' }}>
+
+                {/* Slides */}
+                <div className="relative bg-slate-900 overflow-hidden" style={{ height: '280px' }}>
                   {IMAGES.map((img, i) => (
                     <div
                       key={i}
@@ -265,16 +270,26 @@ const InvestBeansShowcase = () => {
                         zIndex: activeImg === i ? 1 : 0,
                       }}
                     >
-                      {!loadedImages[i] && <Spinner />}
+                      {/* Spinner */}
+                      {!sliderLoaded[i] && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
+                          <div className="relative w-8 h-8">
+                            <div className="absolute inset-0 border-2 border-slate-700 rounded-full" />
+                            <div className="absolute inset-0 border-2 border-t-emerald-400 border-transparent rounded-full animate-spin" />
+                          </div>
+                        </div>
+                      )}
                       <img
                         src={img.src}
                         alt={img.label}
-                        onLoad={() => markLoaded(i)}
+                        onLoad={() => markSlider(i)}
+                        onError={() => markSlider(i)}
                         className="w-full h-full object-cover object-top"
-                        style={{ opacity: loadedImages[i] ? 1 : 0, transition: 'opacity 0.5s ease' }}
+                        style={{ opacity: sliderLoaded[i] ? 1 : 0, transition: 'opacity 0.5s ease' }}
                       />
                     </div>
                   ))}
+                  {/* Dots */}
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                     {IMAGES.map((_, i) => (
                       <button
@@ -291,6 +306,7 @@ const InvestBeansShowcase = () => {
                   </div>
                 </div>
               </div>
+              {/* Floating chip */}
               <div className="absolute -bottom-4 -right-4 bg-slate-800 border border-emerald-500/30 rounded-xl px-4 py-2 shadow-xl z-10">
                 <p className="text-xs text-slate-400 font-mono">Currently viewing</p>
                 <p className="text-sm font-bold text-emerald-400">{IMAGES[activeImg].label}</p>
@@ -302,55 +318,42 @@ const InvestBeansShowcase = () => {
         {/* ── STATS ── */}
         <div ref={statsRef} className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16 sm:mb-24">
           {STATS.map((stat, i) => (
-            <StatCard key={i} {...stat} shouldStart={statsVisible} />
+            <div key={i} className="ib-stat-card">
+              <StatCard {...stat} shouldStart={statsVisible} />
+            </div>
           ))}
         </div>
 
         {/* ── GALLERY ── */}
-        <div ref={galleryRef}>
+        <div>
           <div className="flex items-center gap-4 mb-10">
             <div className="h-px flex-1 bg-gradient-to-r from-emerald-500/40 to-transparent" />
             <span className="text-xs font-bold text-slate-500 tracking-widest uppercase">All Screens</span>
             <div className="h-px flex-1 bg-gradient-to-l from-emerald-500/40 to-transparent" />
           </div>
 
-          {/* Row 1 — equal height via grid rows */}
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4" style={{ gridAutoRows: '260px' }}>
-            <GalleryCard
-              img={IMAGES[0]}
-              loaded={loadedImages[0]}
-              onLoad={() => markLoaded(0)}
-              accentColor="emerald"
-              imgHeight="210px"
-              className="md:col-span-3"
-            />
-            <GalleryCard
-              img={IMAGES[1]}
-              loaded={loadedImages[1]}
-              onLoad={() => markLoaded(1)}
-              accentColor="teal"
-              imgHeight="210px"
-              className="md:col-span-2"
-            />
+          {/* Row 1 */}
+          <div className="ib-gallery-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
+            <div className="md:col-span-3" style={{ height: '260px' }}>
+              <GalleryCard img={IMAGES[0]} accentColor="emerald" className="h-full" />
+            </div>
+            <div className="md:col-span-2" style={{ height: '260px' }}>
+              <GalleryCard img={IMAGES[1]} accentColor="teal" className="h-full" />
+            </div>
           </div>
 
-          {/* Row 2 — equal height */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4" style={{ gridAutoRows: '240px' }}>
+          {/* Row 2 */}
+          <div className="ib-gallery-row grid grid-cols-1 sm:grid-cols-3 gap-4">
             {IMAGES.slice(2).map((img, i) => (
-              <GalleryCard
-                key={i}
-                img={img}
-                loaded={loadedImages[i + 2]}
-                onLoad={() => markLoaded(i + 2)}
-                accentColor={i === 1 ? 'teal' : 'emerald'}
-                imgHeight="190px"
-              />
+              <div key={i} style={{ height: '240px' }}>
+                <GalleryCard img={img} accentColor={i === 1 ? 'teal' : 'emerald'} className="h-full" />
+              </div>
             ))}
           </div>
         </div>
 
         {/* ── CTA ── */}
-        <div className="mt-16 sm:mt-24 relative rounded-3xl overflow-hidden border border-slate-700/40">
+        <div className="ib-cta mt-16 sm:mt-24 relative rounded-3xl overflow-hidden border border-slate-700/40">
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 via-slate-800/60 to-teal-500/10" />
           <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
           <div className="relative px-8 sm:px-12 py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
