@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Phone, Mail, ArrowUpRight } from 'lucide-react';
+import { Mail, ArrowUpRight } from 'lucide-react';
 import { STRATEGIX_DATA } from '../../data/siteContent';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,9 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Contact = () => {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
-  const leftPanelRef = useRef(null);
-  const rightPanelRef = useRef(null);
-  const dividerRef = useRef(null);
+  const cardRef    = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -27,38 +25,13 @@ const Contact = () => {
         },
       });
 
-      gsap.from(leftPanelRef.current, {
-        x: -120,
+      gsap.from(cardRef.current, {
+        y: 60,
         opacity: 0,
         duration: 1.1,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: leftPanelRef.current,
-          start: 'top 85%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      gsap.from(dividerRef.current, {
-        scaleY: 0,
-        opacity: 0,
-        duration: 0.8,
-        delay: 0.3,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      gsap.from(rightPanelRef.current, {
-        x: 120,
-        opacity: 0,
-        duration: 1.1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: rightPanelRef.current,
+          trigger: cardRef.current,
           start: 'top 85%',
           toggleActions: 'play none none reverse',
         },
@@ -67,9 +40,6 @@ const Contact = () => {
 
     return () => ctx.revert();
   }, []);
-
-  const phones = [...new Set(STRATEGIX_DATA.contact.team.map((m) => m.phone))];
-  const emails = [...new Set(STRATEGIX_DATA.contact.team.map((m) => m.email))];
 
   return (
     <section
@@ -92,6 +62,7 @@ const Contact = () => {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Heading */}
         <div ref={headingRef} className="text-center mb-16 sm:mb-20">
           <span className="inline-block text-xs font-bold text-emerald-400 tracking-widest uppercase mb-4 px-4 py-1.5 border border-emerald-500/30 rounded-full bg-emerald-500/10">
@@ -105,84 +76,55 @@ const Contact = () => {
             Your Brand?
           </h3>
           <p className="mt-4 text-slate-400 text-base sm:text-lg max-w-xl mx-auto">
-            Reach out — we are one call or message away.
+            Reach out — we are one message away.
           </p>
         </div>
 
-        {/* Split Contact Panel */}
-        <div className="flex flex-col md:flex-row items-stretch gap-0 max-w-4xl mx-auto rounded-3xl overflow-hidden border border-slate-700/40 shadow-2xl shadow-black/40">
-
-          {/* Left — Phone */}
+        {/* Single Email Card */}
+        <div className="flex justify-center">
           <div
-            ref={leftPanelRef}
-            className="group flex-1 relative bg-slate-800/60 backdrop-blur-sm p-8 sm:p-10 lg:p-14 flex flex-col justify-between gap-8 hover:bg-slate-800/80 transition-all duration-500"
+            ref={cardRef}
+            className="group relative bg-slate-800/60 backdrop-blur-sm border border-slate-700/40 rounded-3xl p-10 sm:p-14
+                       hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10
+                       transition-all duration-500 w-full max-w-lg"
           >
+            {/* Corner accents */}
             <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-emerald-500/40 rounded-tl-3xl" />
+            <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-teal-500/40 rounded-br-3xl" />
 
-            <div className="flex items-center justify-between">
-              <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center group-hover:bg-emerald-500/30 group-hover:scale-110 transition-all duration-300">
-                <Phone size={24} className="text-emerald-400" />
+            {/* Hover glow */}
+            <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            {/* Icon + arrow */}
+            <div className="relative flex items-center justify-between mb-8">
+              <div className="w-14 h-14 bg-emerald-500/20 rounded-2xl flex items-center justify-center
+                              group-hover:bg-emerald-500/30 group-hover:scale-110 transition-all duration-300">
+                <Mail size={24} className="text-emerald-400" />
               </div>
-              <ArrowUpRight size={20} className="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
+              <ArrowUpRight
+                size={20}
+                className="text-slate-600 group-hover:text-emerald-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300"
+              />
             </div>
 
-            <div>
-              <p className="text-xs font-bold tracking-widest text-slate-500 uppercase mb-3">Call Us</p>
-              <div className="space-y-3">
-                {phones.map((phone, i) => (
-                  <a
-                    key={i}
-                    href={"tel:" + phone}
-                    className="block text-xl sm:text-2xl font-bold text-white hover:text-emerald-400 transition-colors duration-300"
-                  >
-                    {phone}
-                  </a>
-                ))}
-              </div>
-              <div className="mt-6 w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full group-hover:w-20 transition-all duration-500" />
-            </div>
+            {/* Label */}
+            <p className="relative text-xs font-bold tracking-widest text-slate-500 uppercase mb-3">
+              General Inquiries
+            </p>
+
+            {/* Email */}
+            <a
+              href={"mailto:marketing@strategixworks.com"}
+              className="relative block text-xl sm:text-2xl font-bold text-white hover:text-emerald-400 transition-colors duration-300 break-all"
+            >
+              marketing@strategixworks.com
+            </a>
+
+            {/* Animated underline */}
+            <div className="relative mt-6 w-12 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full group-hover:w-24 transition-all duration-500" />
           </div>
-
-          {/* Vertical Divider */}
-          <div
-            ref={dividerRef}
-            className="hidden md:block w-px bg-gradient-to-b from-transparent via-slate-600/60 to-transparent origin-top"
-          />
-          {/* Horizontal Divider mobile */}
-          <div className="block md:hidden h-px bg-gradient-to-r from-transparent via-slate-600/60 to-transparent" />
-
-          {/* Right — Email */}
-          <div
-            ref={rightPanelRef}
-            className="group flex-1 relative bg-slate-800/60 backdrop-blur-sm p-8 sm:p-10 lg:p-14 flex flex-col justify-between gap-8 hover:bg-slate-800/80 transition-all duration-500"
-          >
-            <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-teal-500/40 rounded-tr-3xl" />
-
-            <div className="flex items-center justify-between">
-              <div className="w-14 h-14 bg-teal-500/20 rounded-2xl flex items-center justify-center group-hover:bg-teal-500/30 group-hover:scale-110 transition-all duration-300">
-                <Mail size={24} className="text-teal-400" />
-              </div>
-              <ArrowUpRight size={20} className="text-slate-600 group-hover:text-teal-400 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-300" />
-            </div>
-
-            <div>
-              <p className="text-xs font-bold tracking-widest text-slate-500 uppercase mb-3">Email Us</p>
-              <div className="space-y-3">
-                {emails.map((email, i) => (
-                  <a
-                    key={i}
-                    href={"mailto:" + email}
-                    className="block text-lg sm:text-xl font-bold text-white hover:text-teal-400 transition-colors duration-300 break-all"
-                  >
-                    {email}
-                  </a>
-                ))}
-              </div>
-              <div className="mt-6 w-12 h-0.5 bg-gradient-to-r from-teal-500 to-emerald-500 rounded-full group-hover:w-20 transition-all duration-500" />
-            </div>
-          </div>
-
         </div>
+
       </div>
 
       <div className="h-10 lg:h-16" />

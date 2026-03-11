@@ -49,14 +49,7 @@ const Footer = () => {
                   marketing@strategixworks.com
                 </a>
               </div>
-              {STRATEGIX_DATA.contact.team.map((member, index) => (
-                <div key={index} className="text-slate-400 text-sm">
-                  <div className="font-semibold text-white mb-1">{member.name}</div>
-                  <a href={`mailto:${member.email}`} className="hover:text-emerald-400 transition-colors block text-xs">
-                    {member.email}
-                  </a>
-                </div>
-              ))}
+             
             </div>
           </div>
         </div>
