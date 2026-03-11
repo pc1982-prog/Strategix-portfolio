@@ -16,6 +16,7 @@ import ServicesSection from "./components/sections/ServicesSection";
 import Card from "./components/sections/Card";
 import ClientFeedbacks from "./components/sections/Feedback";
 import CTABanner from "./components/sections/CtaBanner";
+import InvestBeansShowcase from "./assets/images/InvestBeansShowcase";
 
 
 const App = () => {
@@ -32,6 +33,7 @@ const App = () => {
         <Card />
         <Work />
         <AIStudio />
+        <InvestBeansShowcase/>
         <Clients />
         <ClientFeedbacks />
         <ServicesSection />
