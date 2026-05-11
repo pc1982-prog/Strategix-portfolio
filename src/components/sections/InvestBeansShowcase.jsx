@@ -17,9 +17,10 @@ const IMAGES = [
 
 const TAGS = ['React.js', 'TradingView', 'Live Data', 'Responsive', 'Dark UI', 'Stock Analytics'];
 
+// ── CHANGED: removed 15m delayed stat, replaced with "Live" stat
 const STATS = [
   { numeric: 5,   suffix: '+', label: 'Dashboard Modules' },
-  { numeric: 15,  suffix: 'm', label: 'Delayed Live Data' },
+  { numeric: 100, suffix: '%', label: 'Live Data' },
   { numeric: 100, suffix: '%', label: 'Responsive' },
   { numeric: 2,   suffix: '',  label: 'Market Modes' },
 ];
@@ -65,23 +66,110 @@ const BrowserBar = ({ label }) => (
   </div>
 );
 
+// ── Image Lightbox ────────────────────────────────────────────────────
+const ImageLightbox = ({ img, onClose, onPrev, onNext, total, current }) => {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+    };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose, onNext, onPrev]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      style={{ background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)' }}
+      onClick={onClose}
+    >
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)' }}
+      >
+        ✕
+      </button>
+
+      {/* Prev button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        className="absolute left-3 sm:left-6 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)' }}
+      >
+        ‹
+      </button>
+
+      {/* Next button */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        className="absolute right-3 sm:right-6 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(52,211,153,0.15)', border: '1px solid rgba(52,211,153,0.3)' }}
+      >
+        ›
+      </button>
+
+      {/* Image container */}
+      <div
+        className="relative mx-14 sm:mx-20 flex flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+      >
+        {/* Browser bar on lightbox */}
+        <div className="w-full rounded-t-xl flex items-center gap-2 px-4 py-2.5"
+          style={{ background: 'rgba(15,20,40,0.98)', border: '1px solid rgba(52,211,153,0.2)', borderBottom: 'none' }}>
+          <span className="w-3 h-3 rounded-full bg-red-500/80" />
+          <span className="w-3 h-3 rounded-full bg-yellow-500/80" />
+          <span className="w-3 h-3 rounded-full bg-emerald-500/80" />
+          <div className="ml-3 flex-1 flex items-center gap-2 rounded-md px-3 py-1" style={{ background: 'rgba(52,211,153,0.08)', maxWidth: '220px' }}>
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-xs font-mono text-emerald-300/70">investbeans.com</span>
+          </div>
+          <span className="ml-auto text-xs font-bold text-emerald-400">LIVE</span>
+        </div>
+        {/* Image */}
+        <img
+          src={img.src}
+          alt={img.label}
+          className="w-full rounded-b-xl object-contain"
+          style={{ maxHeight: 'calc(90vh - 80px)', border: '1px solid rgba(52,211,153,0.2)', borderTop: 'none' }}
+        />
+        {/* Label + counter */}
+        <div className="mt-3 flex items-center gap-3">
+          <span className="text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full text-emerald-400 bg-emerald-500/15 border border-emerald-500/30">
+            {img.label}
+          </span>
+          <span className="text-xs text-slate-500">{current + 1} / {total}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ── Gallery Card ──────────────────────────────────────────────────────
-const GalleryCard = ({ img, accentColor = 'emerald', style = {}, className = '' }) => {
+const GalleryCard = ({ img, accentColor = 'emerald', style = {}, className = '', onOpen }) => {
   const [loaded, setLoaded] = useState(false);
   const [error,  setError]  = useState(false);
 
   return (
     <div
       style={style}
+      onClick={onOpen}
       className={
         'group relative rounded-2xl overflow-hidden border border-slate-700/40 ' +
-        'transition-all duration-500 cursor-pointer shadow-xl shadow-black/40 flex flex-col ' +
+        'transition-all duration-300 cursor-zoom-in shadow-xl shadow-black/40 flex flex-col ' +
+        'hover:border-emerald-500/50 hover:shadow-emerald-500/10 hover:shadow-2xl ' +
         className
       }
     >
       <BrowserBar label={img.label} />
       <div className="relative flex-1 bg-slate-900 overflow-hidden" style={{ minHeight: '200px' }}>
-        {/* Spinner while loading */}
         {!loaded && !error && (
           <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
             <div className="relative w-8 h-8">
@@ -90,7 +178,6 @@ const GalleryCard = ({ img, accentColor = 'emerald', style = {}, className = '' 
             </div>
           </div>
         )}
-        {/* Error fallback */}
         {error && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 z-10 gap-2">
             <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center">
@@ -107,6 +194,14 @@ const GalleryCard = ({ img, accentColor = 'emerald', style = {}, className = '' 
           className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
           style={{ opacity: loaded && !error ? 1 : 0, transition: 'opacity 0.5s ease' }}
         />
+        {/* Hover overlay with zoom icon */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          style={{ background: 'rgba(0,0,0,0.3)' }}>
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl"
+            style={{ background: 'rgba(52,211,153,0.2)', border: '2px solid rgba(52,211,153,0.5)', backdropFilter: 'blur(4px)' }}>
+            🔍
+          </div>
+        </div>
         <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-900/90 to-transparent pointer-events-none" />
         <div className="absolute bottom-3 left-3 z-10">
           <span className={'text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full text-' + accentColor + '-400 bg-' + accentColor + '-500/20 border border-' + accentColor + '-500/30'}>
@@ -126,15 +221,18 @@ const InvestBeansShowcase = () => {
   const [activeImg,    setActiveImg]    = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
   const [sliderLoaded, setSliderLoaded] = useState({});
+  const [lightbox,     setLightbox]     = useState(null); // index into IMAGES or null
 
   const markSlider = (i) => setSliderLoaded((p) => ({ ...p, [i]: true }));
+  const openLight  = (i) => setLightbox(i);
+  const closeLight = ()  => setLightbox(null);
+  const prevLight  = ()  => setLightbox((p) => (p - 1 + IMAGES.length) % IMAGES.length);
+  const nextLight  = ()  => setLightbox((p) => (p + 1) % IMAGES.length);
 
-  // ── GSAP: use fromTo + once:true + clearProps so elements are never stuck invisible
   useEffect(() => {
     const mm = gsap.matchMedia();
     mm.add('(min-width: 0px)', () => {
 
-      // Helper — safe animate that always ends visible
       const animate = (selector, vars, triggerEl) => {
         const els = sectionRef.current ? sectionRef.current.querySelectorAll(selector) : [];
         if (!els.length) return;
@@ -146,11 +244,11 @@ const InvestBeansShowcase = () => {
           stagger: vars.stagger || 0,
           ease: vars.ease || 'power3.out',
           delay: vars.delay || 0,
-          clearProps: 'all', // remove inline styles after animation — prevents stuck states
+          clearProps: 'all',
           scrollTrigger: {
             trigger: triggerEl,
             start: 'top 88%',
-            once: true, // fire once, never reverse — content stays visible
+            once: true,
           },
         });
       };
@@ -165,7 +263,6 @@ const InvestBeansShowcase = () => {
       animate('.ib-gallery-row', { y: 60, duration: 0.9, stagger: 0.15 }, sec);
       animate('.ib-cta',         { y: 40, duration: 0.8 }, sec);
 
-      // Counter trigger
       ScrollTrigger.create({
         trigger: statsRef.current,
         start: 'top 88%',
@@ -177,13 +274,25 @@ const InvestBeansShowcase = () => {
     return () => mm.revert();
   }, []);
 
-  // Auto-rotate slider
   useEffect(() => {
     const t = setInterval(() => setActiveImg((p) => (p + 1) % IMAGES.length), 3000);
     return () => clearInterval(t);
   }, []);
 
   return (
+    <>
+      {/* ── Lightbox ── */}
+      {lightbox !== null && (
+        <ImageLightbox
+          img={IMAGES[lightbox]}
+          current={lightbox}
+          total={IMAGES.length}
+          onClose={closeLight}
+          onPrev={prevLight}
+          onNext={nextLight}
+        />
+      )}
+
     <section
       ref={sectionRef}
       className="relative bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 overflow-hidden py-20 sm:py-28 lg:py-36"
@@ -246,7 +355,7 @@ const InvestBeansShowcase = () => {
             <div className="ib-slider-wrap relative">
               <div className="absolute inset-0 bg-emerald-500/10 rounded-2xl blur-2xl scale-110" />
               <div className="relative rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl shadow-black/50">
-                {/* Browser top bar */}
+                {/* Browser top bar — CHANGED URL to investbeans.com (already was correct here) */}
                 <div className="bg-slate-800/90 px-4 py-2.5 flex items-center gap-2 border-b border-slate-700/60">
                   <span className="w-3 h-3 rounded-full bg-red-500/70" />
                   <span className="w-3 h-3 rounded-full bg-yellow-500/70" />
@@ -259,7 +368,7 @@ const InvestBeansShowcase = () => {
                 </div>
 
                 {/* Slides */}
-                <div className="relative bg-slate-900 overflow-hidden" style={{ height: '280px' }}>
+                <div className="relative bg-slate-900 overflow-hidden cursor-zoom-in" style={{ height: '280px' }} onClick={() => openLight(activeImg)}>
                   {IMAGES.map((img, i) => (
                     <div
                       key={i}
@@ -270,7 +379,6 @@ const InvestBeansShowcase = () => {
                         zIndex: activeImg === i ? 1 : 0,
                       }}
                     >
-                      {/* Spinner */}
                       {!sliderLoaded[i] && (
                         <div className="absolute inset-0 flex items-center justify-center bg-slate-900 z-10">
                           <div className="relative w-8 h-8">
@@ -289,12 +397,12 @@ const InvestBeansShowcase = () => {
                       />
                     </div>
                   ))}
-                  {/* Dots */}
+                  {/* Dots — stop propagation so dot clicks don't open lightbox */}
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                     {IMAGES.map((_, i) => (
                       <button
                         key={i}
-                        onClick={() => setActiveImg(i)}
+                        onClick={(e) => { e.stopPropagation(); setActiveImg(i); }}
                         className="rounded-full transition-all duration-300"
                         style={{
                           width: activeImg === i ? '20px' : '6px',
@@ -335,10 +443,10 @@ const InvestBeansShowcase = () => {
           {/* Row 1 */}
           <div className="ib-gallery-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4">
             <div className="md:col-span-3" style={{ height: '260px' }}>
-              <GalleryCard img={IMAGES[0]} accentColor="emerald" className="h-full" />
+              <GalleryCard img={IMAGES[0]} accentColor="emerald" className="h-full" style={{ height: '260px' }} onOpen={() => openLight(0)} />
             </div>
             <div className="md:col-span-2" style={{ height: '260px' }}>
-              <GalleryCard img={IMAGES[1]} accentColor="teal" className="h-full" />
+              <GalleryCard img={IMAGES[1]} accentColor="teal" className="h-full" style={{ height: '260px' }} onOpen={() => openLight(1)} />
             </div>
           </div>
 
@@ -346,7 +454,7 @@ const InvestBeansShowcase = () => {
           <div className="ib-gallery-row grid grid-cols-1 sm:grid-cols-3 gap-4">
             {IMAGES.slice(2).map((img, i) => (
               <div key={i} style={{ height: '240px' }}>
-                <GalleryCard img={img} accentColor={i === 1 ? 'teal' : 'emerald'} className="h-full" />
+                <GalleryCard img={img} accentColor={i === 1 ? 'teal' : 'emerald'} className="h-full" style={{ height: '240px' }} onOpen={() => openLight(i + 2)} />
               </div>
             ))}
           </div>
@@ -373,6 +481,7 @@ const InvestBeansShowcase = () => {
 
       </div>
     </section>
+    </>
   );
 };
 

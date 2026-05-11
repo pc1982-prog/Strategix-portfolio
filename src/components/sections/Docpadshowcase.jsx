@@ -94,8 +94,8 @@ const StatCard = ({ numeric, suffix, label, shouldStart }) => {
   );
 };
 
-// ── Browser Chrome ────────────────────────────────────────────────────
-const BrowserChrome = ({ url = 'docpad.app', isLight = false }) => (
+// ── Browser Chrome — CHANGED: default URL is now docpad.in ────────────
+const BrowserChrome = ({ url = 'docpad.in', isLight = false }) => (
   <div className="flex-shrink-0 flex items-center gap-2 px-3 py-2 border-b"
     style={{
       background: isLight ? '#f8faff' : 'rgba(15,16,36,0.95)',
@@ -113,17 +113,107 @@ const BrowserChrome = ({ url = 'docpad.app', isLight = false }) => (
   </div>
 );
 
-// ── Gallery Card ──────────────────────────────────────────────────────
-const GalleryCard = ({ img, isLight = false, style = {}, className = '' }) => {
+// ── Image Lightbox ────────────────────────────────────────────────────
+const ImageLightbox = ({ img, onClose, onPrev, onNext, total, current }) => {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+    };
+    document.addEventListener('keydown', handleKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose, onNext, onPrev]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      style={{ background: 'rgba(0,0,0,0.92)', backdropFilter: 'blur(12px)' }}
+      onClick={onClose}
+    >
+      {/* Close */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center text-white transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+      >
+        ✕
+      </button>
+
+      {/* Prev */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onPrev(); }}
+        className="absolute left-3 sm:left-6 w-10 h-10 rounded-full flex items-center justify-center text-white text-xl transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.35)' }}
+      >
+        ‹
+      </button>
+
+      {/* Next */}
+      <button
+        onClick={(e) => { e.stopPropagation(); onNext(); }}
+        className="absolute right-3 sm:right-6 w-10 h-10 rounded-full flex items-center justify-center text-white text-xl transition-all duration-200 hover:scale-110 z-10"
+        style={{ background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.35)' }}
+      >
+        ›
+      </button>
+
+      {/* Image */}
+      <div
+        className="relative mx-14 sm:mx-20 flex flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: '90vw', maxHeight: '90vh' }}
+      >
+        {/* Browser chrome on popup */}
+        <div className="w-full rounded-t-xl flex items-center gap-2 px-4 py-2.5"
+          style={{ background: 'rgba(5,6,26,0.98)', border: '1px solid rgba(99,102,241,0.3)', borderBottom: 'none' }}>
+          <span className="w-3 h-3 rounded-full" style={{ background: '#ff5f57' }} />
+          <span className="w-3 h-3 rounded-full" style={{ background: '#febc2e' }} />
+          <span className="w-3 h-3 rounded-full" style={{ background: '#28c840' }} />
+          <div className="ml-3 flex-1 flex items-center gap-2 rounded-md px-3 py-1" style={{ background: 'rgba(99,102,241,0.08)', maxWidth: '200px' }}>
+            <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" />
+            <span className="text-xs font-mono" style={{ color: 'rgba(165,180,252,0.7)' }}>docpad.in</span>
+          </div>
+          <span className="ml-auto text-xs font-bold" style={{ color: '#6366f1' }}>LIVE</span>
+        </div>
+        <img
+          src={img.src}
+          alt={img.label}
+          className="w-full rounded-b-xl object-contain"
+          style={{ maxHeight: 'calc(90vh - 80px)', border: '1px solid rgba(99,102,241,0.3)', borderTop: 'none' }}
+        />
+        {/* Label + tag + counter */}
+        <div className="mt-3 flex items-center gap-3">
+          {img.tag && (
+            <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ background: 'rgba(99,102,241,0.25)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
+              {img.tag}
+            </span>
+          )}
+          <span className="text-xs font-semibold text-white">{img.label}</span>
+          <span className="text-xs" style={{ color: 'rgba(165,180,252,0.4)' }}>{current + 1} / {total}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ── Gallery Card — CHANGED: object-contain + auto height for mobile ───
+const GalleryCard = ({ img, isLight = false, style = {}, className = '', onOpen }) => {
   const [loaded, setLoaded] = useState(false);
   const [error, setError]   = useState(false);
 
   return (
     <div
       style={{ ...style, border: '1px solid rgba(99,102,241,0.2)' }}
-      className={'group relative rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer shadow-xl flex flex-col ' + className}
+      onClick={onOpen}
+      className={'group relative rounded-2xl overflow-hidden transition-all duration-300 cursor-zoom-in shadow-xl flex flex-col hover:border-indigo-500/50 hover:shadow-indigo-500/10 hover:shadow-2xl ' + className}
     >
-      <BrowserChrome url="docpad-y0a2.onrender.com" isLight={isLight} />
+      <BrowserChrome url="docpad.in" isLight={isLight} />
       <div className="relative flex-1 overflow-hidden" style={{ minHeight: '180px', background: isLight ? '#f0f4ff' : '#0a0b1a' }}>
         {!loaded && !error && (
           <div className="absolute inset-0 flex items-center justify-center z-10">
@@ -147,6 +237,14 @@ const GalleryCard = ({ img, isLight = false, style = {}, className = '' }) => {
           className="absolute inset-0 w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
           style={{ opacity: loaded && !error ? 1 : 0, transition: 'opacity 0.5s ease' }}
         />
+        {/* Hover zoom overlay */}
+        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+          style={{ background: 'rgba(0,0,0,0.28)' }}>
+          <div className="w-12 h-12 rounded-full flex items-center justify-center text-xl"
+            style={{ background: 'rgba(99,102,241,0.2)', border: '2px solid rgba(99,102,241,0.5)', backdropFilter: 'blur(4px)' }}>
+            🔍
+          </div>
+        </div>
         <div className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
           style={{ background: 'linear-gradient(to top, rgba(10,11,26,0.9), transparent)' }} />
         <div className="absolute bottom-3 left-3 z-10 flex items-center gap-2">
@@ -179,8 +277,13 @@ const DocPadShowcase = () => {
   const [activeImg,    setActiveImg]    = useState(0);
   const [statsVisible, setStatsVisible] = useState(false);
   const [sliderLoaded, setSliderLoaded] = useState({});
+  const [lightbox,     setLightbox]     = useState(null);
 
   const markSlider = (i) => setSliderLoaded((p) => ({ ...p, [i]: true }));
+  const openLight  = (i) => setLightbox(i);
+  const closeLight = ()  => setLightbox(null);
+  const prevLight  = ()  => setLightbox((p) => (p - 1 + IMAGES.length) % IMAGES.length);
+  const nextLight  = ()  => setLightbox((p) => (p + 1) % IMAGES.length);
 
   useEffect(() => {
     const mm = gsap.matchMedia();
@@ -228,6 +331,18 @@ const DocPadShowcase = () => {
   }, []);
 
   return (
+    <>
+      {lightbox !== null && (
+        <ImageLightbox
+          img={IMAGES[lightbox]}
+          current={lightbox}
+          total={IMAGES.length}
+          onClose={closeLight}
+          onPrev={prevLight}
+          onNext={nextLight}
+        />
+      )}
+
     <section
       ref={sectionRef}
       className="relative overflow-hidden py-20 sm:py-28 lg:py-36"
@@ -235,22 +350,18 @@ const DocPadShowcase = () => {
     >
       {/* ── Background Decoration ── */}
       <div className="absolute inset-0 pointer-events-none">
-        {/* Subtle grid */}
         <div className="absolute inset-0 opacity-[0.03]"
           style={{
             backgroundImage: 'linear-gradient(rgba(99,102,241,1) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,1) 1px, transparent 1px)',
             backgroundSize: '72px 72px',
           }}
         />
-        {/* Glows */}
         <div className="absolute top-1/3 -left-40 w-[500px] h-[500px] rounded-full opacity-20"
           style={{ background: 'radial-gradient(circle, #4f46e5 0%, transparent 70%)' }} />
         <div className="absolute bottom-1/4 -right-40 w-[400px] h-[400px] rounded-full opacity-15"
           style={{ background: 'radial-gradient(circle, #818cf8 0%, transparent 70%)' }} />
-        {/* Vertical accent line */}
         <div className="absolute top-0 left-1/3 w-px h-full opacity-10"
           style={{ background: 'linear-gradient(to bottom, transparent, #6366f1, transparent)', transform: 'rotate(-8deg)', transformOrigin: 'top center' }} />
-        {/* Cross marks */}
         <div className="absolute top-24 right-24 w-4 h-4 opacity-20" style={{ color: '#6366f1' }}>+</div>
         <div className="absolute bottom-32 left-20 w-4 h-4 opacity-20" style={{ color: '#818cf8' }}>+</div>
       </div>
@@ -274,7 +385,6 @@ const DocPadShowcase = () => {
           <div className="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
             {/* ── LEFT ── */}
             <div>
-              {/* Title */}
               <div className="mb-6">
                 <h2 className="dp-title font-black leading-none tracking-tight text-white"
                   style={{ fontSize: 'clamp(3rem, 7vw, 5.5rem)' }}>
@@ -305,7 +415,6 @@ const DocPadShowcase = () => {
                 all in one HIPAA-inspired platform.
               </p>
 
-              {/* Tags */}
               <div className="flex flex-wrap gap-2">
                 {TAGS.map((tag, i) => (
                   <span key={i}
@@ -316,7 +425,6 @@ const DocPadShowcase = () => {
                 ))}
               </div>
 
-              {/* Role badges */}
               <div className="mt-8 flex flex-wrap gap-3">
                 {['Doctor', 'Staff', 'Admin'].map((role, i) => (
                   <div key={i} className="flex items-center gap-2 px-3 py-2 rounded-xl"
@@ -333,17 +441,15 @@ const DocPadShowcase = () => {
 
             {/* ── RIGHT: Slider ── */}
             <div className="dp-slider-wrap relative">
-              {/* Glow behind slider */}
               <div className="absolute inset-0 rounded-3xl opacity-30 scale-110 blur-3xl"
                 style={{ background: 'radial-gradient(circle, #4f46e5 0%, transparent 70%)' }} />
 
-              {/* Phone + browser frame hybrid */}
               <div className="relative rounded-2xl overflow-hidden shadow-2xl"
                 style={{ border: '1px solid rgba(99,102,241,0.3)', boxShadow: '0 0 0 1px rgba(99,102,241,0.1), 0 32px 64px rgba(0,0,0,0.6)' }}>
-                <BrowserChrome url="docpad-y0a2.onrender.com" isLight={false} />
+                {/* CHANGED: URL now docpad.in */}
+                <BrowserChrome url="docpad.in" isLight={false} />
 
-                {/* Slides */}
-                <div className="relative overflow-hidden" style={{ height: '300px', background: '#050614' }}>
+                <div className="relative overflow-hidden cursor-zoom-in" style={{ height: '300px', background: '#050614' }} onClick={() => openLight(activeImg)}>
                   {IMAGES.map((img, i) => (
                     <div key={i} className="absolute inset-0 transition-all duration-700"
                       style={{
@@ -373,7 +479,7 @@ const DocPadShowcase = () => {
                   {/* Dots */}
                   <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
                     {IMAGES.map((_, i) => (
-                      <button key={i} onClick={() => setActiveImg(i)}
+                      <button key={i} onClick={(e) => { e.stopPropagation(); setActiveImg(i); }}
                         className="rounded-full transition-all duration-300"
                         style={{
                           width: activeImg === i ? '18px' : '5px',
@@ -431,10 +537,10 @@ const DocPadShowcase = () => {
           {/* Row 1: 2 big cards */}
           <div className="dp-gallery-row grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div style={{ height: '280px' }}>
-              <GalleryCard img={IMAGES[0]} className="h-full" />
+              <GalleryCard img={IMAGES[0]} className="h-full" style={{ height: '280px' }} onOpen={() => openLight(0)} />
             </div>
             <div style={{ height: '280px' }}>
-              <GalleryCard img={IMAGES[2]} className="h-full" />
+              <GalleryCard img={IMAGES[2]} className="h-full" style={{ height: '280px' }} onOpen={() => openLight(2)} />
             </div>
           </div>
 
@@ -442,7 +548,7 @@ const DocPadShowcase = () => {
           <div className="dp-gallery-row grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
             {[IMAGES[3], IMAGES[4], IMAGES[5]].map((img, i) => (
               <div key={i} style={{ height: '240px' }}>
-                <GalleryCard img={img} className="h-full" />
+                <GalleryCard img={img} className="h-full" style={{ height: '240px' }} onOpen={() => openLight(i + 3)} />
               </div>
             ))}
           </div>
@@ -450,10 +556,10 @@ const DocPadShowcase = () => {
           {/* Row 3: wide + narrow */}
           <div className="dp-gallery-row grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="md:col-span-3" style={{ height: '240px' }}>
-              <GalleryCard img={IMAGES[6]} className="h-full" />
+              <GalleryCard img={IMAGES[6]} className="h-full" style={{ height: '240px' }} onOpen={() => openLight(6)} />
             </div>
             <div className="md:col-span-2" style={{ height: '240px' }}>
-              <GalleryCard img={IMAGES[7]} className="h-full" />
+              <GalleryCard img={IMAGES[7]} className="h-full" style={{ height: '240px' }} onOpen={() => openLight(7)} />
             </div>
           </div>
         </div>
@@ -461,11 +567,8 @@ const DocPadShowcase = () => {
         {/* ══ CTA ══ */}
         <div className="dp-cta relative rounded-3xl overflow-hidden"
           style={{ border: '1px solid rgba(99,102,241,0.25)' }}>
-          {/* Background */}
           <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(79,70,229,0.15) 0%, rgba(9,11,36,0.8) 50%, rgba(129,140,248,0.1) 100%)' }} />
-          {/* Top line */}
           <div className="absolute top-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(99,102,241,0.6), transparent)' }} />
-          {/* Decorative circle */}
           <div className="absolute -right-16 -top-16 w-48 h-48 rounded-full opacity-10"
             style={{ background: 'radial-gradient(circle, #6366f1 0%, transparent 70%)' }} />
 
@@ -483,12 +586,12 @@ const DocPadShowcase = () => {
             </a>
           </div>
 
-          {/* Bottom line */}
           <div className="absolute bottom-0 left-0 right-0 h-px" style={{ background: 'linear-gradient(to right, transparent, rgba(129,140,248,0.5), transparent)' }} />
         </div>
 
       </div>
     </section>
+    </>
   );
 };
 
