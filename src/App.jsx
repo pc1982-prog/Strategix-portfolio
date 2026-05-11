@@ -17,6 +17,8 @@ import Card from "./components/sections/Card";
 import ClientFeedbacks from "./components/sections/Feedback";
 import CTABanner from "./components/sections/CtaBanner";
 import InvestBeansShowcase from "./components/sections/InvestBeansShowcase";
+import DocPadShowcase from "./components/sections/Docpadshowcase";
+// import WorkShowcase from "./components/sections/Workshowcase";
 
 
 const App = () => {
@@ -34,6 +36,8 @@ const App = () => {
         <Work />
         <AIStudio />
         <InvestBeansShowcase/>
+        <DocPadShowcase/>
+        {/* <WorkShowcase/> */}
         <Clients />
         <ClientFeedbacks />
         <ServicesSection />
